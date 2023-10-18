@@ -1,0 +1,37 @@
+#list_assos{
+  clear:both;
+  border-radius: 20px;
+  background-color: white;
+  margin: 20px;
+  color: black;
+  overflow: hidden;
+  font-size: 30px;
+}
+tr{
+  clear: both;
+  padding: 10px;
+  cursor: pointer;
+}
+td{
+  border: solid black 0px;
+  margin: 0px;
+  clear: both;
+  padding: 10px;
+}
+#list_assos tr:nth-child(even) {
+  /* Cible en Css les cellules de tableau des colonnes de position paire  */
+  /* Listes de propriétés Css */
+  background-color : white;
+}
+#list_assos tr:nth-child(odd) {
+  /* Cible en Css les cellules de tableau des colonnes de position impaire */
+  /* Listes de propriétés Css */
+  background-color : rgb(220,220,200);
+}
+.image_table{
+  height: 60px;
+  border-radius: 10px;
+}
+tr:hover{
+  background-color: rgb(200,200,200);
+}

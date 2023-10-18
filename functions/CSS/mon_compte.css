@@ -1,0 +1,19 @@
+.liste_prop{
+  
+}
+
+.liste_prop>div{
+  font-weight: bold;
+  background-color: var(--couleur-gris-clair);
+  border-radius: 20px;
+  padding: 20px;
+  width: 350px;
+  margin-bottom: 10px;
+  transition: ease-in-out 0.5s;
+  overflow-wrap: break-word;
+}
+.liste_prop>div:hover{
+  background-color: var(--couleur-gris-fonce);
+  color: var(--couleur-police-clair);
+  text-shadow: 
+}

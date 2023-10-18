@@ -1,0 +1,24 @@
+.titre_asso{
+  font-size: 20px;
+  font-weight: bold;
+  
+}
+.img_asso{
+  width: 50px;
+  border-radius: 20px;
+  box-shadow: 2px 2px 4px rgb(228,236,204);
+}
+
+.rej_bouton{
+  min-width: 50px;
+  padding: 5px;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+}
+.cote_a_cote>*{
+  display: inline-block;
+}

@@ -1,0 +1,76 @@
+.cote_a_cote>*{
+  
+ 
+  
+}
+.cote_a_cote{
+   margin: auto;
+  height: 800px;
+  width: 1800px;
+  background-color: var(--couleur-gris-moyen_clair);
+  border-radius: 20px;
+  justify-content: center;
+  clear: both;
+   display: flex;
+  justify-content: space-between;
+  padding: 40px;
+}
+.scroller{
+  width: 49%;
+  height: 90%;
+  background-color: var(--couleur-fond-clair);
+  border-radius: 10px;
+}
+
+.liste{
+  list-style-type: none;
+  width: 80%;
+  height: 100px;
+  transition: 0.5s;
+  display: flex;
+  align-items:center;
+  padding: 20px;
+  border-radius: 20px;
+}
+.liste:hover{
+  background-color: var(--couleur-gris-moyen_clair);
+}
+
+.tag{
+  padding-left: 10px;
+  padding-right: 10px;
+  height: 30px;
+  display: flex;
+  align-items:center;
+  justify-content:center;
+  color: var(--couleur-police-clair);
+  font-weight: bold;
+  position: relative;
+  left: 75%;
+  cursor: pointer;
+  transition: 0.5s;
+}
+.tag:hover{
+  
+}
+.menu_roles{
+  background-color: var(--couleur-fond-clair);
+  border-radius: 20px;
+  list-style-type: none;
+  transition: 0.5s;
+  overflow: hidden;
+  left: 0px;
+  padding-left: 0px;
+  border: 1px solid var(--couleur-fond-fonce);
+}
+.menu_roles>li{
+  padding: 10px;
+  margin-left: 0px;
+  
+}
+.menu_roles>li:hover{
+  background-color: var(--couleur-fond-fonce);
+  color: var(--couleur-police-clair);
+  cursor: pointer;
+  
+}
