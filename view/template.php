@@ -52,7 +52,7 @@ header('Cache-Control: private',true);
 }
 
 #boutonlogo3 {
-    max-width: 15%; /* Vous pouvez ajuster le pourcentage selon la taille souhaitée */
+    max-width: 13%; /* Vous pouvez ajuster le pourcentage selon la taille souhaitée */
     height: auto; /* Cela maintiendra les proportions de l'image */
 }
 
