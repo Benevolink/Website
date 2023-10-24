@@ -5,7 +5,7 @@ if(file_exists(__DIR__.'/../../eds-www')){
     $path_html = '';
     
 }
-$path = $path_html.'/';
+$path = __DIR__.'/';
 //On importe la BDD
 require_once __DIR__."/db.php";
 //Importation de la bibliothèque BF

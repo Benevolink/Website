@@ -100,7 +100,8 @@ class BF{
             while(BF::equals(mb_substr($string,0,1),'/') || BF::equals(mb_substr($string,0,1),'.')){
                 $string = mb_substr($string,1);
             }
-            $value = $path.'/'.$string;
+            //Débarassage des //
+            $value = implode('/',explode('//',$path.'/'.$string));
             if(file_exists($value)){
                 return $value;
             }
