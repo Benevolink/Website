@@ -163,7 +163,7 @@ class BF{
      * @param boolean $fetch_one true si on execute fetch() à la place de fetchAll()
      * @param PDO::FETCH_MODE $pdo_fetch_mode le mode du fetch.
      * 
-     * @return boolean (ou array si le mode fetch est activé)
+     * @return mixed (ou array si le mode fetch est activé)
      * 
      * @throws false
      */
