@@ -34,9 +34,8 @@ if(isset($_POST['domaines'])){
   $req_events_domaines_2->execute([$id_domaine]);
   $events_domaines = $req_events_domaines_2->fetch(PDO::FETCH_ASSOC);
   for($i = 0; $i < count($events); $i++){
-    if(not($events[i]["id_asso"], $events_domaines["id_asso"]){
+    if(not($events[i]["id_asso"], $events_domaines["id_asso"])){
        unset($event[i]);
-    }
     }
 }
 

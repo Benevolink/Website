@@ -9,5 +9,7 @@ class Auth{
       return true;
     }
     return false;
+  }
 }
-?>
+
+  ?>
