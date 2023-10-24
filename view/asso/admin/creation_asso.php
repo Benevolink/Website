@@ -195,19 +195,7 @@
                   Domaines souhaités </label>
                 <p>
                   <?php
-                  // Récupérez les domaines depuis la table "domaine"
-                  $query = "SELECT id_domaine, nom_domaine FROM domaine";
-                  $domaines = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
-
-                  if (!empty($domaines)) {
-                      foreach ($domaines as $domaine) {
-                          $id_domaine = $domaine['id_domaine'];
-                          $nom_domaine = $domaine['nom_domaine'];
-                          echo '<label><input type="checkbox" name="domaine[]" value="' . $id_domaine . '">' . $nom_domaine . '</label><br>';
-                      }
-                  } else {
-                      echo "Aucun domaine n'a été trouvé dans la base de données.";
-                  }
+                  
                   ?>
                 </p>
                
