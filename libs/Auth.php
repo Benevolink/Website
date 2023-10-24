@@ -22,4 +22,5 @@ class Auth{
     return false;
   }
 }
-?>
+
+  ?>

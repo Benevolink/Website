@@ -172,7 +172,6 @@ VALUES
 	('Mercredi', '13:00', '17:00')";
 $req = $db->exec($req);
 
-}
 ?>
 
 

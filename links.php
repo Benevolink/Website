@@ -2,7 +2,7 @@
 if(file_exists(__DIR__.'/../../eds-www')){
     $path_html = '/Website';
 }else{
-    $path_html = '/';
+    $path_html = '';
     
 }
 $path = $path_html.'/';
