@@ -81,7 +81,7 @@ class User{
     On renvoie le logo de l'utilisateur
     */
     
-    $req_filename = "SELECT logo FROM users WHERE id_user=? ";//on vérifie que le nom n'est pas déjà pris
+    $req_filename = "SELECT logo FROM users WHERE id=? ";//on vérifie que le nom n'est pas déjà pris
     $filename_tab = BF::request($req_filename,[$this->id],true,true,PDO::FETCH_ASSOC);
     if(isset($filename_tab["logo"])){
        $filename = "media/img/".$filename_tab["logo"];

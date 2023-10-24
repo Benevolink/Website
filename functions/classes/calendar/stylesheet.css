@@ -10,11 +10,10 @@
     gap: 0px;
     grid-template-columns: repeat(7,1fr);
     grid-template-rows: repeat(6,1fr);
-  
 }
 .calendar_jour {
-  height: 100px;
-  width: 150px;
+  min-height: 100px;
+  min-width: 150px;
   background-color: white;
 }
 
