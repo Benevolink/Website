@@ -74,6 +74,7 @@ class BF{
             if($x1 === $x2){
                 return $x1 == $x2;
             }
+            return false;
         }catch(Exception $e){
             return false;
         }
