@@ -109,41 +109,6 @@
 
 
 
-<form enctype="multipart/form-data" action="creation_asso_sql.php" method="post">
-    <p id="nom_asso">Nom de l'association : <input type="text" name="nom" data-toggle="tooltip" data-placement="right" title="Champs obligatoire" /></p>
-
-  
-  <textarea data-toggle="tooltip" data-placement="right" title="Champs obligatoire">Nom de l'association</textarea>
-
-
-  
-    <p>Description : </p><textarea name="desc" style="width: 400px; height: 200px;"></textarea>
-    <p>Domaine(s) :
-    <?php
-    // Récupérez les domaines depuis la table "domaine"
-    $query = "SELECT id_domaine, nom_domaine FROM domaine";
-    $domaines = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
-
-    if (!empty($domaines)) {
-        foreach ($domaines as $domaine) {
-            $id_domaine = $domaine['id_domaine'];
-            $nom_domaine = $domaine['nom_domaine'];
-            echo '<label><input type="checkbox" name="domaine[]" value="' . $id_domaine . '">' . $nom_domaine . '</label><br>';
-        }
-    } else {
-        echo "Aucun domaine n'a été trouvé dans la base de données.";
-    }
-    ?>
-    </p>
-    <p>Types de missions proposées : </p><textarea name="desc_missions" style="width: 400px; height: 200px;"></textarea>
-    <p>Votre localisation : <input type="text" name="adresse" required /></p>
-    <p>Email de l'association : <input type="text" name="email" required /></p>
-    <p>Téléphone : <input type="text" name="tel" /></p>
-    <p>Votre logo : <input name="uploadedfile" type="file" />
-                  <input type="hidden" name="uploadedfile" ></p>
-    <p><input type="submit" value="Valider"></p>
-</form>
-
 
 
   <div class="modal fade" tabindex="-1" role="dialog">
@@ -188,17 +153,17 @@
           <h2>Entrez les informations principales de votre association :</h2>
           <form>
               <div class="form-group">
-                  <label for="nomAssociation"> <span class="glyphicon glyphicon-text-background" aria-hidden="true"></span> Nom de l'association :</label>
-                  <input type="text" class="form-control" id="nomAssociation" name="nomAssociation" placeholder="Entrez le nom de votre association">
+                  <label for="nomAssociation" enctype="multipart/form-data" action="creation_asso_sql.php" method="post"  > <span class="glyphicon glyphicon-text-background" aria-hidden="true"></span> Nom de l'association :</label>
+                  <input data-toggle="tooltip" data-placement="right" title="Champs obligatoire" type="text" class="form-control" id="nomAssociation" name="nomAssociation" placeholder="Entrez le nom de votre association">
               </div>
               <div class="form-group">
                   <label for="descriptionAssociation"> <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span> Description de l'association :</label>
-                  <textarea class="form-control" id="descriptionAssociation" name="descriptionAssociation" placeholder="Entrez la description de votre association"></textarea>
+                  <textarea data-toggle="tooltip" data-placement="right" title="Champs obligatoire" class="form-control" id="descriptionAssociation" name="descriptionAssociation" placeholder="Entrez la description de votre association"></textarea>
               </div>
             <div class="form-group">
               <label for="localisation">Votre localisation :</label>
               <div class="input-group">
-                <input type="text" class="form-control" id="localisation" name="localisation" placeholder="Entrez votre localisation" required>
+                <input data-toggle="tooltip" data-placement="right" title="Champs obligatoire" type="text" class="form-control" id="localisation" name="localisation" placeholder="Entrez votre localisation" required>
                 <span class="input-group-addon">
                   <i class="glyphicon glyphicon-map-marker"></i> <!-- Icône de marqueur de carte -->
                 </span>
