@@ -135,7 +135,7 @@ function create_tab_domains(){
   ?>
   <div id=tab_domaines>
     <div>
-      <input placeholder="intérêt à ajouter"/>
+      <input style="color : blue;"placeholder="intérêt à ajouter"/>
       <button onclick="manage_interest('new', this.parentElement.childNodes[1].value, '')">add</button>
     </div>
   
