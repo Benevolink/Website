@@ -195,7 +195,7 @@
                   Domaines souhaités </label>
                 <p>
                   <?php
-                  
+                    show_all_domaines();
                   ?>
                 </p>
                
