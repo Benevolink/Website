@@ -2,25 +2,52 @@
 require_once __DIR__."/../functions/basic_functions.php";
 require_once BF::abs_path("db.php",true);
 
-class image {
-    private $image;
-    private $emplacement
-    public function __construct($i,$em){
-        $this->image=$i;
-        $this->emplacement=$em;
-    }
+class Image {
 
-    public function getNom(){
-        return $this->image;
-    }
-    public function getEmplacement(){
-        return $this->emplacement;
-    }
+    public static function getImage(){}
+    
 
+  
 
-    public function placer_image($image,$table,$chemin){
+    
+    /**
+     * Method placer_image
+     *
+     * @param $image $image [explicite description]
+     * @param $table $table [explicite description]
+     * @param $chemin $chemin [explicite description]
+     *
+     * Permet de rentrer de manière sécurisée un image dans la base de donnée 
+     * @return void
+     */
+    public static function placer_image($image,$table,$chemin){
         $unique = 0;
         $ext = pathinfo($image, PATHINFO_EXTENSION);
+        
+        //Début vérification qu'il s'agit d'un bon format
+       
+        //Vérifier l'extension
+        $allowed_extensions = array('jpg', 'jpeg', 'png', 'gif');
+        $nom_image=$_FILES['uploadedfile']['name'];
+        $extension = pathinfo($nom_image, PATHINFO_EXTENSION);
+        
+        if (!in_array($extension, $allowed_extensions)) {
+            
+            return 1; // changer en echo ?
+            }
+            //Vérifier qu'il n'y a pas de points dans le nom de l'image
+            
+        for ($i=0; $i<strlen($nom_image)-5; $i++) {
+              
+            if ($nom_image[$i]==".") {
+            return 2; //changer en echo ?
+            }
+        }
+      //Si pas de return le format est le bon        
+
+        //Fin vérification qu'il s'agit d'un bon format
+
+
         while($unique!=1){
             $image_name = uniqid();
 
@@ -46,7 +73,7 @@ class image {
         rename($destinationPath, $path.$newDestinationPath);
         //UPDATE le chemin vers l'image dans la BDD
         BF::request("UPDATE assos SET logo = ? WHERE id = ?",[$newDestinationPath,$id]);
-        //Créer l'objet id avec l'image et le lien
+        
  
   
   
