@@ -31,10 +31,10 @@ class Domaine{
     /**
      * Renvoie toutes les infos des domaines
      *
-     * @return void
+     * @return array
      */
     public static function get_all(){
-        $array = BF::request("SELECT * FROM domaine",[],true,false,PDO::FETCH_ASSOC);
+        return BF::request("SELECT * FROM domaine",[],true,false,PDO::FETCH_ASSOC);
     }
     
     /**
