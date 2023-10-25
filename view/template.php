@@ -13,6 +13,7 @@ header('Cache-Control: private',true);
   <script src="<?= BF::abs_path("JS/jquery.js")?>"></script>
   <?php include __DIR__."/../JS/abs_path.php";?>
   <script src="<?= BF::abs_path("JS/main.js")?>"></script>
+  <?php require_once BF::abs_path("JS/abs_path.php",true); ?>
   
 </head>
 <header>

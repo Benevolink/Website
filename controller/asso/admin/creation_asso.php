@@ -2,6 +2,7 @@
 $a_jour = true;
 $file_name = "asso/admin/".basename(__FILE__);
 require_once "links.php";
+ob_start();
 BF::sess_start();
 if(BF::is_connected()){ //Si l'utilisateur est connecté
 
@@ -9,9 +10,9 @@ if(BF::is_connected()){ //Si l'utilisateur est connecté
     require_once BF::abs_path("model/".$file_name,true);
 
     require_once BF::abs_path("view/".$file_name,true);
+    BF::afficher_template(ob_get_clean());
+
 }else{//Sinon on le redirige
-    header("Location: ".BF::abs_path("",true));
-    //On n'oublie pas d'exit !
-    exit();
+    BF::go_home();
 }
 ?>

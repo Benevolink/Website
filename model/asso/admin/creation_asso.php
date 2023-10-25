@@ -1,5 +1,5 @@
 <?php
-require_once BF::abs_path("libs/Domaine.php");
+require_once BF::abs_path("libs/Domaine.php",true);
 
 function show_all_domaines(){
     $domaines = Domaine::get_all();
@@ -9,7 +9,7 @@ function show_all_domaines(){
             $nom_domaine = $domaine['nom_domaine'];
             ?><label>
                 <input type="checkbox" name="domaine[]" value="<?=$id_domaine?>"> <?=$nom_domaine?> </label><br>
-            <?
+            <?php
         }
     } else {
         echo "Aucun domaine n'a été trouvé dans la base de données.";

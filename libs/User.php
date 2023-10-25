@@ -1,10 +1,11 @@
 <?php
 require_once __DIR__."/../functions/basic_functions.php";
 require_once BF::abs_path("db.php",true);
+/**
+ * Abstraction table users
+ */
 class User{
-  /*
-  Abstraction utilisateurs
-  */
+  
   public $id;  
   /**
    * Method __construct
@@ -182,6 +183,7 @@ class User{
     /*
     Renvoie la liste d'évènements d'une association
     */
+    $id_domaine = null;
       $id_asso = BF::request("SELECT id_asso FROM evenements WHERE id_event = ?", [$id_event], true, true)[0];
       $id_domaine = BF::request("SELECT id_domaine FROM domaine WHERE nom_domaine = ?", [$id_domaine], true, true)[0];
       $id_association_domaine = BF::request("SELECT id_asso FROM evenements WHERE id_domaine = ?", [$id_domaine], true, true)[0];
@@ -239,7 +241,7 @@ class User{
   /**
    * Renvoie toutes les infos dans la table user de l'utilisateur
    *
-   * @return void
+   * @return array
    */
   public function all_infos(){
     return BF::request("SELECT * FROM users WHERE id = ?",[$this->id],true,true,PDO::FETCH_ASSOC);
