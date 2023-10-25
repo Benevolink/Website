@@ -10,7 +10,7 @@ class Asso{
    *
    * @var int
    */
-  public $id;  
+  public $id;
   /**
    * Constructeur
    *
@@ -62,7 +62,7 @@ class Asso{
    * @param string $searchQuery $searchQuery [explicite description]
    *
    * @return array
-   */
+   */  
   public function recherche_asso($searchQuery) {
     $searchQuery = "%" . $searchQuery . "%";
     return BF::request("SELECT id, nom FROM assos WHERE nom LIKE ?", [$searchQuery], true, false, PDO::FETCH_ASSOC);
@@ -95,85 +95,6 @@ class Asso{
     );
   }
 
-  public static function insert_asso(){
-    global $db;
-    try{
-      // On se connecte à la BDD
-      $db->beginTransaction();
-      // On insère les données reçues dans la table "assos"
-      $sth = $db->prepare("INSERT INTO assos (nom, desc, desc_missions, email, tel, logo) VALUES(:nom, :desc, :desc_missions, :email, :tel, :logo)");
-      $sth->bindParam(':nom', $association);
-      $sth->bindParam(':desc', $description);
-      $sth->bindParam(':desc_missions', $description_missions);
-      $sth->bindParam(':email', $email);
-      $sth->bindParam(':tel', $telephone);
-      $sth->bindParam(':logo', $logo);
-      $sth->execute();
-    
-      // Récupérer l'ID de l'association qui vient d'être créée
-      
-      $id = $db->lastInsertId();
-      $db->commit();
 
-      // on récupère les domaines sélectionnés
-      $domainesSelectionnes = $_POST["domaine"];
-  
-      // on insère les domaines sélectionnés dans la table "domaine_jonction"
-      $query = "INSERT INTO domaine_jonction (id_domaine, id_jonction,type) VALUES (?, ?, 1)";
-      $stmt = $db->prepare($query);
-  
-      foreach ($domainesSelectionnes as $idDomaine) {
-          $stmt->execute([$idDomaine, $id]);
-      }
-    
-      // on récupère l'adresse de l'asso
-      $adresse = $_POST["adresse"];
-
-      // Insérer l'adresse dans la table "lieu"
-      $sth = $db->prepare("INSERT INTO lieu (adresse) VALUES(:adresse)");
-      $sth->bindParam(':adresse', $adresse);
-      $sth->execute();
-      
-      // Récupérer l'ID de l'adresse qui vient d'être créée
-      $id_lieu = $db->lastInsertId();
-      
-      // Mettre à jour l'ID de l'adresse dans la table "assos"
-      $sth = $db->prepare("UPDATE assos SET id_lieu = :id_lieu WHERE id = :id");
-      $sth->bindParam(':id_lieu', $id_lieu);
-      $sth->bindParam(':id', $id);
-      $sth->execute();
-    
-      //Mettre l'image dans le fichier logo/asso/
-      $destinationPath = $path."media/logo/asso/".basename($_FILES['uploadedfile']['name']); 
-      $fileNameParts = explode('.',basename($_FILES['uploadedfile']['name']));
-      $ext = end($fileNameParts);
-      array_map('unlink', glob($path."media/logo/asso/".$id.".*")); //On supprime les fichiers résiduels
-      if(move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $destinationPath)) {
-        echo "Le fichier ".  basename( $_FILES['uploadedfile']['name'])." a bien été téléversé";
-      } else{
-        echo "Il y a eu une erreur pour poster le fichier, réessayez.";
-      }
-      $newDestinationPath = "media/logo/asso/".$id.".".$ext;
-      rename($destinationPath, $path.$newDestinationPath);
-    
-      //UPDATE le chemin vers l'image dans la BDD
-   
-      BF::request("UPDATE assos SET logo = ? WHERE id = ?",[$newDestinationPath,$id]);
-    
-      // Récupérer l'ID de l'utilisateur qui a créé l'association
-      $id_utilisateur = $_SESSION["user_id"];
-      // Mettre à jour le statut de l'utilisateur en "admin" pour l'association qu'il a créée      
-      BF::request("INSERT INTO membres_assos (id_user, id_asso, statut) VALUES (?, ?, 3)",[$id_utilisateur,$id]);
-      
-    
-      
-      //On renvoie l'utilisateur vers la page de remerciement
-      header('Location:'+BF::abs_path('controller/static/form-merci.php'));
-      exit(0);
-    }
-    catch(PDOException $e){
-        echo 'Impossible de traiter les données. Erreur : '.$e->getMessage();
-    }
-  }
 }
 ?>
