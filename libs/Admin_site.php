@@ -106,7 +106,7 @@ class Admin_site{
     */
     $user_del = BF::request("UPDATE users SET account_status = 9 WHERE id = ?", [$id]);
     $user_del2 = BF::request("DELETE FROM signalements WHERE id_cible = ?", [$id]);
-    if(this.existence_in_association($id)){
+    if(Admin_site::existence_in_association($id)){
       $user_del3 = BF::request("DELETE FROM membres_assos WHERE id_user = ?", [$id]);
     }
     return 1;
@@ -116,8 +116,8 @@ class Admin_site{
     /*
     unbans a banned person
     */
-    $user_del = BF::request("UPDATE users SET account_status = 0 WHERE id = ?", [$person]);
-    return 1;
+    $user_del = BF::request("UPDATE users SET account_status = 0 WHERE id = ?", [$id]);
+    return $user_del;
   }
 
   /*SET DOMAIN*/
