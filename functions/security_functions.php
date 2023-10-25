@@ -22,6 +22,7 @@ function secure_image($image) {
 }
 
 //Donner un nom aléatoire à une image. Il faut donc créer un nom aléatoire composé de caractère de tout types lettres, chiffres, caractères spéciaux...
+//La fontion est déjà donnée l'image
 function secure_image_name($image,$table,$chemin) {
   //modèle fait pour la table user. La modifier avant de la mettre dans les autres
   $unique = 0;
