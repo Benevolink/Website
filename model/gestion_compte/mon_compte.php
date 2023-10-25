@@ -1,5 +1,10 @@
 <?php
 require_once BF::abs_path("libs/User.php",true);
+/**
+ * Method afficher_infos_1
+ *
+ * @return void
+ */
 function afficher_infos_1(){
   global $table;
   ?>
@@ -12,6 +17,11 @@ function afficher_infos_1(){
   <?php
 }
 
+/**
+ * Method afficher_infos_2
+ *
+ * @return void
+ */
 function afficher_infos_2(){
   global $table;
   global $user;

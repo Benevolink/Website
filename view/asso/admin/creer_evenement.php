@@ -2,7 +2,7 @@
 include $path."/media/data/phpliteadmin.config.sample.php";
 include $path."/media/data/categories_event.php";
 
-if ($_SERVER["REQUEST_METHOD"] === "POST" && BF::is_connected() && BF::is_posted('id_asso') && BF::is_admin($_SESSION["user_id"], $_GET['id_asso'])) {
+if($_SERVER["REQUEST_METHOD"] === "POST" && BF::is_connected() && BF::is_posted('id_asso') && BF::is_admin($_SESSION["user_id"], $_GET['id_asso'])) {
     try {
         // On vérifie qu'on s'est bien connecté à la BDD
         $db->beginTransaction();

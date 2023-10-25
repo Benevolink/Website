@@ -10,7 +10,7 @@ class Asso{
    *
    * @var int
    */
-  public $id;  
+  public $id;
   /**
    * Constructeur
    *
@@ -62,7 +62,7 @@ class Asso{
    * @param string $searchQuery $searchQuery [explicite description]
    *
    * @return array
-   */
+   */  
   public function recherche_asso($searchQuery) {
     $searchQuery = "%" . $searchQuery . "%";
     return BF::request("SELECT id, nom FROM assos WHERE nom LIKE ?", [$searchQuery], true, false, PDO::FETCH_ASSOC);
@@ -94,5 +94,6 @@ class Asso{
         'membres_count' => $membresCount
     );
   }
+
 }
 ?>
