@@ -101,6 +101,7 @@ class User{
   }
 
   public static function insert_user($nom,$prenom,$date_naissance,$email,$mdp,$tel,$visu,$departement,$adresse){
+    global $db;
     /*
     Permet de créer un utilisateur
     */
@@ -112,7 +113,7 @@ class User{
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     BF::request($insertUserQuery,[$nom,$prenom,$date_naissance,$email,$mdp,$tel,$visu,$id_lieu,false],false);
     $id_user = $db->lastInsertId();
-    return user::user($id_user);
+    return new User($id_user);
   }
 
   public function rejoindre_asso($id_asso){
@@ -222,6 +223,7 @@ class User{
   }
 
   public function creer_evenement($date_debut, $date_fin, $heure_debut, $heure_fin, $id_asso, $nom_event, $nb_personnes, $visu, $desc, $departement, $adresse) {
+      global $db;
       /*
       permet de créer un évènement
       */
@@ -245,9 +247,14 @@ class User{
   }
 
   
-
-  public function nombre_users() {
-      // Compter le nombre d'utilisateurs
+  
+  /**
+   * Renvoie le nombre total d'utilisateurs
+   *
+   * @return int
+   */
+  public static function nombre_users() {
+      
       $usersCount = BF::request("SELECT COUNT(*) FROM users", [], true, true)[0];
 
       return $usersCount;
@@ -284,6 +291,6 @@ class User{
   }
 
   
-
+  
 }
 ?>

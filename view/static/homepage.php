@@ -55,7 +55,7 @@
   
   <div id="index_compteur">
     <span class="glyphicon glyphicon-heart-empty"> </span>
-    <?= BF::request("SELECT COUNT(*) FROM users",[],true)[0][0]." ";?>utilisateurs nous ont déjà rejoint
+    <?= nb_utilisateurs() ?>utilisateurs nous ont déjà rejoint
   </div>
 </div>
 
