@@ -258,5 +258,18 @@ class User{
 
       return $usersCount;
   }
+  
+  /**
+   * Renvoie les infos des évènements dans lesquels est l'utilisateur sous forme d'une array
+   * 
+   * Les indexes de l'array sont: id_event, nom_event, date_debut, date_fin, nom, id
+   * 
+   * où nom et id concernent l'asso de l'event
+   *
+   * @return array
+   */
+  public function infos_events(){
+    return BF::request("SELECT e.id_event, e.nom_event, ho.date_debut, ho.date_fin, a.nom, a.id FROM (((evenements e JOIN assos a ON e.id_asso = a.id) JOIN  membres_evenements me ON me.id_event = e.id_event )JOIN horaire ho ON ho.id_horaire = e.id_horaire) WHERE me.id_user = ?",[$this->id],true,false,PDO::FETCH_ASSOC);
+  }
 }
 ?>

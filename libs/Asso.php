@@ -94,7 +94,19 @@ class Asso{
         'membres_count' => $membresCount
     );
   }
-
+  
+  /**
+   * Renvoie des infos sur les events (heure début/fin) + des infos sur l'asso
+   * 
+   * Concrètement, renvoie une array avec les champs id_event, nom_event, date_debut, date_fin, nom, id
+   * 
+   * Où nom et id concernent l'asso
+   *
+   * @return array
+   */
+  public function get_infos_events(){
+    return BF::request("SELECT e.id_event, e.nom_event, ho.date_debut, ho.date_fin, a.nom, a.id FROM ((evenements e JOIN assos a ON e.id_asso = a.id) JOIN horaire ho ON e.id_horaire = ho.id_horaire) WHERE a.id = ?",[$this->id],true,false,PDO::FETCH_ASSOC);
+  }
 
 }
 ?>
