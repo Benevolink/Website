@@ -241,7 +241,7 @@ class User{
   /**
    * Renvoie toutes les infos dans la table user de l'utilisateur
    *
-   * @return void
+   * @return array
    */
   public function all_infos(){
     return BF::request("SELECT * FROM users WHERE id = ?",[$this->id],true,true,PDO::FETCH_ASSOC);
