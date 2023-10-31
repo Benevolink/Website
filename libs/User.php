@@ -1,11 +1,13 @@
 <?php
 require_once __DIR__."/../functions/basic_functions.php";
 require_once BF::abs_path("db.php",true);
+require_once __DIR__."/noms_tables.php";
+use AttributsTables as A;
+
 /**
  * Abstraction table users
  */
 class User{
-  
   public $id;  
   /**
    * Method __construct
@@ -29,7 +31,7 @@ class User{
    * @return void
    */
   public function suppr_user(){
-    BF::request("DELETE FROM users WHERE id = ?",[$this->id]);
+    BF::request("DELETE FROM ".A::USER." WHERE ".A::USER_ID." = ?",[$this->id]);
   }
   
   /**
@@ -40,7 +42,7 @@ class User{
    * @return int
    */
   public function statut_asso($id_asso){
-    $statut = BF::request("SELECT statut FROM membres_assos WHERE id_user = ? AND id_asso = ?",[$this->id,$id_asso],true,true);
+    $statut = BF::request("SELECT ".A::MEMBRESASSOS_STATUT." FROM ".A::MEMBRESASSOS." WHERE ".A::MEMBRESASSOS_ID_USER." = ? AND ".A::MEMBRESASSOS_ID_ASSO." = ?",[$this->id,$id_asso],true,true);
     return $statut;
   }
   
@@ -82,7 +84,7 @@ class User{
    * @return void
    */
   public function quitter_asso($id_asso){
-    BF::request("DELETE FROM membres_assos WHERE id_user = ?",[$this->id]);
+    BF::request("DELETE FROM ".A::MEMBRESASSOS." WHERE ".A::MEMBRESASSOS_ID_USER." = ?",[$this->id]);
   }
   
   /**
@@ -96,7 +98,7 @@ class User{
     /*
     On renvoie la liste de toutes les assos de l'utilisateur avec le statut
     */
-    $req = "SELECT a.*, m.statut FROM assos a JOIN membres_assos m ON (a.id = m.id_asso AND m.id_user = ? AND m.statut >= 0) ORDER BY m.statut ASC";
+    $req = "SELECT a.*, m.".A::MEMBRESASSOS_STATUT." FROM ".A::ASSO." a JOIN ".A::MEMBRESASSOS." m ON (a.".A::ASSO_ID." = m.".A::MEMBRESASSOS_ID_ASSO." AND m.".A::MEMBRESASSOS_ID_USER." = ? AND m.".A::MEMBRESASSOS_STATUT." >= 0) ORDER BY m.".A::MEMBRESASSOS_STATUT." ASC";
     $table = BF::request($req,[$this->id],true,false,PDO::FETCH_ASSOC);
     return $table;
   }
@@ -107,7 +109,7 @@ class User{
    * @return array
    */
   public function liste_missions(){
-    $array = BF::request("SELECT e.id_event, e.nom_event, ho.date_debut, ho.date_fin, a.nom, a.id FROM (((evenements e JOIN assos a ON e.id_asso = a.id) JOIN  membres_evenements me ON me.id_event = e.id_event )JOIN horaire ho ON ho.id_horaire = e.id_horaire) WHERE me.id_user = ?",[$this->id],true,false,PDO::FETCH_ASSOC);
+    $array = BF::request("SELECT e.".A::EVENT_ID.", e.".A::EVENT_NOM.", ho.".A::HORAIRE_DATE_DEBUT.", ho.".A::HORAIRE_DATE_FIN.", a.".A::ASSO_NOM.", a.".A::ASSO_ID." FROM (((".A::EVENT." e JOIN ".A::ASSO." a ON e.".A::EVENT_ID_ASSO." = a.".A::ASSO_ID.") JOIN  ".A::MEMBRESEVENTS." me ON me.".A::MEMBRESEVENTS_ID_EVENT." = e.".A::EVENT_ID." )JOIN ".A::HORAIRE." ho ON ho.".A::HORAIRE_ID." = e.".A::EVENT_ID_HORAIRE.") WHERE me.".A::MEMBRESEVENTS_ID_USER." = ?",[$this->id],true,false,PDO::FETCH_ASSOC);
     return $array;
   }
   
@@ -118,7 +120,7 @@ class User{
    */
   public function logo(){
     
-    $req_filename = "SELECT logo FROM users WHERE id=? ";//on vérifie que le nom n'est pas déjà pris
+    $req_filename = "SELECT ".A::USER_LOGO." FROM ".A::USER." WHERE ".A::USER_ID."=? ";//on vérifie que le nom n'est pas déjà pris
     $filename_tab = BF::request($req_filename,[$this->id],true,true,PDO::FETCH_ASSOC);
     if(isset($filename_tab["logo"])){
        $filename = "media/img/".$filename_tab["logo"];
@@ -149,12 +151,12 @@ class User{
     Permet de créer un utilisateur
     */
     //On insère d'abord le lieu
-    BF::request("INSERT INTO lieu (departement, adresse) VALUES (?, ?)",[$departement,$adresse]);
+    BF::request("INSERT INTO ".A::LIEU." (".A::LIEU_DEPARTEMENT.", ".A::LIEU_ADRESSE.") VALUES (?, ?)",[$departement,$adresse]);
     $id_lieu = $db->lastInsertId();
     //On insère l'utilisateur
-    $insertUserQuery = "INSERT INTO users (nom, prenom, date_de_naissance, email, mdp, tel, visu, id_lieu, est_bloque)
+    $insertUserQuery = "INSERT INTO ".A::USER." (".A::USER_NOM.", ".A::USER_PRENOM.", ".A::USER_DATE_NAISSANCE.", ".A::USER_EMAIL.", ".A::USER_MDP.", ".A::USER_TEL.", ".A::USER_VISIBILITE.", ".A::USER_ID_LIEU.", ".A::USER_ETAT_COMPTE.")
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    BF::request($insertUserQuery,[$nom,$prenom,$date_naissance,$email,$mdp,$tel,$visu,$id_lieu,false],false);
+    BF::request($insertUserQuery,[$nom,$prenom,$date_naissance,$email,$mdp,$tel,$visu,$id_lieu,0],false);
     $id_user = $db->lastInsertId();
     return new User($id_user);
   }
@@ -167,7 +169,7 @@ class User{
    * @return void
    */
   public function rejoindre_asso($id_asso){
-    $req = "INSERT INTO membres_assos (id_asso,id_user,statut) VALUES (? , ?, ?)";
+    $req = "INSERT INTO ".A::MEMBRESASSOS." (".A::MEMBRESASSOS_ID_ASSO.",".A::MEMBRESASSOS_ID_USER.",".A::MEMBRESASSOS_STATUT.") VALUES (? , ?, ?)";
     BF::request($req,[$id_asso,$this->id,0],false);
   }
   
@@ -184,9 +186,11 @@ class User{
     Renvoie la liste d'évènements d'une association
     */
     $id_domaine = null;
-      $id_asso = BF::request("SELECT id_asso FROM evenements WHERE id_event = ?", [$id_event], true, true)[0];
-      $id_domaine = BF::request("SELECT id_domaine FROM domaine WHERE nom_domaine = ?", [$id_domaine], true, true)[0];
-      $id_association_domaine = BF::request("SELECT id_asso FROM evenements WHERE id_domaine = ?", [$id_domaine], true, true)[0];
+      $id_asso = BF::request("SELECT ".A::EVENT_ID_ASSO." FROM ".A::EVENT." WHERE ".A::EVENT_ID." = ?", [$id_event], true, true)[0];
+      $id_domaine = BF::request("SELECT ".A::DOMAINE_ID." FROM ".A::DOMAINE." WHERE ".A::DOMAINE_NOM." = ?", [$id_domaine], true, true)[0];
+
+      //Erreur ici
+      $id_association_domaine = BF::request("SELECT ".A::EVENT_ID_ASSO." FROM ".A::EVENT." WHERE ".A::EVENT_ID_DOMAINE." = ?", [$id_domaine], true, true)[0];
 
       return array(
           'id_asso' => $id_asso,
@@ -204,7 +208,7 @@ class User{
   public function events_user()
   {
       
-      $req = "SELECT id_event FROM evenements e WHERE e.visu = 'publique' OR (SELECT COUNT(*) FROM membres_assos m WHERE m.id_asso = e.id_assos AND m.id_user = ?) = 1";
+      $req = "SELECT ".A::EVENT_ID." FROM ".A::EVENT." e WHERE e.".A::EVENT_VISIBILITE." = 'publique' OR (SELECT COUNT(*) FROM ".A::MEMBRESASSOS." m WHERE m.".A::MEMBRESASSOS_ID_ASSO." = e.".A::EVENT_ID_ASSO." AND m.".A::MEMBRESASSOS_ID_USER." = ?) = 1";
       $id_events = BF::request($req, [$this->id], true, false, PDO::FETCH_ASSOC);
       $array = array();
       require_once "Event.php"; //Importation de la classe Event
@@ -225,13 +229,13 @@ class User{
    */
   public function asso_changer_role($id_asso, $new_statut)
   {
-      $current_statut = BF::request("SELECT statut FROM membres_assos WHERE id_asso = ? AND id_user = ?", [$id_asso, $this->id], true, true)[0];
+      $current_statut = BF::request("SELECT ".A::MEMBRESASSOS_STATUT." FROM ".A::MEMBRESASSOS." WHERE ".A::MEMBRESASSOS_ID_ASSO." = ? AND ".A::MEMBRESASSOS_ID_USER." = ?", [$id_asso, $this->id], true, true)[0];
 
       if ($current_statut !== null) {
-          BF::request("UPDATE membres_assos SET statut = ? WHERE id_asso = ? AND id_user = ?", [$new_statut, $id_asso, $this->id]);
+          BF::request("UPDATE ".A::MEMBRESASSOS." SET ".A::MEMBRESASSOS_STATUT." = ? WHERE ".A::MEMBRESASSOS_ID_ASSO." = ? AND ".A::MEMBRESASSOS_ID_USER." = ?", [$new_statut, $id_asso, $this->id]);
           return true;
       } else {
-          BF::request("INSERT INTO membres_assos (id_asso, id_user, statut) VALUES (?, ?, ?)", [$id_asso, $this->id, $new_statut], false);
+          BF::request("INSERT INTO ".A::MEMBRESASSOS." (".A::MEMBRESASSOS_ID_ASSO.", ".A::MEMBRESASSOS_ID_USER.", ".A::MEMBRESASSOS_STATUT.") VALUES (?, ?, ?)", [$id_asso, $this->id, $new_statut], false);
       }
     
       return false;
@@ -244,7 +248,7 @@ class User{
    * @return array
    */
   public function all_infos(){
-    return BF::request("SELECT * FROM users WHERE id = ?",[$this->id],true,true,PDO::FETCH_ASSOC);
+    return BF::request("SELECT * FROM ".A::USER." WHERE ".A::USER_ID." = ?",[$this->id],true,true,PDO::FETCH_ASSOC);
   }
   
   
@@ -254,7 +258,7 @@ class User{
    * @return int
    */
   public static function nombre_users() {
-      $usersCount = BF::request("SELECT COUNT(*) FROM users", [], true, true)[0];
+      $usersCount = BF::request("SELECT COUNT(*) FROM ".A::USER."", [], true, true)[0];
 
       return $usersCount;
   }
@@ -269,7 +273,7 @@ class User{
    * @return array
    */
   public function infos_events(){
-    return BF::request("SELECT e.id_event, e.nom_event, ho.date_debut, ho.date_fin, a.nom, a.id FROM (((evenements e JOIN assos a ON e.id_asso = a.id) JOIN  membres_evenements me ON me.id_event = e.id_event )JOIN horaire ho ON ho.id_horaire = e.id_horaire) WHERE me.id_user = ?",[$this->id],true,false,PDO::FETCH_ASSOC);
+    return BF::request("SELECT e.".A::EVENT_ID.", e.".A::EVENT_NOM.", ho.".A::HORAIRE_DATE_DEBUT.", ho.".A::HORAIRE_DATE_FIN.", a.".A::ASSO_NOM.", a.".A::ASSO_ID." FROM (((".A::EVENT." e JOIN ".A::ASSO." a ON e.".A::EVENT_ID_ASSO." = a.".A::ASSO_ID.") JOIN  ".A::MEMBRESEVENTS." me ON me.".A::MEMBRESEVENTS_ID_EVENT." = e.".A::EVENT_ID." )JOIN ".A::HORAIRE." ho ON ho.".A::HORAIRE_ID." = e.".A::EVENT_ID_HORAIRE.") WHERE me.".A::MEMBRESEVENTS_ID_USER." = ?",[$this->id],true,false,PDO::FETCH_ASSOC);
   }
 }
 ?>
