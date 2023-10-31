@@ -24,44 +24,14 @@ if(BF::is_posted("id_event")){
                 ?>
             <div class="event_a_droite">
                 <div class="event_infos">
-                    <div class="titre_rubrique_event">
-                        Date
-                    </div>
-                    De : <div style="float: right;"><img src="<?= BF::abs_path("media/img/calendar.png") ?>" style="width: 10px; display: inline-block;"> <?= date("Y/m/d  ",$infos["date_event_debut"]) ?><img src="<?= BF::abs_path("media/img/clock.png") ?>" style="height: 12px; display: inline-block;"><?= date(" H:i",$infos["date_event_debut"]) ?></div>
-                    <div style="clear:both;"></div>
-                    A : <div style="float: right;"><img src="<?= BF::abs_path("media/img/calendar.png") ?>" style="width: 10px; display: inline-block;"> <?= date("Y/m/d  ",$infos["date_event_fin"]) ?><img src="<?= BF::abs_path("media/img/clock.png") ?>" style="height: 12px; display: inline-block;"><?= date(" H:i",$infos["date_event_fin"]) ?></div>
-                    <div style="clear: both"></div>
+                    <?php afficher_dates(); ?>
                 </div>
                 <div class="desc">
                     <div class="titre_rubrique_event">
                         Informations
                     </div>
                     <?php 
-                        $frequence = "";
-                        $freq = BF::request($req, [$id_event,"freq"],true,true);
-                
-                        if(BF::equals($freq[0],"annu")? 1 : 0){
-                            $frequence = "Annuelle";
-                        }elseif(BF::equals($freq[0],"mens")? 1 : 0){
-                            $frequence = "Mensuelle";
-                        }
-                        elseif(BF::equals($freq[0],"hebd")? 1 : 0){
-                            $frequence = "Hebdomadaire";
-                        }
-                        elseif(BF::equals($freq[0],"quot")? 1 : 0){
-                            $frequence = "Quotidienne";
-                        }
-                        echo "Fréquence : ".$frequence."<br>";
-                        
-                        
-                        $vis = "";
-                        $visu = BF::request($req, [$id_event,"visu"],true,true);
-                
-                        if($visu[0]? 1 : 0){
-                            $vis = $visu[0];
-                        }
-                        
-                        echo " Visibilité : ".$vis;
+                        afficher_visu();
                         ?>
                         <img src="<?= BF::abs_path("media/img/eye.png") ?>" style="width: 13px; display: inline-block;">
                         

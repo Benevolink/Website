@@ -4,7 +4,7 @@ require_once BF::abs_path("db.php",true);
 
 class image {
     private $image;
-    private $emplacement
+    private $emplacement;
     public function __construct($i,$em){
         $this->image=$i;
         $this->emplacement=$em;
@@ -18,7 +18,12 @@ class image {
     }
 
 
+    /**
+     * Obsolète (mettre à jour avec des BF::request et utiliser noms_tables.php)
+     */
     public function placer_image($image,$table,$chemin){
+        global $path;
+        global $db;
         $unique = 0;
         $ext = pathinfo($image, PATHINFO_EXTENSION);
         while($unique!=1){
