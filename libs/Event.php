@@ -98,6 +98,16 @@ class Event{
     public function get_prop_evenement($propNom) {
         return BF::request("SELECT valeur FROM prop_evenements WHERE id_event = ? AND prop_nom = ?", [$this->id, $propNom], true, true)[0];
     }
+
+        
+    /**
+     * Renvoie toutes les infos de l'évènement associé
+     *
+     * @return array
+     */
+    public function all_infos(){
+        return BF::request("SELECT * FROM evenements WHERE id = ?",[$this->id],true,false,PDO::FETCH_ASSOC);
+    }
 }
 
 ?>
