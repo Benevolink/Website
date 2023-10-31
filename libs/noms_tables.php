@@ -111,9 +111,9 @@ interface AttributsPropAsso{
  */
 interface AttributsPropEvent{
     public const PROPEVENT = "prop_evenements";
-    public const PROPASSO_ID_EVENT = "id_event";
-    public const PROPASSO_NOM = "prop_nom";
-    public const PROPASSO_VALEUR = "valeur";
+    public const PROPEVENT_ID_EVENT = "id_event";
+    public const PROPEVENT_NOM = "prop_nom";
+    public const PROPEVENT_VALEUR = "valeur";
 }
 
 /**

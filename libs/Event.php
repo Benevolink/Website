@@ -1,6 +1,8 @@
 <?php
 require_once __DIR__."/../functions/basic_functions.php";
 require_once BF::abs_path("db.php",true);
+require_once __DIR__."/noms_tables.php";
+use AttributsTables as A;
 class Event{    
     
     /**
@@ -23,28 +25,26 @@ class Event{
 
     
     /**
-     * Method suppr_event
+     * Supprime l'évènement
      *
      * @return void
      */
     public function suppr_event()
     {
         $id_event = $this->id;
-        $id_asso = BF::request("SELECT id_asso FROM evenements WHERE id_event = ?", [$id_event], true, true)[0];
-        $statut = BF::request("SELECT statut FROM membres_assos WHERE id_user = ? AND id_asso = ?", [$this->id, $id_asso], true, true)[0];
-        $id_horaire = BF::request("SELECT id_horaire FROM evenements WHERE id_event = ?", [$id_event], true, true)[0];
+        $id_horaire = BF::request("SELECT ".A::EVENT_ID_HORAIRE." FROM ".A::EVENT." WHERE ".A::EVENT_ID." = ?", [$id_event], true, true)[0];
   
         // Supprimer l'horaire
-        BF::request("DELETE * FROM horaire WHERE id_horaire = ?", [$id_horaire]);
+        BF::request("DELETE * FROM ".A::HORAIRE." WHERE ".A::HORAIRE_ID." = ?", [$id_horaire]);
   
         // Supprimer l'événement
-        BF::request("DELETE * FROM event WHERE id_event = ?", [$id_event]);
+        BF::request("DELETE * FROM ".A::EVENT." WHERE ".A::EVENT_ID." = ?", [$id_event]);
   
         // Supprimer les membres de l'événement
-        BF::request("DELETE * FROM membres_evenements WHERE id_event = ?", [$id_event]);
+        BF::request("DELETE * FROM ".A::MEMBRESEVENTS." WHERE ".A::MEMBRESEVENTS_ID_EVENT." = ?", [$id_event]);
   
         // Supprimer les propositions d'événements
-        BF::request("DELETE * FROM prop_evenements WHERE id_event = ?", [$id_event]);
+        BF::request("DELETE * FROM ".A::PROPEVENT." WHERE ".A::PROPEVENT_ID_EVENT." = ?", [$id_event]);
     }
     
     /**
@@ -71,16 +71,16 @@ class Event{
         */
       
         //On insère d'abord le lieu
-        BF::request("INSERT INTO lieu (departement, adresse) VALUES (?, ?)",[$departement,$adresse]);
+        BF::request("INSERT INTO ".A::LIEU." (".A::LIEU_DEPARTEMENT.", ".A::LIEU_ADRESSE.") VALUES (?, ?)",[$departement,$adresse]);
         $id_lieu = $db->lastInsertId();
         // Insérer un nouvel horaire
-        $horaireInsertQuery = "INSERT INTO horaire (date_debut, date_fin, heure_debut, heure_fin) VALUES (?, ?, ?, ?)";
+        $horaireInsertQuery = "INSERT INTO ".A::HORAIRE." (".A::HORAIRE_DATE_DEBUT.", ".A::HORAIRE_DATE_FIN.", ".A::HORAIRE_HEURE_DEBUT.", ".A::HORAIRE_HEURE_FIN.") VALUES (?, ?, ?, ?)";
         BF::request($horaireInsertQuery, [$date_debut, $date_fin, $heure_debut, $heure_fin], false);
   
         $id_horaire = $db->lastInsertId();
   
         // Insérer un nouvel événement
-        $evenementInsertQuery = "INSERT INTO evenements (id_asso, nom_event, id_horaire, nb_personnes, visu, desc, id_lieu) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $evenementInsertQuery = "INSERT INTO ".A::EVENT." (".A::EVENT_ID_ASSO.", ".A::EVENT_NOM.", ".A::EVENT_ID_HORAIRE.", ".A::EVENT_NB_MAX_PERSONNES.", ".A::EVENT_VISIBILITE.", ".A::EVENT_DESCRIPTION.", ".A::EVENT_ID_LIEU.") VALUES (?, ?, ?, ?, ?, ?, ?)";
         BF::request($evenementInsertQuery, [$id_asso, $nom_event, $id_horaire, $nb_personnes, $visu, $desc, $id_lieu], false);
   
         $id_event = $db->lastInsertId();
@@ -96,7 +96,7 @@ class Event{
      * @return string valeur de la propriété
      */
     public function get_prop_evenement($propNom) {
-        return BF::request("SELECT valeur FROM prop_evenements WHERE id_event = ? AND prop_nom = ?", [$this->id, $propNom], true, true)[0];
+        return BF::request("SELECT ".A::PROPEVENT_VALEUR." FROM ".A::PROPEVENT." WHERE ".A::PROPEVENT_ID_EVENT." = ? AND ".A::PROPEVENT_NOM." = ?", [$this->id, $propNom], true, true)[0];
     }
 
         
@@ -106,7 +106,7 @@ class Event{
      * @return array
      */
     public function all_infos(){
-        return BF::request("SELECT * FROM evenements WHERE id = ?",[$this->id],true,false,PDO::FETCH_ASSOC);
+        return BF::request("SELECT * FROM ".A::EVENT." WHERE ".A::EVENT_ID." = ?",[$this->id],true,false,PDO::FETCH_ASSOC);
     }
 }
 
