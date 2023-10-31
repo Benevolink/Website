@@ -134,6 +134,7 @@ interface AttributsSignalement{
 interface AttributsUsers{
     const USER = "users";
     const USER_ID = "id";
+    const USER_NOM = "nom";
     const USER_DATE_NAISSANCE = "date_de_naissance";
     const USER_EMAIL = "email";
     const USER_MDP = "mdp";
