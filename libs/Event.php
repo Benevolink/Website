@@ -157,17 +157,21 @@ class Event implements Suppression, GestionMembres, GestionLogo, GestionPropriet
   }
   /**
    * Supprime le logo
+   * @todo
    */
   public function suppr_logo(){
     
   }
 
   /**
-   * 
+   * @todo
    */
   public function insert_prop($prop_name,$prop_value){
 
   }
+  /**
+   * @todo
+   */
     public function suppr_prop($prop_name){
         
     }
