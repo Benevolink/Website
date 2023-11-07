@@ -142,6 +142,7 @@ class Event implements Suppression, GestionMembres, GestionLogo, GestionPropriet
 
     /**
    * Ajoute un logo à l'event
+   * @
    * @todo
    */
   public function ajouter_logo(){
