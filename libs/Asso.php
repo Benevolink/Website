@@ -2,11 +2,12 @@
 require_once __DIR__."/../functions/basic_functions.php";
 require_once BF::abs_path("db.php",true);
 require_once __DIR__."/Ressources/NomsAttributsTables.php";
+require_once __DIR__."/Ressources/LibsInterfaces.php";
 use AttributsTables as A;
 /**
  * Abstraction table asso
  */
-class Asso{  
+class Asso implements Suppression, GestionMembres, GestionLogo{  
   /**
    * id : l'id de l'utilisateur
    *
@@ -49,7 +50,7 @@ class Asso{
    *
    * @return array
    */
-  public function liste_membres_noms(){
+  public function get_all_membres(){
     $req  = "SELECT u.".A::USER_NOM.", u.".A::USER_PRENOM.", ma.*
     FROM ".A::MEMBRESASSOS."
     INNER JOIN ".A::USER." u ON membres_assos ma.".A::MEMBRESASSOS_ID_USER." = u.".A::USER_ID."
@@ -108,6 +109,87 @@ class Asso{
    */
   public function get_infos_events(){
     return BF::request("SELECT e.".A::EVENT_ID.", e.".A::EVENT_NOM.", ho.".A::HORAIRE_DATE_DEBUT.", ho.".A::HORAIRE_DATE_FIN.", a.".A::ASSO_NOM.", a.".A::ASSO_ID." FROM ((".A::EVENT." e JOIN ".A::ASSO." a ON e.".A::EVENT_ID." = a.".A::ASSO_ID.") JOIN ".A::HORAIRE." ho ON e.".A::EVENT_ID_HORAIRE." = ho.".A::HORAIRE_ID.") WHERE a.".A::ASSO_ID." = ?",[$this->id],true,false,PDO::FETCH_ASSOC);
+  }
+
+  /**
+   * A faire, crée une asso
+   * @todo 
+   */
+  public static function insert(){
+  }
+
+  /**
+   * A faire
+   * @todo permet de supprimer toutes les données relatives à l'association
+   */
+  public function suppr(){
+
+  }
+
+  /**
+   * Ajoute un membre
+   * @todo 
+   */
+  public function ajouter_membre($user, $role = null){
+
+  }
+
+  /**
+   * Supprime un membre
+   * @todo
+   */
+  public function supprimer_membre($user){
+
+  }
+  /**
+   * Faire simplement appel aux 2 fonctions ci-dessus
+   * @todo
+   */
+  public function modifier_role_membre($user, $role){
+
+  }
+
+  /**
+   * Ajoute un logo à l'asso
+   * @todo
+   */
+  public function ajouter_logo(){
+    
+  }
+
+  /**
+   * Renvoie le chemin du logo pour l'implémenter en HTML
+   * @todo
+   */
+  public function get_logo(){
+
+  }
+  /**
+   * Supprime le logo
+   */
+  public function suppr_logo(){
+
+  }
+
+  /**
+   * @todo
+   */
+  public function get_prop_value($prop_name){
+
+  }
+
+  /**
+   * @todo
+   */
+  public function insert_prop($prop_name,$prop_value){
+
+  }
+
+  /**
+   * @todo
+   */
+  public function suppr_prop($prop_name){
+    
   }
 
 }

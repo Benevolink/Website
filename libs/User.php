@@ -7,7 +7,7 @@ use AttributsTables as A;
 /**
  * Abstraction table users
  */
-class User{
+class User implements Suppression, GestionLogo{
   public $id;  
   /**
    * Method __construct
@@ -30,7 +30,7 @@ class User{
    *
    * @return void
    */
-  public function suppr_user(){
+  public function suppr(){
     BF::request("DELETE FROM ".A::USER." WHERE ".A::USER_ID." = ?",[$this->id]);
   }
   
@@ -274,6 +274,28 @@ class User{
    */
   public function infos_events(){
     return BF::request("SELECT e.".A::EVENT_ID.", e.".A::EVENT_NOM.", ho.".A::HORAIRE_DATE_DEBUT.", ho.".A::HORAIRE_DATE_FIN.", a.".A::ASSO_NOM.", a.".A::ASSO_ID." FROM (((".A::EVENT." e JOIN ".A::ASSO." a ON e.".A::EVENT_ID_ASSO." = a.".A::ASSO_ID.") JOIN  ".A::MEMBRESEVENTS." me ON me.".A::MEMBRESEVENTS_ID_EVENT." = e.".A::EVENT_ID." )JOIN ".A::HORAIRE." ho ON ho.".A::HORAIRE_ID." = e.".A::EVENT_ID_HORAIRE.") WHERE me.".A::MEMBRESEVENTS_ID_USER." = ?",[$this->id],true,false,PDO::FETCH_ASSOC);
+  }
+
+  /**
+   * Ajoute un logo à l'utilisateur
+   * @todo
+   */
+  public function ajouter_logo(){
+    
+  }
+
+  /**
+   * Renvoie le chemin du logo pour l'implémenter en HTML
+   * @todo
+   */
+  public function get_logo(){
+
+  }
+  /**
+   * Supprime le logo
+   */
+  public function suppr_logo(){
+    
   }
 }
 ?>

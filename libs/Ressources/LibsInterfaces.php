@@ -3,10 +3,9 @@
 /**
  * Implémente des fonctionnalités de création et de suppression d'éléments
  */
-interface CreationSuppression{
+interface Suppression{
 
-    //Méthode abstraite
-    public function insert();
+    //Supprime l'objet dans sa table et dans toutes les tables où il apparaît
     public function suppr();
 }
 
@@ -18,16 +17,26 @@ interface GestionMembres{
     public function ajouter_membre($user, $role = null);
     public function supprimer_membre($user);
 
+    public function modifier_role_membre($user, $role);
+
 }
 
 /**
  * Gestion des logos (pour utilisateurs, associations et évènements)
  */
 interface GestionLogo{
+
+    /**
+     * Renvoie le chemin du logo pour l'implémenter en HTML
+     */
     public function get_logo();
 
     //Paramètres dans la fonction à rajouter
     public function ajouter_logo();
+
+    /**
+     * Supprime le logo s'il existe
+     */
     public function suppr_logo();
 }
 
