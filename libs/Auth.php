@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__."/../functions/basic_fonctions.php";
 require_once BF::abs_path("db.php");
-require_once __DIR__."/noms_tables.php";
+require_once __DIR__."/Ressources/NomsAttributsTables.php";
 use AttributsTables as A;
 /**
  * Classe qui gère l'authentification.
@@ -25,4 +25,4 @@ class Auth{
   }
 }
 
-  ?>
+?>
