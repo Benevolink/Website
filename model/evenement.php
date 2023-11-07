@@ -1,7 +1,7 @@
 
 
 <?php
-
+//TOUTES LES REQUETES BDD SERONT DANS libs
 $req = "SELECT valeur FROM prop_evenements WHERE id_event = ? AND prop_nom = ?"; //requete SQL utilisée en masse sur la page
 
 /**

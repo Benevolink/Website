@@ -1,11 +1,11 @@
 <link href="<?= BF::abs_path("CSS/evenement.css") ?>" rel="stylesheet"/>
 <?php
 
-if(BF::is_posted("id_event")){
-    $id_event = $_GET["id_event"];
+if(BF::is_posted("id_event")){ //controller
+    $id_event = $_GET["id_event"]; //controller
     $infos = get_infos($id_event);
     ?>
-    <div class="case" style="width: 800px;<?php if(isset($_GET["iframe"]) ? 1 : 0){echo "margin: 0px;";}?>">
+    <div class="case" style="width: 800px;<?php if(isset($_GET["iframe"]) ? 1 : 0){echo "margin: 0px;";} //controller?>">
         <div class="titre_event">
             <?= $infos["nom_event"] ?>
         </div>
@@ -18,7 +18,7 @@ if(BF::is_posted("id_event")){
             if(BF::equals($logo[0],"TRUE")? 1 : 0){
                 foreach (glob($path."media/logo/event/".$id_event.".*") as $filename){
                     ?>
-                    <img style ="width: 200px; float: left; height: 200px;" src="<?= BF::abs_path("media/logo/event/".basename($filename)) ?>">
+                    <img style ="width: 200px; float: left; height: 200px;" src="<?= BF::abs_path("media/logo/event/".basename($filename))?>">
                     <?php
                 }
                 ?>
@@ -64,7 +64,7 @@ if(BF::is_posted("id_event")){
     </div>
     <?php
 }
-if(isset($_GET["iframe"]) ? 1 : 0){
+if(isset($_GET["iframe"]) ? 1 : 0){ //controller
     ?>
     <script>
         let body = document.body;
