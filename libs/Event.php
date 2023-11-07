@@ -3,7 +3,7 @@ require_once __DIR__."/../functions/basic_functions.php";
 require_once BF::abs_path("db.php",true);
 require_once __DIR__."/Ressources/NomsAttributsTables.php";
 use AttributsTables as A;
-class Event{    
+class Event implements Suppression, GestionMembres{    
     
     /**
      * id event
@@ -29,7 +29,7 @@ class Event{
      *
      * @return void
      */
-    public function suppr_event()
+    public function suppr()
     {
         $id_event = $this->id;
         $id_horaire = BF::request("SELECT ".A::EVENT_ID_HORAIRE." FROM ".A::EVENT." WHERE ".A::EVENT_ID." = ?", [$id_event], true, true)[0];
@@ -107,6 +107,37 @@ class Event{
      */
     public function all_infos(){
         return BF::request("SELECT * FROM ".A::EVENT." WHERE ".A::EVENT_ID." = ?",[$this->id],true,false,PDO::FETCH_ASSOC);
+    }
+    /**
+     * Renvoie la liste de tous les membres (id, nom et role)
+     * se référer à l'interface pour plus d'infos
+     * @todo
+     */
+    public function get_all_membres(){
+
+    }
+
+    /**
+     * Enlève le membre de l'évènement
+     * @todo
+     */
+    public function supprimer_membre($user){
+
+    }
+
+    /**
+     * Ajoute un membre, et spécifie son rôle
+     */
+    public function ajouter_membre($user, $role = null){
+
+    }
+
+    /**
+     * Simplement utiliser les fonction ci-dessus
+     * @todo
+     */
+    public function modifier_role_membre($user, $role){
+
     }
 }
 

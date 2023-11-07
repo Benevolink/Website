@@ -7,7 +7,7 @@ use AttributsTables as A;
 /**
  * Abstraction table users
  */
-class User{
+class User implements Suppression{
   public $id;  
   /**
    * Method __construct
@@ -30,7 +30,7 @@ class User{
    *
    * @return void
    */
-  public function suppr_user(){
+  public function suppr(){
     BF::request("DELETE FROM ".A::USER." WHERE ".A::USER_ID." = ?",[$this->id]);
   }
   

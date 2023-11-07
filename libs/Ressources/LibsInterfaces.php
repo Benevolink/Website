@@ -3,10 +3,9 @@
 /**
  * Implémente des fonctionnalités de création et de suppression d'éléments
  */
-interface CreationSuppression{
+interface Suppression{
 
-    //Méthode abstraite
-    public function insert();
+    //Supprime l'objet dans sa table et dans toutes les tables où il apparaît
     public function suppr();
 }
 
@@ -17,6 +16,8 @@ interface GestionMembres{
     public function get_all_membres();
     public function ajouter_membre($user, $role = null);
     public function supprimer_membre($user);
+
+    public function modifier_role_membre($user, $role);
 
 }
 

@@ -42,7 +42,7 @@ function afficher_role($role,$id_asso,$id_membre){
 function get_liste_membres(){
   global $id_asso;
   $asso = new Asso($id_asso);
-  $array = $asso->liste_membres_noms();
+  $array = $asso->get_all_membres();
   return $array;
 }
 
