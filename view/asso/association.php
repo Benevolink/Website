@@ -24,7 +24,6 @@ if(isset($_GET["id"])){
 }
   ?>
 
-
   <link rel="stylesheet" href="<?= BF::abs_path("CSS/association.css")?>">
 <body>
   <img id="logo" src="<?= BF::abs_path($table["logo"]) ?>" class="img_asso">
