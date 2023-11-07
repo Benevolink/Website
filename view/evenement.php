@@ -3,7 +3,7 @@
 
 if(BF::is_posted("id_event")){
     $id_event = $_GET["id_event"];
-    $infos = BF::request("SELECT * FROM evenements WHERE id_event = ?",[$id_event],true,false,PDO::FETCH_ASSOC)[0];
+    $infos = get_infos($id_event);
     ?>
     <div class="case" style="width: 800px;<?php if(isset($_GET["iframe"]) ? 1 : 0){echo "margin: 0px;";}?>">
         <div class="titre_event">
@@ -12,8 +12,8 @@ if(BF::is_posted("id_event")){
         <div>
         <?php
         //Affichage du logo
-            $req = "SELECT valeur FROM prop_evenements WHERE id_event = ? AND prop_nom = ?";
-            $logo = BF::request($req, [$id_event,"logo"],true,true);
+            
+            $logo = get_logo($id_event);
             
             if(BF::equals($logo[0],"TRUE")? 1 : 0){
                 foreach (glob($path."media/logo/event/".$id_event.".*") as $filename){
@@ -52,7 +52,7 @@ if(BF::is_posted("id_event")){
                 <?php
                 
 
-                $desc = BF::request($req,[$id_event,"desc"],true,true);
+                $desc = get_desc($id_event);
                 if($desc[0]? 1 : 0){
                     echo $desc[0];
                 }

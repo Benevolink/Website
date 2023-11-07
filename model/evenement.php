@@ -2,6 +2,8 @@
 
 <?php
 
+$req = "SELECT valeur FROM prop_evenements WHERE id_event = ? AND prop_nom = ?"; //requete SQL utilisée en masse sur la page
+
 /**
  * Affiche les éléments pour la date
  *
@@ -53,6 +55,42 @@ function afficher_visu(){
         $vis = $visu;
     }
     echo " Visibilité : ".$vis;
+}
+
+
+/** 
+* Récupère les infos d'un événement
+*
+* @return $infos
+**/
+function get_infos($id_event){
+    global $infos;
+    $infos = BF::request("SELECT * FROM evenements WHERE id_event = ?",[$id_event],true,false,PDO::FETCH_ASSOC)[0];
+    return $infos;
+}
+
+
+/** 
+* Récupère le logo d'un événement
+*
+* @return $logo
+**/
+function get_logo($id_event){
+    global $req;
+    $logo = BF::request($req, [$id_event,"logo"],true,true);
+    return $logo;
+}
+
+
+/** 
+* Récupère la description d'un événement
+*
+* @return $desc
+**/
+function get_desc($id_event){
+    global $req;
+    $desc = BF::request($req, [$id_event,"desc"],true,true);
+    return $desc;
 }
 
 ?>
