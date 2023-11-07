@@ -2,7 +2,14 @@
 require_once __DIR__."/../functions/basic_functions.php";
 require_once BF::abs_path("db.php",true);
 
-class Image {
+
+class image {
+    private $image;
+    private $emplacement;
+    public function __construct($i,$em){
+        $this->image=$i;
+        $this->emplacement=$em;
+    }
 
     public static function getImage(){}
     
@@ -21,9 +28,14 @@ class Image {
      * @return void
      */
 
-    
-    
-    public static function placer_image($image,$table,$chemin){
+
+    /**
+     * Obsolète (mettre à jour avec des BF::request et utiliser noms_tables.php)
+     */
+    public function placer_image($image,$table,$chemin){
+        global $path;
+        global $db;
+
         $unique = 0;
         $ext = pathinfo($image, PATHINFO_EXTENSION);
 

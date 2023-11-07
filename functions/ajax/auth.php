@@ -16,6 +16,7 @@ if(BF::is_posted(["email","mdp"])){//On vérifie que les variables sont bien dé
   $table = $req_temp->fetchAll();
   if(isset($table[0][0]) && password_verify($mdp,$table[0][0])){
     //Si l'email et le mdp correspondent, on affecte les variables de $_SESSION à l'utilisateur
+    session_regenerate_id(true);//Ne pas oublier de renvoyer une id pour éviter les attaques par id statique
     $_SESSION["auth"]=1;
     $req = "SELECT id FROM users WHERE email =:email";
     $table2 = $db->prepare($req);

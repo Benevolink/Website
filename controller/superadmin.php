@@ -1,5 +1,6 @@
 <?php
 //On importe la BDD
+$a_jour = true;
 require_once __DIR__."/../db.php";
 //Importation de la bibliothèque BF
 require_once __DIR__.'/../functions/basic_functions.php';

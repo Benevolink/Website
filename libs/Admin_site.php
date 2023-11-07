@@ -122,6 +122,7 @@ class Admin_site{
 
   /*SET DOMAIN*/
 
+  
   public static function insert_domain($domain){
     /*
     inserts a new domain in db

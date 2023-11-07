@@ -133,7 +133,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt->bindValue(':type', 0); // Type 0 pour un utilisateur
             $stmt->execute();
         }
-        
+        session_regenerate_id(true);
         $tableau['statut'] = 1;
           //On affecte les variables de $_SESSION à l'utilisateur
         $_SESSION["auth"]=1;

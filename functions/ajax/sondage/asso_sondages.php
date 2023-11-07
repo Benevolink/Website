@@ -1,4 +1,8 @@
 <?php
+
+/**
+ * Ce code est périmé, mes sondages ne sont plus supportés :(
+ */
 require_once __DIR__."/../../../links.php";
 BF::sess_start();
 $array = array();
