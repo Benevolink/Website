@@ -25,10 +25,18 @@ interface GestionMembres{
  * Gestion des logos (pour utilisateurs, associations et évènements)
  */
 interface GestionLogo{
+
+    /**
+     * Renvoie le chemin du logo pour l'implémenter en HTML
+     */
     public function get_logo();
 
     //Paramètres dans la fonction à rajouter
     public function ajouter_logo();
+
+    /**
+     * Supprime le logo s'il existe
+     */
     public function suppr_logo();
 }
 

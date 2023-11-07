@@ -7,7 +7,7 @@ use AttributsTables as A;
 /**
  * Abstraction table asso
  */
-class Asso implements Suppression, GestionMembres{  
+class Asso implements Suppression, GestionMembres, GestionLogo{  
   /**
    * id : l'id de l'utilisateur
    *
@@ -116,7 +116,6 @@ class Asso implements Suppression, GestionMembres{
    * @todo 
    */
   public static function insert(){
-
   }
 
   /**
@@ -148,6 +147,49 @@ class Asso implements Suppression, GestionMembres{
    */
   public function modifier_role_membre($user, $role){
 
+  }
+
+  /**
+   * Ajoute un logo à l'asso
+   * @todo
+   */
+  public function ajouter_logo(){
+    
+  }
+
+  /**
+   * Renvoie le chemin du logo pour l'implémenter en HTML
+   * @todo
+   */
+  public function get_logo(){
+
+  }
+  /**
+   * Supprime le logo
+   */
+  public function suppr_logo(){
+
+  }
+
+  /**
+   * @todo
+   */
+  public function get_prop_value($prop_name){
+
+  }
+
+  /**
+   * @todo
+   */
+  public function insert_prop($prop_name,$prop_value){
+
+  }
+
+  /**
+   * @todo
+   */
+  public function suppr_prop($prop_name){
+    
   }
 
 }

@@ -3,7 +3,7 @@ require_once __DIR__."/../functions/basic_functions.php";
 require_once BF::abs_path("db.php",true);
 require_once __DIR__."/Ressources/NomsAttributsTables.php";
 use AttributsTables as A;
-class Event implements Suppression, GestionMembres{    
+class Event implements Suppression, GestionMembres, GestionLogo, GestionProprietesAdditionnelles{    
     
     /**
      * id event
@@ -64,7 +64,7 @@ class Event implements Suppression, GestionMembres{
      *
      * @return Event
      */
-    public function insert_evenement($date_debut, $date_fin, $heure_debut, $heure_fin, $id_asso, $nom_event, $nb_personnes, $visu, $desc, $departement, $adresse) {
+    public function insert($date_debut, $date_fin, $heure_debut, $heure_fin, $id_asso, $nom_event, $nb_personnes, $visu, $desc, $departement, $adresse) {
         global $db;
         /*
         permet de créer un évènement
@@ -95,7 +95,7 @@ class Event implements Suppression, GestionMembres{
      *
      * @return string valeur de la propriété
      */
-    public function get_prop_evenement($propNom) {
+    public function get_prop_value($propNom) {
         return BF::request("SELECT ".A::PROPEVENT_VALEUR." FROM ".A::PROPEVENT." WHERE ".A::PROPEVENT_ID_EVENT." = ? AND ".A::PROPEVENT_NOM." = ?", [$this->id, $propNom], true, true)[0];
     }
 
@@ -138,6 +138,38 @@ class Event implements Suppression, GestionMembres{
      */
     public function modifier_role_membre($user, $role){
 
+    }
+
+    /**
+   * Ajoute un logo à l'event
+   * @todo
+   */
+  public function ajouter_logo(){
+    
+  }
+
+  /**
+   * Renvoie le chemin du logo pour l'implémenter en HTML
+   * @todo
+   */
+  public function get_logo(){
+
+  }
+  /**
+   * Supprime le logo
+   */
+  public function suppr_logo(){
+    
+  }
+
+  /**
+   * 
+   */
+  public function insert_prop($prop_name,$prop_value){
+
+  }
+    public function suppr_prop($prop_name){
+        
     }
 }
 
