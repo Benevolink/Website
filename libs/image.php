@@ -4,12 +4,8 @@ require_once BF::abs_path("db.php",true);
 
 
 class image {
-    private $image;
-    private $emplacement;
-    public function __construct($i,$em){
-        $this->image=$i;
-        $this->emplacement=$em;
-    }
+    
+    
 
     public static function getImage(){}
     
@@ -20,21 +16,20 @@ class image {
     /**
      * Method placer_image
      *
-     * @param $image $image [explicite description]
-     * @param $table $table [explicite description]
-     * @param $chemin $chemin [explicite description]
+     * @param $image $image [est le nom d'origine de l'image. Les vraies manipulations de l'image se font via "$_FILEs"]
+     * @param $table $table [la table où le chemin de l'asso sera stockée]
+     * @param $chemin $chemin [chemin depuis la racine où l'on souhaite que l'image soit stockée]
      *
      * Permet de rentrer de manière sécurisée un image dans la base de donnée 
      * @return void
      */
+    
+    /*
+    *A été modifié : à retester
+    */
 
-
-    /**
-     * Obsolète (mettre à jour avec des BF::request et utiliser noms_tables.php)
-     */
     public function placer_image($image,$table,$chemin){
-        global $path;
-        global $db;
+        
 
         $unique = 0;
         $ext = pathinfo($image, PATHINFO_EXTENSION);
@@ -55,15 +50,15 @@ class image {
         }
 
   //Mettre l'image dans le fichier logo/user/
-        $destinationPath = $chemin.basename($_FILES['uploadedfile']['name']); 
+        $destinationPath = $chemin.$image_name.".".$ext;
         array_map('unlink', glob($chemin.$image_name.".*")); //On supprime les fichiers résiduels
-        if(move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $destinationPath)) {
+        if(move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $destinationPath)) { 
             echo "Le fichier ".  basename( $_FILES['uploadedfile']['name'])." a bien été téléversé";
         } //la fonction move_uploaded_file déplace le fichier dans destination et renvoie un si l'opération est un succés 0 sinon
         else{
             echo "Il y a eu une erreur pour poster le fichier, réessayez.";
         }
-        $newDestinationPath = $chemin.$image_name.".".$ext;
+        
         //rename($destinationPath, $newDestinationPath);
         //UPDATE le chemin vers l'image dans la BDD
         BF::request("UPDATE" .$table. " SET logo = ? WHERE id = ?",[$newDestinationPath,$id]);
