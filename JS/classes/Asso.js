@@ -1,4 +1,7 @@
-class Asso{
+import {Event} from './Event.js';
+import {User} from './User.js';
+
+export class Asso{
 
     constructor(id_asso){
         this.id_asso = id_asso;
@@ -11,7 +14,7 @@ class Asso{
             method: "POST",
             dataType: "json",
             data: {
-                id_asso: id_asso
+                id_asso: this.id_asso
             }
         }).done(function(rep){
             console.log(rep);
@@ -25,11 +28,11 @@ class Asso{
                         borderRadius: "3px",
                         padding: "10px"
                     })
-                    //remplacer le forEach en fct de la tête du json
                     //ajouter un on click : afficher en grand
                 );
             });    
         })
+        //remplacer le forEach en fct de la tête du json
     }
 
     afficher_details_long(){
@@ -38,10 +41,36 @@ class Asso{
 
     afficher_liste_events(){
         //ajax pour récupérer liste events puis appel à la classe Event pour afficher
+        $.ajax({
+            url: abs_path("NOMFICHIER.php"),
+            method: "POST",
+            dataType: "json",
+            data: {
+                id_asso: this.id_asso
+            }
+        }).done(function(rep){
+            console.log(rep);
+            rep.forEach((element)=>{
+            element.afficher_event_court();
+        });    
+        })
     }
 
     afficher_liste_membres(){
         //ajax pour récupérer liste membres puis appel à la classe User pour afficher
+        $.ajax({
+            url: abs_path("NOMFICHIER.php"),
+            method: "POST",
+            dataType: "json",
+            data: {
+                id_asso: this.id_asso
+            }
+        }).done(function(rep){
+            console.log(rep);
+            rep.forEach((element)=>{
+            element.afficher_profil_court();
+        });    
+        })
     }
 
 

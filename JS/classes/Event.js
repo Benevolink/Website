@@ -1,4 +1,4 @@
-class Event{
+export class Event{
 
     constructor(id_event){
         this.id_event = id_event;
