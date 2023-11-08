@@ -1,9 +1,13 @@
+*{
+  font-family: Corps;
+src: url(fonts/Nexa-Heavy.woff2) format("woff2");
+}
+
 .liste_prop{
   
 }
 
 .liste_prop>div{
-  font-weight: bold;
   background-color: var(--couleur-gris-clair);
   border-radius: 20px;
   padding: 20px;

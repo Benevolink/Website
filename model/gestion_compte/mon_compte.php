@@ -8,6 +8,8 @@ require_once BF::abs_path("libs/User.php",true);
 function afficher_infos_1(){
   global $table;
   ?>
+<br>
+<div> <h2> Mes informations </h2> </div>
   <br>
       Nom: <?= $table["pseudo"] ?>
   <br>
@@ -26,7 +28,7 @@ function afficher_infos_2(){
   global $table;
   global $user;
   ?>
-  <img id="image_logo" src="<?= $user->logo() ?>" style="width: 200px; border-radius: 200px; border: 10px black solid; cursor: pointer;">
+  <!-- <img id="image_logo" src="<?= $user->logo() ?>" style="width: 200px; border-radius: 200px; border: 10px black solid; cursor: pointer;"> -->
   <br>
   Nom: <?= $table["pseudo"] ?>
   <br>
