@@ -25,6 +25,7 @@ class Asso{
                         borderRadius: "3px",
                         padding: "10px"
                     })
+                    //remplacer le forEach en fct de la tête du json
                     //ajouter un on click : afficher en grand
                 );
             });    
@@ -32,8 +33,7 @@ class Asso{
     }
 
     afficher_details_long(){
-        //affichage dans une base à part
-
+        //affichage dans une page à part
     }
 
     afficher_liste_events(){
