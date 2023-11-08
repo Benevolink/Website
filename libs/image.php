@@ -68,7 +68,7 @@ class image {
   
 }
     public static function verifier_format($image){
-        $allowed_extensions = array('jpg', 'jpeg', 'png', 'gif');
+        $allowed_extensions = array('jpg', 'jpeg', 'png');
         $nom_image=$_FILES['uploadedfile']['name'];
         $extension = pathinfo($nom_image, PATHINFO_EXTENSION);
     
@@ -86,10 +86,13 @@ class image {
              }
     }
 }
-    /*public static function corriger_extension($image){
+    public static function corriger_extension($image){
         $ext = pathinfo($image, PATHINFO_EXTENSION);
+        if(strcmp($ext,"jpg")!=0){
 
-    }*/
+        }
+
+    }
 
 }
 
