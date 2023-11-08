@@ -193,21 +193,6 @@ if(!(isset($iframe) ? 1 : 0)){
   </p>
   </footer>
 
-<<<<<<< Updated upstream
-
-<!-- <footer id="footer" class="p-0">
-    <div class="container pt-6 pb-5">
-    
-     <h1>Quelques informations</h1>
-    
-      <ul>
-       <li>Nous contacter : projetg1g2@gmail.com</li>
-       <li><a href="<?= BF::abs_path("controller/static/equipe.php") ?>">Qui nous sommes</a></li> -->
-      <!-- </ul>
-    </div>
-    
-  </footer> -->
-<?php } ?>
 
 
 <!-- <footer id="footer" class="p-0">
@@ -223,6 +208,20 @@ if(!(isset($iframe) ? 1 : 0)){
     
   </footer> -->
 <?php } ?>
+
+
+<!-- <footer id="footer" class="p-0">
+    <div class="container pt-6 pb-5">
+    
+     <h1>Quelques informations</h1>
+    
+      <ul>
+       <li>Nous contacter : projetg1g2@gmail.com</li>
+       <li><a href="<?= BF::abs_path("controller/static/equipe.php") ?>">Qui nous sommes</a></li> -->
+      <!-- </ul>
+    </div>
+    
+  </footer> -->
 
     
 
