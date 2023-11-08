@@ -3,23 +3,14 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 
-<?php
-if(BF::is_posted("Recherche")){
-  $r = $_GET["Recherche"];
-}
-else{
-  $r = "";
-}
-$r = $r."%";
-$table = BF::request("SELECT * FROM assos WHERE nom LIKE ? ORDER BY nom ASC",[$r],true);
-?>
+
 <link rel="stylesheet" href="<?= BF::abs_path("CSS/search.css") ?>">
 <table class="table table-striped table-bordered" id="list_assos">
 
   
 <?php
 if($table == NULL){
-  exit("La table est nulle !");
+  exit("La recherche est vide !");
 }
 foreach($table as $index => $row){
   ?>

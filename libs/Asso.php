@@ -68,7 +68,7 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
    */  
   public static function recherche_asso($searchQuery) {
     $searchQuery = "%" . $searchQuery . "%";
-    return BF::request("SELECT ".A::ASSO_ID.", ".A::ASSO_NOM." FROM ".A::ASSO." WHERE ".A::ASSO_NOM." LIKE ? ORDER BY ".A::ASSO_NOM." ASC", [$searchQuery], true, false, PDO::FETCH_ASSOC);
+    return BF::request("SELECT * FROM ".A::ASSO." WHERE ".A::ASSO_NOM." LIKE ? ORDER BY ".A::ASSO_NOM." ASC", [$searchQuery], true, false, PDO::FETCH_ASSOC);
   }
   
   /**
