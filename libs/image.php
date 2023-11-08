@@ -12,8 +12,47 @@ class image {
     private $error;
     private $fullpath;
 
-    public static function getImage(){}
-    public static function setImage(){}
+    /**
+     * Method getImage
+     * 
+     * @param $table [table dans laquelle se trouve l'image que l'on cherche. Est une chaine de charactère]
+     * @param $id [id de l'utilisateur/asso/... dont on cherche l'image]
+     * 
+     * Permet d'obtenir le lien (contenu dans le champs 'logo' de la table de donnée) menant vers l'image
+     * 
+     * @return char
+     */
+
+    public static function getImage($id,$table){
+
+        $req_image = "SELECT logo FROM".$table." WHERE id=? ";
+        $req_image_2 = $db->prepare($req_image);
+        $req_image_2->execute([$id]);
+        $image = $req_image_2->fetch(PDO::FETCH_ASSOC);
+
+        if(count($image)==0){return -1}
+
+        return $image[0]
+
+    }
+
+    /**
+     *  Method setImage
+     * 
+     * Permet de saisir les informations de l'image téléchargée via $_POST dans une variable que sera ensuite utilisée 
+     * 
+     * @return image
+     */
+
+    public static function setImage(){
+        $this->$name=$_FILES['file']['name'];
+        $this->$type=$_FILE['file']['type'];
+        $this->$size=$_FILE['file']['size'];
+        $this->$tmp_name=['file']['tmp_name'];
+        $this->$error=['file']['error'];
+        $this->fullpath=['file']['fullpath'];
+        return $this
+    }
     
 
   
@@ -50,7 +89,7 @@ class image {
             $image_name_num = uniqid();
 
             $req_noms = "SELECT logo FROM".$table." WHERE basename(logo)=? ";//on vérifie que le nom n'est pas déjà pris
-            $req_noms_2 = $db->prepare($req_id);
+            $req_noms_2 = $db->prepare($req_noms);
             $req_noms_2->execute([$image_name_num]);
             $id = $req_noms_2->fetch(PDO::FETCH_ASSOC);
 
