@@ -2,6 +2,7 @@
 require_once __DIR__."/../functions/basic_functions.php";
 require_once BF::abs_path("db.php",true);
 require_once __DIR__."/Ressources/NomsAttributsTables.php";
+require_once __DIR__."/Ressources/LibsInterfaces.php";
 use AttributsTables as A;
 class Event implements Suppression, GestionMembres, GestionLogo, GestionProprietesAdditionnelles{    
     
@@ -142,6 +143,7 @@ class Event implements Suppression, GestionMembres, GestionLogo, GestionPropriet
 
     /**
    * Ajoute un logo à l'event
+   * @
    * @todo
    */
   public function ajouter_logo(){
@@ -157,17 +159,21 @@ class Event implements Suppression, GestionMembres, GestionLogo, GestionPropriet
   }
   /**
    * Supprime le logo
+   * @todo
    */
   public function suppr_logo(){
     
   }
 
   /**
-   * 
+   * @todo
    */
   public function insert_prop($prop_name,$prop_value){
 
   }
+  /**
+   * @todo
+   */
     public function suppr_prop($prop_name){
         
     }

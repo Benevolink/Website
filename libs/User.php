@@ -2,6 +2,7 @@
 require_once __DIR__."/../functions/basic_functions.php";
 require_once BF::abs_path("db.php",true);
 require_once __DIR__."/Ressources/NomsAttributsTables.php";
+require_once __DIR__."/Ressources/LibsInterfaces.php";
 use AttributsTables as A;
 
 /**
@@ -190,6 +191,7 @@ class User implements Suppression, GestionLogo{
       $id_domaine = BF::request("SELECT ".A::DOMAINE_ID." FROM ".A::DOMAINE." WHERE ".A::DOMAINE_NOM." = ?", [$id_domaine], true, true)[0];
 
       //Erreur ici
+      //Utiliser domaine->detient_domaine($asso)
       $id_association_domaine = BF::request("SELECT ".A::EVENT_ID_ASSO." FROM ".A::EVENT." WHERE ".A::EVENT_ID_DOMAINE." = ?", [$id_domaine], true, true)[0];
 
       return array(
