@@ -116,28 +116,27 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
    * @todo 
    */
   public static function insert($nom, $description, $domaines, $missions, $localisation, $email, $telephone) {
-    // Créez une nouvelle instance d'association
-    $nouvelleAssociation = new Asso();
+    // Étape 1 : on insère la nouvelle localisation dans la table "lieu"
+    $insertLieuQuery = "INSERT INTO lieu (nom_lieu) VALUES (?)";
+    $insertLieuParams = [$localisation];
 
-    // Initialisez les propriétés de l'association avec les paramètres fournis
-    $nouvelleAssociation->nom = $nom;
-    $nouvelleAssociation->description = $description;
-    $nouvelleAssociation->domaines = $domaines;
-    $nouvelleAssociation->missions = $missions;
-    $nouvelleAssociation->localisation = $localisation;
-    $nouvelleAssociation->email = $email;
-    $nouvelleAssociation->telephone = $telephone;
+    // Exécutez la requête d'insertion de lieu et récupérez l'ID généré automatiquement
+    $newLieuId = VotreClasseDeRequete::executeInsertQuery($insertLieuQuery, $insertLieuParams);
 
-    // Insérez les données de l'association dans la base de données
-    $insertQuery = "INSERT INTO " . A::ASSO . " (" . A::ASSO_NOM . ", " . A::ASSO_DESCRIPTION . ", " . A::ASSO_DOMAINES . ", " . A::ASSO_DESCRIPTION_MISSIONS . ", " . A::ASSO_ID_LIEU . ", " . A::ASSO_EMAIL . ", " . A::ASSO_TELEPHONE . ") VALUES (?, ?, ?, ?, ?, ?, ?)";
-    $insertParams = [$nom, $description, $domaines, $missions, $localisation, $email, $telephone];
+    if ($newLieuId !== false) {
+        // Étape 2 : Insérer la nouvelle association avec l'ID de localisation dans la table "asso"
+        $insertQuery = "INSERT INTO " . A::ASSO . " (" . A::ASSO_NOM . ", " . A::ASSO_DESCRIPTION . ", " . A::ASSO_DOMAINES . ", " . A::ASSO_MISSIONS . ", " . A::ASSO_LOCALISATION . ", " . A::ASSO_EMAIL . ", " . A::ASSO_TELEPHONE . ") VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $insertParams = [$nom, $description, $domaines, $missions, $newLieuId, $email, $telephone];
 
-    // Utilisez une méthode de requête pour exécuter la requête d'insertion
-    // Assurez-vous que votre méthode de requête gère la connexion à la base de données et la préparation des requêtes.
-    // La manière de l'exécuter dépend de la logique de gestion de la base de données de votre application.
+        // Exécutez la requête d'insertion de l'association
+        $insertAssociationResult = VotreClasseDeRequete::executeInsertQuery($insertQuery, $insertParams);
 
-    // Vous pouvez renvoyer une valeur pour indiquer le succès ou l'échec de l'opération
-    // Par exemple, true si l'insertion a réussi, false si elle a échoué.
+        // Vérifiez si l'insertion a réussi et renvoyez le résultat
+        return $insertAssociationResult;
+    } else {
+        // Si l'insertion de lieu a échoué, renvoyez une valeur pour indiquer l'échec
+        return false;
+    }
 }
 
 
