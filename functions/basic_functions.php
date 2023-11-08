@@ -253,6 +253,9 @@ class BF{
     }
     /**
        * Vérifie que l'utilisateur est admin de l'asso
+       * 
+       * /!\ Obsolète et voué à disparaître, ne pas utiliser
+       * @deprecated 1.3
        * @since 1.1
        * 
        * @param int id_user
@@ -269,6 +272,10 @@ class BF{
     }
     /**
        * Vérifie que l'utilisateur est admin de l'asso
+       *
+       * /!\ Obsolète et voué à disparaître, ne pas utiliser
+       * 
+       * @deprecated 1.3
        * @since 1.2
        * 
        * @param int id_user
@@ -285,6 +292,10 @@ class BF{
     }
     /**
        * Renvoie l'id de toutes les assos de l'utilisateur
+       * 
+       * /!\ Obsolète et voué à disparaître, ne pas utiliser
+       * 
+       * @deprecated 1.3
        * @since 1.1
        * 
        * @param int id_user
@@ -304,6 +315,10 @@ class BF{
 
      /**
      * Renvoie l'id de tous les évènements de l'asso
+     *
+     * /!\ Obsolète et voué à disparaître, ne pas utiliser
+     * 
+     * @deprecated 1.3
      * @since 1.1
      * 
      * @param int id_asso

@@ -1,67 +1,37 @@
 <link href="<?= BF::abs_path("CSS/evenement.css") ?>" rel="stylesheet"/>
 <?php
 
-if(BF::is_posted("id_event")){
-    $id_event = $_GET["id_event"];
-    $infos = BF::request("SELECT * FROM evenements WHERE id_event = ?",[$id_event],true,false,PDO::FETCH_ASSOC)[0];
+if(BF::is_posted("id_event")){ //controller
+    $id_event = $_GET["id_event"]; //controller
+    $infos = get_infos($id_event);
     ?>
-    <div class="case" style="width: 800px;<?php if(isset($_GET["iframe"]) ? 1 : 0){echo "margin: 0px;";}?>">
+    <div class="case" style="width: 800px;<?php if(isset($_GET["iframe"]) ? 1 : 0){echo "margin: 0px;";} //controller?>">
         <div class="titre_event">
             <?= $infos["nom_event"] ?>
         </div>
         <div>
         <?php
         //Affichage du logo
-            $req = "SELECT valeur FROM prop_evenements WHERE id_event = ? AND prop_nom = ?";
-            $logo = BF::request($req, [$id_event,"logo"],true,true);
+            
+            $logo = get_logo($id_event);
             
             if(BF::equals($logo[0],"TRUE")? 1 : 0){
                 foreach (glob($path."media/logo/event/".$id_event.".*") as $filename){
                     ?>
-                    <img style ="width: 200px; float: left; height: 200px;" src="<?= BF::abs_path("media/logo/event/".basename($filename)) ?>">
+                    <img style ="width: 200px; float: left; height: 200px;" src="<?= BF::abs_path("media/logo/event/".basename($filename))?>">
                     <?php
                 }
                 ?>
             <div class="event_a_droite">
                 <div class="event_infos">
-                    <div class="titre_rubrique_event">
-                        Date
-                    </div>
-                    De : <div style="float: right;"><img src="<?= BF::abs_path("media/img/calendar.png") ?>" style="width: 10px; display: inline-block;"> <?= date("Y/m/d  ",$infos["date_event_debut"]) ?><img src="<?= BF::abs_path("media/img/clock.png") ?>" style="height: 12px; display: inline-block;"><?= date(" H:i",$infos["date_event_debut"]) ?></div>
-                    <div style="clear:both;"></div>
-                    A : <div style="float: right;"><img src="<?= BF::abs_path("media/img/calendar.png") ?>" style="width: 10px; display: inline-block;"> <?= date("Y/m/d  ",$infos["date_event_fin"]) ?><img src="<?= BF::abs_path("media/img/clock.png") ?>" style="height: 12px; display: inline-block;"><?= date(" H:i",$infos["date_event_fin"]) ?></div>
-                    <div style="clear: both"></div>
+                    <?php afficher_dates(); ?>
                 </div>
                 <div class="desc">
                     <div class="titre_rubrique_event">
                         Informations
                     </div>
                     <?php 
-                        $frequence = "";
-                        $freq = BF::request($req, [$id_event,"freq"],true,true);
-                
-                        if(BF::equals($freq[0],"annu")? 1 : 0){
-                            $frequence = "Annuelle";
-                        }elseif(BF::equals($freq[0],"mens")? 1 : 0){
-                            $frequence = "Mensuelle";
-                        }
-                        elseif(BF::equals($freq[0],"hebd")? 1 : 0){
-                            $frequence = "Hebdomadaire";
-                        }
-                        elseif(BF::equals($freq[0],"quot")? 1 : 0){
-                            $frequence = "Quotidienne";
-                        }
-                        echo "Fréquence : ".$frequence."<br>";
-                        
-                        
-                        $vis = "";
-                        $visu = BF::request($req, [$id_event,"visu"],true,true);
-                
-                        if($visu[0]? 1 : 0){
-                            $vis = $visu[0];
-                        }
-                        
-                        echo " Visibilité : ".$vis;
+                        afficher_visu();
                         ?>
                         <img src="<?= BF::abs_path("media/img/eye.png") ?>" style="width: 13px; display: inline-block;">
                         
@@ -82,7 +52,7 @@ if(BF::is_posted("id_event")){
                 <?php
                 
 
-                $desc = BF::request($req,[$id_event,"desc"],true,true);
+                $desc = get_desc($id_event);
                 if($desc[0]? 1 : 0){
                     echo $desc[0];
                 }
@@ -94,7 +64,7 @@ if(BF::is_posted("id_event")){
     </div>
     <?php
 }
-if(isset($_GET["iframe"]) ? 1 : 0){
+if(isset($_GET["iframe"]) ? 1 : 0){ //controller
     ?>
     <script>
         let body = document.body;

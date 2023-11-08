@@ -1,7 +1,8 @@
 <?php
 require_once __DIR__."/../functions/basic_functions.php";
 require_once BF::abs_path("db.php",true);
-
+require_once __DIR__."/Ressources/NomsAttributsTables.php";
+use AttributsTables as A;
 /**
 * Abstraction de la table domaine
 **/
@@ -25,16 +26,16 @@ class Domaine{
     **/
     public function get_nom(){
         
-        $array = BF::request("SELECT nom_domaine FROM domaine WHERE id = ?",[$this->id],true,true,PDO::FETCH_ASSOC);
-        return $array["nom_domaine"];
+        $array = BF::request("SELECT ".A::DOMAINE_NOM." FROM ".A::DOMAINE." WHERE ".A::DOMAINE_ID." = ?",[$this->id],true,true,PDO::FETCH_ASSOC);
+        return $array[A::DOMAINE_NOM];
     }    
     /**
      * Renvoie toutes les infos des domaines
      *
-     * @return void
+     * @return array
      */
     public static function get_all(){
-        $array = BF::request("SELECT * FROM domaine",[],true,false,PDO::FETCH_ASSOC);
+        return BF::request("SELECT * FROM ".A::DOMAINE,[],true,false,PDO::FETCH_ASSOC);
     }
     
     /**
@@ -46,9 +47,9 @@ class Domaine{
      */
     public function create_domaine($nom_domaine){
         //Insertion du domaine
-        BF::request("INSERT INTO domaine (nom_domaine) VALUES (?)",[$nom_domaine],false);
+        BF::request("INSERT INTO ".A::DOMAINE." (".A::DOMAINE_NOM.") VALUES (?)",[$nom_domaine],false);
         //Récupération de l'id
-        $this->id = BF::request("SELECT id_domaine FROM domaine WHERE nom_domaine LIKE ?",[$nom_domaine],true,true)[0];
+        $this->id = BF::request("SELECT ".A::DOMAINE_ID." FROM ".A::DOMAINE." WHERE ".A::DOMAINE_NOM." LIKE ?",[$nom_domaine],true,true)[0];
     }
     
     /**
@@ -57,7 +58,7 @@ class Domaine{
      * @return int
      */
     public static function nombre_domaines(){
-        return BF::request("SELECT COUNT(*) FROM domaine",[],true,false)[0];
+        return BF::request("SELECT COUNT(*) FROM ".A::DOMAINE,[],true,false)[0];
     }
 }
 
