@@ -115,28 +115,19 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
    * A faire, crée une asso
    * @todo 
    */
-  public static function insert($nom, $description, $domaines, $missions, $localisation, $email, $telephone) {
-    // Étape 1 : on insère la nouvelle localisation dans la table "lieu"
-    $insertLieuQuery = "INSERT INTO lieu (nom_lieu) VALUES (?)";
-    $insertLieuParams = [$localisation];
+  public static function insert($nom, $description, $domaines, $missions, $lieu, $email, $telephone) {
 
-    // Exécutez la requête d'insertion de lieu et récupérez l'ID généré automatiquement
-    $newLieuId = VotreClasseDeRequete::executeInsertQuery($insertLieuQuery, $insertLieuParams);
+    //On insère d'abord le lieu
+    BF::request("INSERT INTO ".A::LIEU." (".A::LIEU_DEPARTEMENT.", ".A::LIEU_ADRESSE.") VALUES (?, ?)",[$departement,$adresse]);
+    $id_lieu = $db->lastInsertId();
 
-    if ($newLieuId !== false) {
-        // Étape 2 : Insérer la nouvelle association avec l'ID de localisation dans la table "asso"
-        $insertQuery = "INSERT INTO " . A::ASSO . " (" . A::ASSO_NOM . ", " . A::ASSO_DESCRIPTION . ", " . A::ASSO_DOMAINES . ", " . A::ASSO_MISSIONS . ", " . A::ASSO_LOCALISATION . ", " . A::ASSO_EMAIL . ", " . A::ASSO_TELEPHONE . ") VALUES (?, ?, ?, ?, ?, ?, ?)";
-        $insertParams = [$nom, $description, $domaines, $missions, $newLieuId, $email, $telephone];
+    // On insère les données de l'association dans la base de données
+    $assoInsertQuery = "INSERT INTO " . A::ASSO . " (" . A::ASSO_NOM . ", " . A::ASSO_DESCRIPTION . ", " . A::ASSO_DOMAINES . ", " . A::ASSO_DESCRIPTION_MISSIONS . ", " . A::ASSO_ID_LIEU . ", " . A::ASSO_EMAIL . ", " . A::ASSO_TELEPHONE . ") VALUES (?, ?, ?, ?, ?, ?, ?)";
+    BF::request($evenementInsertQuery,[$nom, $description, $domaines, $missions, $id_lieu, $email, $telephone], false);
 
-        // Exécutez la requête d'insertion de l'association
-        $insertAssociationResult = VotreClasseDeRequete::executeInsertQuery($insertQuery, $insertParams);
+    $id_asso = $db->lastInsertId();
 
-        // Vérifiez si l'insertion a réussi et renvoyez le résultat
-        return $insertAssociationResult;
-    } else {
-        // Si l'insertion de lieu a échoué, renvoyez une valeur pour indiquer l'échec
-        return false;
-    }
+    return new Asso($id_asso);
 }
 
 
