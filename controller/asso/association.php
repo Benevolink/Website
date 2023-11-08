@@ -8,7 +8,18 @@ if(!isset($_GET["id"])){
 }
 
 require_once BF::abs_path("libs/Asso.php",true);
+require_once BF::abs_path("libs/User.php",true);
+
 $id_asso = $_GET["id"];
 $asso = new Asso($id_asso);
-$table = $asso->get_all();
+
+$prop_all = $asso->prop_association();
+$nombre = $prop_all["membres_count"][0];
+
+$user = new User();
+$is_admin = $user->est_admin_asso($id_asso);
+$est_dans_asso = $user->suit_asso($id_asso);
+ob_start();
+require_once BF::abs_path("view/".$file_name,true);
+BF::afficher_template();
 ?>

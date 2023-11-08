@@ -76,6 +76,21 @@ class User implements Suppression, GestionLogo{
     }
     return false;
   }
+
+    /**
+   * Vérifie que l'utilisateur suit l'asso (statut > -1)
+   *
+   * @param int $id_asso $id_asso [id association]
+   *
+   * @return bool
+   */
+  public function suit_asso($id_asso){
+    $statut = $this->statut_asso($id_asso);
+    if($statut > -1){
+      return true;
+    }
+    return false;
+  }
     
   /**
    * Quitte l'association
