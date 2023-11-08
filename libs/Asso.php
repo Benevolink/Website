@@ -115,8 +115,31 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
    * A faire, crée une asso
    * @todo 
    */
-  public static function insert(){
-  }
+  public static function insert($nom, $description, $domaines, $missions, $localisation, $email, $telephone) {
+    // Créez une nouvelle instance d'association
+    $nouvelleAssociation = new Asso();
+
+    // Initialisez les propriétés de l'association avec les paramètres fournis
+    $nouvelleAssociation->nom = $nom;
+    $nouvelleAssociation->description = $description;
+    $nouvelleAssociation->domaines = $domaines;
+    $nouvelleAssociation->missions = $missions;
+    $nouvelleAssociation->localisation = $localisation;
+    $nouvelleAssociation->email = $email;
+    $nouvelleAssociation->telephone = $telephone;
+
+    // Insérez les données de l'association dans la base de données
+    $insertQuery = "INSERT INTO " . A::ASSO . " (" . A::ASSO_NOM . ", " . A::ASSO_DESCRIPTION . ", " . A::ASSO_DOMAINES . ", " . A::ASSO_DESCRIPTION_MISSIONS . ", " . A::ASSO_ID_LIEU . ", " . A::ASSO_EMAIL . ", " . A::ASSO_TELEPHONE . ") VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $insertParams = [$nom, $description, $domaines, $missions, $localisation, $email, $telephone];
+
+    // Utilisez une méthode de requête pour exécuter la requête d'insertion
+    // Assurez-vous que votre méthode de requête gère la connexion à la base de données et la préparation des requêtes.
+    // La manière de l'exécuter dépend de la logique de gestion de la base de données de votre application.
+
+    // Vous pouvez renvoyer une valeur pour indiquer le succès ou l'échec de l'opération
+    // Par exemple, true si l'insertion a réussi, false si elle a échoué.
+}
+
 
   /**
    * A faire
