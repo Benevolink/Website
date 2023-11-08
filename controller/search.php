@@ -2,8 +2,10 @@
 $a_jour = true;
 $file_name = basename(__FILE__);
 require_once __DIR__.'/../links.php';
-if(BF::is_posted("Recherche"))
+if(BF::is_posted("Recherche")){
     $r = $_GET["Recherche"];
+}
+
 else
     $r = "";
 

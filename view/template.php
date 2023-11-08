@@ -116,7 +116,7 @@ if(!(isset($iframe) ? 1 : 0)){
     </ul>
     <form class="navbar-form navbar-left" action="<?= BF::abs_path("controller/search.php")?>" method="get">
       <div class="form-group">
-        <input type="text"  class="form-control input-large" placeholder="Rechercher une mission ou association">
+        <input type="text" name="Recherche"  class="form-control input-large" placeholder="Rechercher une mission ou association">
       </div>
       <button type="submit" class="btn btn-default input-large">Rechercher</button>
     </form>
