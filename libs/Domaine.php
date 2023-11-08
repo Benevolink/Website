@@ -60,6 +60,21 @@ class Domaine{
     public static function nombre_domaines(){
         return BF::request("SELECT COUNT(*) FROM ".A::DOMAINE,[],true,false)[0];
     }
+
+    /**
+     * Vérifie si l'élément a comme domaine le domaine correspondant
+     * @todo
+     */
+    public function detient_domaine($objet){
+        if($objet instanceof Asso){
+
+        }elseif($objet instanceof Event){
+
+        }elseif($objet instanceof User){
+
+        }
+    }
+    
 }
 
 ?>
