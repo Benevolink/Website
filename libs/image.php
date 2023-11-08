@@ -129,7 +129,7 @@ class image {
     //on vérifie le format de l'image
         if (!in_array($extension, $allowed_extensions)) {
         
-        echo "Cette extension n'est pas authorisée";
+        echo "Cette extension n'est pas authorisée. Les authorisations authorisées sont jpg, jpeg et png";
         }
         //Vérifier qu'il n'y a pas de points autres que celui de l'extension dans le nom de l'image pour éviter une double extension
         
@@ -138,8 +138,29 @@ class image {
             if ($nom_image[$i]==".") {
             echo "Il ne peut y avoir d'autres points que celui de l'extension"; 
              }
+        }
     }
-}
+    /**
+     * Method modifier_image
+     * 
+     * @param $lien_image [Un lien vers l'image à modifier. L'image doit DEJA être mise dans la base de donnée]
+     * 
+     * @return message_erreur
+     * Permet de modifier et de mettre aux normes une image DEJA dans la base de donnée. Retourne 1 si l'opération a réussi et 0 sinon.
+     */
+
+    public static function modifier_image($lien_image){
+        $name=basename($lien_image);
+        $ext=pathinfo($name,PATHINFO_EXTENSION);
+        if(strcmp($ext,"jpg")==0 ||strcmp($ext,"jpeg")==0){$im_php = imagecreatefromjpeg($lien_image);}
+        elseif(strcmp($ext,"png")==0){$im_php = imagecreatefrompng($lien_image);}
+        else{return 0;}
+        //mettre les modifications souhaitées
+        $new_name = str_replace('-1920x1080', '-640x'.$new_height, basename($lien_image)); // A revoir
+        imagejpeg($im_php, $lien_image); //même lien que l'image originale, donc normalement écrase l'image originale (il faudra néanmoins vérifier dans la doc)
+        //revoir les messages d'erreur en fonction des fonctions de modification
+    }
+
 
 }
 
