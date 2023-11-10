@@ -7,63 +7,51 @@ export class Asso{
         this.id_asso = id_asso;
     }
 
-    afficher_details_court(){
-        //ajax pour récupérer le tableau puis affichage
-        $.ajax({
+    getInfo(info_name){
+        return $.ajax({
             url: abs_path("NOMFICHIER.php"),
             method: "POST",
             dataType: "json",
             data: {
                 id_asso: this.id_asso
             }
-        }).done(function(rep){
+        }).then(function(rep) {
             console.log(rep);
-            //détailler l'affichage paramètre par paramètre : nom, logo
-            var nom_asso = rep.nom;
-            var logo_asso = rep.logo;
-            //ajouter bien au HTML
-            main.append(
-                $('<div>').css({
-                    cursor: "pointer",
-                    margin: "10px",
-                    backgroundColor: "rgb(245,245,245)",
-                    width: "600px",
-                    borderRadius: "3px",
-                    padding: "10px"
-                })
-                //ajouter un on click : afficher en grand
-            );  
-        })
-        }
-
-    afficher_details_long(reponse){
-        //affichage dans une page à part on click
-        //on part de la rep et on affiche un peu comme details courts avec des trucs en plus/+grand
-
-        //détailler l'affichage paramètre par paramètre : nom, desc, desc_missions, id_lieu, email, tel, logo
-        var nom_asso = reponse.nom;
-        var logo_asso = reponse.logo;
-        var desc_asso = reponse.desc;
-        var desc_missions_asso = reponse.desc_missions;
-        var email_asso = reponse.email;
-        var tel_asso = reponse.tel;
-        var id_lieu_asso = reponse.id_lieu;
-        //a partir de id_lieu : déterminer département
-
-        //ajouter bien au HTML
-        main.append(
-            $('<div>').css({
-                cursor: "pointer",
-                margin: "10px",
-                backgroundColor: "rgb(245,245,245)",
-                width: "600px",
-                borderRadius: "3px",
-                padding: "10px"
-            })
-        );
-
+            return rep[info_name];
+        });
     }
 
+    getName(){
+        return this.getInfo("nom");
+        }
+    
+
+    getLogo(){
+        return this.getInfo("logo");
+        }
+    
+
+    getDesc(){
+        return this.getInfo("desc");
+        }
+    
+
+    getDescMissions(){
+        return this.getInfo("desc_missions");
+        }
+    
+    
+    getEmail(){
+        return this.getInfo("email");
+        }
+    
+
+    getTel(){
+        return this.getInfo("tel");
+        }
+    
+    
+    //bouger ça ailleurs
     afficher_liste_events(){
         //ajax pour récupérer liste events puis appel à la classe Event pour afficher
         $.ajax({
