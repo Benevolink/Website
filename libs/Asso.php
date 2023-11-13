@@ -174,7 +174,6 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
 
   /**
    * Ajoute un membre
-   * @todo 
    */
   public function ajouter_membre($user, $role = null){
     BF::request("INSERT INTO ".A::MEMBRESASSOS." (".A::MEMBRESASSOS_ID_ASSO.",".A::MEMBRESASSOS_ID_USER.",".A::MEMBRESASSOS_STATUT.") VALUES (?,?,?)",[$this->id,$user->id,$role]);
