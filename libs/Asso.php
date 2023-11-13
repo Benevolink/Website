@@ -159,7 +159,7 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
 
     //Ajout de l'utilisateur en tant qu'admin de l'asso crée
     $user = new User();
-    $asso->modifier_role_membre($user,3);
+    $asso->ajouter_membre($user,3);
     
 
   }
@@ -177,7 +177,7 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
    * @todo 
    */
   public function ajouter_membre($user, $role = null){
-
+    BF::request("INSERT INTO ".A::MEMBRESASSOS." (".A::MEMBRESASSOS_ID_ASSO.",".A::MEMBRESASSOS_ID_USER.",".A::MEMBRESASSOS_STATUT.") VALUES (?,?,?)",[$this->id,$user->id,$role]);
   }
 
   /**
