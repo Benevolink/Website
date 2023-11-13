@@ -83,16 +83,16 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
   public function prop_association() {
     $id_asso = $this->id;
     // Sélectionner les propriétés de l'association
-    $propAssos = BF::request("SELECT * FROM ".A::PROPASSO." WHERE ".A::PROPASSO_ID_ASSO." = ?", [$id_asso], true, false, PDO::FETCH_ASSOC);
+    $propAssos = BF::request("SELECT * FROM ".A::PROPASSO." WHERE ".A::PROPASSO_ID_ASSO." = ?", [$id_asso], true, true, PDO::FETCH_ASSOC);
 
     // Sélectionner les informations de l'association
-    $assoInfo = BF::request("SELECT * FROM ".A::ASSO." WHERE ".A::ASSO_ID." = ?", [$id_asso], true, false, PDO::FETCH_ASSOC);
+    $assoInfo = BF::request("SELECT * FROM ".A::ASSO." WHERE ".A::ASSO_ID." = ?", [$id_asso], true, true, PDO::FETCH_ASSOC);
 
     // Compter les membres de l'association
     $membresCount = BF::request("SELECT COUNT(*) FROM ".A::MEMBRESASSOS." WHERE ".A::MEMBRESASSOS_ID_ASSO." = ?", [$id_asso], true, true)[0];
 
     return array(
-        'prop_assos' => $propAssos,
+        'prop_asso' => $propAssos,
         'asso_info' => $assoInfo,
         'membres_count' => $membresCount
     );
@@ -114,7 +114,7 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
   /**
    * Renvoie toutes les données de l'association
    *
-   * @return void
+   * @return array
    */
   public function get_all(){
     return BF::request("SELECT * FROM ".A::ASSO." WHERE ".A::ASSO_ID." = ?",[$this->id],true,true,PDO::FETCH_ASSOC);
