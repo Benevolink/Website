@@ -33,7 +33,7 @@ class Lieu implements Suppression{
 
   }
 
-  public static function insert($adresse,$departement){
+  public static function insert($adresse = null,$departement = null){
     if(is_null($departement)&&is_null($adresse)) return false;
     if(is_null($departement)){
         BF::request("INSERT INTO ".A::LIEU." (".A::LIEU_ADRESSE.") VALUES (?)",[$adresse],false);

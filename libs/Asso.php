@@ -127,6 +127,8 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
   public static function insert($nom, $description, $description_missions, $logo, $email, $tel, $domaines){
     global $db;
     require_once __DIR__."/Domaine.php";
+    require_once __DIR__."/Lieu.php";
+    require_once __DIR__."/User.php";
     /**
      * Partie logo à ajouter quand Charlotte aura fini
      * @todo
@@ -149,9 +151,16 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
       $domaine->insert_jonction($asso);
     }
 
+    //Insertion du lieu
+    Lieu::insert($adresse);
+    $id_lieu = $db->lastInsertId();
+    //Ajout du lieu dans l'asso
+    BF::request("UPDATE ".A::ASSO." SET ".A::ASSO_ID_LIEU." = ? WHERE ".A::ASSO_ID." = ?",[$id_lieu,$id]);
 
+    //Ajout de l'utilisateur en tant qu'admin de l'asso crée
+    $user = new User();
+    $asso->modifier_role_membre($user,3);
     
-  
 
   }
 
