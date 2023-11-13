@@ -4,7 +4,7 @@ if(isset($_GET["iframe"]) ? 1 : 0){
     $iframe = true;
 }
 require_once __DIR__.'/../links.php';
-if(!isset($_GET["id_event"])){
+if(!isset($_GET["id_event"]) || !is_int($_GET["id_event"])){
     BF::go_home();
 }
 
