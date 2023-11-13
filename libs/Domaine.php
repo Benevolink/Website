@@ -39,17 +39,18 @@ class Domaine{
     }
     
     /**
-     * Method create_domaine
+     * Method insert
      *
-     * @param string  $nom_domaine $nom_domaine [Du du domine que l'on veut créer]
+     * @param string  $nom_domaine $nom_domaine [Du du domaine que l'on veut créer]
      *
-     * @return void
+     * @return Domaine
      */
-    public function create_domaine($nom_domaine){
+    public static function insert($nom_domaine){
         //Insertion du domaine
         BF::request("INSERT INTO ".A::DOMAINE." (".A::DOMAINE_NOM.") VALUES (?)",[$nom_domaine],false);
         //Récupération de l'id
-        $this->id = BF::request("SELECT ".A::DOMAINE_ID." FROM ".A::DOMAINE." WHERE ".A::DOMAINE_NOM." LIKE ?",[$nom_domaine],true,true)[0];
+        $id = BF::request("SELECT ".A::DOMAINE_ID." FROM ".A::DOMAINE." WHERE ".A::DOMAINE_NOM." LIKE ?",[$nom_domaine],true,true)[0];
+        return new Domaine($id);
     }
     
     /**
@@ -74,6 +75,26 @@ class Domaine{
 
         }
     }
+        
+    /**
+     * Ajoute une jonction avec la cible. Définis automatiquement le type de jonction
+     * selon la classe de la cible
+     *
+     * @param $cible $cible [Instance de la cible (user / asso / event)]
+     *
+     * @return void
+     */
+    public function insert_jonction($cible){
+        if($cible instanceof User)
+            $type = 0;
+        else if($cible instanceof Asso)
+            $type = 1;
+        else if($cible instanceof Event)
+            $type = 2;
+        BF::request("INSERT INTO ".A::DOMAINEJONCTION." (".A::DOMAINEJONCTION_ID_DOMAINE.",".A::DOMAINEJONCTION_ID_JONCTION.",".A::DOMAINEJONCTION_TYPE.") VALUES (?,?,?)",[$this->id,$cible->id,$type],false);
+    }
+
+
     
 }
 
