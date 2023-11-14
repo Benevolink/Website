@@ -314,5 +314,43 @@ class User implements Suppression, GestionLogo{
   public function suppr_logo(){
     
   }
+  
+  /**
+   * Method user_exists
+   *
+   * @param string $email $email [explicite description]
+   * @param string $tel $tel [explicite description]
+   *
+   * @return bool
+   */
+  public static function user_exists($email,$tel){
+    $count =BF::request("SELECT COUNT(*) FROM ".A::USER." WHERE (".A::USER_EMAIL." = ? OR ".A::USER_TEL." = ?)",[$email,$tel]);
+    return $count> 0?true:false;
+  }
+  
+  /**
+   * Method user_email_exists
+   *
+   * @param string $email $email [explicite description]
+   *
+   * @return bool
+   */
+  public static function user_email_exists($email){
+    $count =BF::request("SELECT COUNT(*) FROM ".A::USER." WHERE ".A::USER_EMAIL." = ?",[$email]);
+    return $count> 0?true:false;
+  }
+  
+  /**
+   * Method user_tel_exists
+   *
+   * @param string $tel $tel [explicite description]
+   *
+   * @return bool
+   */
+  public static function user_tel_exists($tel){
+    $count =BF::request("SELECT COUNT(*) FROM ".A::USER." WHERE ".A::USER_TEL." = ?",[$tel]);
+    return $count> 0?true:false;
+  }
+
 }
 ?>
