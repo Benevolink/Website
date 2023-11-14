@@ -6,5 +6,5 @@ switch($fonction){
     case "":
         break;
     case "search":
-        APIAsso::recherche_asso($_POST["recherche"]);
+        APIAsso::api_search($_POST["recherche"]);
 }

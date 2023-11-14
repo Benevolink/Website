@@ -17,13 +17,13 @@ class APIUser extends User{
     public static function api_auth($email,$mdp){
         require_once BF::abs_path("libs/Auth.php",true);
         if(Auth::verif_pw($email,$mdp)){
-            echo return_statut(true);
+            return_statut(true);
             session_regenerate_id(true);
             $_SESSION["auth"]=1;
             $_SESSION["user_id"] = $table2[0][0];
             exit();
         }
-        echo return_statut(false);
+        return_statut(false);
         exit();
     }
     
