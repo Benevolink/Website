@@ -19,7 +19,7 @@ class APIUser extends User{
         if(Auth::verif_pw($email,$mdp)){
             return_statut(true);
             session_regenerate_id(true);
-            $_SESSION["auth"]=1;
+            $_SESSION["auth"] = 1;
             $_SESSION["user_id"] = $table2[0][0];
             exit();
         }
