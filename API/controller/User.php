@@ -19,6 +19,10 @@ switch($fonction){
     case "inscription_etape1":
         APIUser::api_inscription_etape1($_POST["email"],$_POST["tel"],$_POST["mdp"],$_POST["mdp2"]);
         break;
+    case "liste_asso":
+        $user = new APIUser();
+        $user->api_liste_asso();
+        exit();
     default:
         echo "Veuillez spécifier une fonction";
         exit();
