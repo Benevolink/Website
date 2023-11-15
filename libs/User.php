@@ -351,6 +351,15 @@ class User implements Suppression, GestionLogo{
     $count =BF::request("SELECT COUNT(*) FROM ".A::USER." WHERE ".A::USER_TEL." = ?",[$tel]);
     return $count> 0?true:false;
   }
-
+  
+  /**
+   * Vrai si l'utilisateur est superadmin
+   *
+   * @return bool
+   */
+  public function is_admin_glob(){
+    $i = BF::request("SELECT ".A::USER_ACCOUNT_STATUS." FROM ".A::USER." WHERE ".A::USER_ID." = ?",[$this->user_id]);
+    return $i > 0?true:false;
+  }
 }
 ?>
