@@ -1,6 +1,6 @@
 <?php
 //Redirige la requête vers le bon fichier
-require_once __DIR__."/../../functions/basic_functions.php";
+require_once __DIR__."/../functions/basic_functions.php";
 
 //Lecture de l'entrée utilisateur
 if(!isset($_POST["fonction"]) || empty($_POST["fonction"]))
@@ -9,6 +9,8 @@ exit("Veuillez spécifier une fonction");
 if(!isset($_POST["type"]) || empty($_POST["fonction"]))
 exit("Veuillez spécifier un type");
 
+
+header('Content-Type: application/json; charset=utf-8');
 $fonction = $_POST["fonction"];
 $type = $_POST["type"];
 
@@ -18,10 +20,10 @@ $type = $_POST["type"];
  *
  * @param array $data $data [explicite description]
  *
- * @return string|bool
+ * @return void
  */
 function return_json($data) {
-    return json_encode($data, JSON_UNESCAPED_UNICODE);
+    echo json_encode($data, JSON_UNESCAPED_UNICODE);
 }
 
 /**
@@ -30,7 +32,7 @@ function return_json($data) {
  * @param bool $statut $statut [explicite description]
  * @param string $msg_erreur $msg_erreur [explicite description]
  *
- * @return bool|string
+ * @return void
  */
 function return_statut($statut,$msg_erreur = ""){
     if($statut == true)
@@ -39,13 +41,19 @@ function return_statut($statut,$msg_erreur = ""){
     else
     $array = array("statut" => 0, "message_erreur" => $msg_erreur);
 
-    return json_encode($array, JSON_UNESCAPED_UNICODE);
+    echo json_encode($array, JSON_UNESCAPED_UNICODE);
 }
 
 //Redirection
 switch($type){
     case "user":
         require __DIR__."/controller/User.php";
+        break;
+    case "asso":
+        require __DIR__."/controller/Asso.php";
+        break;
+    case "event":
+        require __DIR__."/controller/Event.php";
         break;
     default:
     break;
