@@ -1,4 +1,3 @@
-
   <link rel="stylesheet" href="<?= BF::abs_path("CSS/association.css")?>">
 <body>
   <img id="logo" src="<?= BF::abs_path($prop_all["asso_info"][AttributsTables::ASSO_LOGO]) ?>" class="img_asso">
