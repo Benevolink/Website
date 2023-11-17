@@ -55,6 +55,7 @@ header('Cache-Control: private',true);
 #boutonlogo3 {
     max-width: 13%; /* Vous pouvez ajuster le pourcentage selon la taille souhaitée */
     height: auto; /* Cela maintiendra les proportions de l'image */
+
 }
 
 #barre_2{
@@ -62,12 +63,7 @@ header('Cache-Control: private',true);
   font-size:16px;
 }
 
-  .logo-img {
-      display: block; /* Assurez-vous que l'image est affichée en tant que bloc */
-      margin: 0 auto;  /* Centre l'image horizontalement */
-      max-width: 30%; /* Garantit que l'image ne dépasse pas la largeur de son parent */
-      height: auto;    /* Ajuste la hauteur en conséquence pour maintenir le ratio d'aspect */
-  }
+  
 
 
 
@@ -107,31 +103,25 @@ if(!(isset($iframe) ? 1 : 0)){
   
   </ul>
 
-  <div class="container">
-      <div class="row">
-          <div class="col-xs-6">
-              <a href="<?= BF::abs_path('index.php') ?>"><img id="boutonlogo2" src="<?= BF::abs_path("media/img/benevolink2.jpg") ?>" class="logo-img" alt="Logo"></a>
-          </div>
-      </div>
-  </div>
+  <a href="#" style="display: flex; justify-content: center; align-items: center;">
+    <img id="boutonlogo3" src="<?= BF::abs_path("media/img/benevolink3.png") ?>" 
+      zonclick="window.location.href = '<?= BF::abs_path('index.php') ?>'" style="max-width: 13%;">
+  </a>
   
-<div class="navbar navbar-default navbar-shadow" id="bs-example-navbar-collapse-1">
-   <a class="navbar-brand" href="#"> <img id="boutonlogo3" src="<?= BF::abs_path("media/img/benevolink3.png") ?>" onclick="window.location.href = '<?= BF::abs_path('index.php') ?>'"></a>
-  <ul class="nav navbar-nav" id="recherche2">
-    <li class="active"><a href="<?= BF::abs_path("controller/asso/associations_user.php")?>"> <span class="text-success">Associations</span></a></li>
-    <li><a href="<?= BF::abs_path("controller/missions.php")?>"> <span class="text-success"> Missions </span> </a></li>
-  </ul>
-  <form class="navbar-form navbar-left" action="<?= BF::abs_path("controller/search.php")?>" method="get">
-    <div class="form-group">
-      <input type="text"  class="form-control input-large" placeholder="Rechercher une mission ou association">
-    </div>
-    <button type="submit" class="btn btn-default input-large">Rechercher</button>
-  </form>
+  <div class="navbar navbar-default navbar-shadow" id="bs-example-navbar-collapse-1">
 
-  
-  
-  <ul class="nav navbar-nav navbar-right" id="barre_2">
-    <li class="dropdown">
+    <ul class="nav navbar-nav" id="recherche2" style="display: flex; justify-content: center; align-items: center;">
+      <li class="active"><a href="<?= BF::abs_path("controller/asso/associations_user.php")?>"> <span class="text-success">Associations</span></a></li>
+      <li><a href="<?= BF::abs_path("controller/missions.php")?>"> <span class="text-success"> Missions </span> </a></li>
+    </ul>
+    <form class="navbar-form navbar-left" action="<?= BF::abs_path("controller/search.php")?>" method="get">
+      <div class="form-group">
+        <input type="text" name="Recherche"  class="form-control input-large" placeholder="Rechercher une mission ou association">
+      </div>
+      <button type="submit" class="btn btn-default input-large">Rechercher</button>
+    </form>
+    <ul class="nav navbar-nav navbar-right" id="barre_2">
+      <li class="dropdown">
       <!-- mettre Se connecter si pas co, sinon afficher le nom de l'utilisateur -->
       <?php 
       if(!BF::is_connected()){
@@ -155,8 +145,9 @@ if(!(isset($iframe) ? 1 : 0)){
         <?php } ?>
       </li>
     </ul>
-  </div><!-- /.navbar-collapse -->
-</div><!-- /.container-fluid -->
+  </div>
+  
+
 </nav>
 
    <script>
@@ -203,6 +194,7 @@ if(!(isset($iframe) ? 1 : 0)){
   </footer>
 
 
+
 <!-- <footer id="footer" class="p-0">
     <div class="container pt-6 pb-5">
     
@@ -216,3 +208,24 @@ if(!(isset($iframe) ? 1 : 0)){
     
   </footer> -->
 <?php } ?>
+
+
+<!-- <footer id="footer" class="p-0">
+    <div class="container pt-6 pb-5">
+    
+     <h1>Quelques informations</h1>
+    
+      <ul>
+       <li>Nous contacter : projetg1g2@gmail.com</li>
+       <li><a href="<?= BF::abs_path("controller/static/equipe.php") ?>">Qui nous sommes</a></li> -->
+      <!-- </ul>
+    </div>
+    
+  </footer> -->
+
+    
+
+    
+
+    
+

@@ -2,6 +2,7 @@
 require_once __DIR__."/../functions/basic_functions.php";
 require_once BF::abs_path("db.php",true);
 require_once __DIR__."/Ressources/NomsAttributsTables.php";
+require_once __DIR__."/Ressources/LibsInterfaces.php";
 use AttributsTables as A;
 
 /**
@@ -71,6 +72,21 @@ class User implements Suppression, GestionLogo{
   public function est_membre_asso($id_asso){
     $statut = $this->statut_asso($id_asso);
     if($statut > 0){
+      return true;
+    }
+    return false;
+  }
+
+    /**
+   * Vérifie que l'utilisateur suit l'asso (statut > -1)
+   *
+   * @param int $id_asso $id_asso [id association]
+   *
+   * @return bool
+   */
+  public function suit_asso($id_asso){
+    $statut = $this->statut_asso($id_asso);
+    if($statut > -1){
       return true;
     }
     return false;
@@ -190,6 +206,7 @@ class User implements Suppression, GestionLogo{
       $id_domaine = BF::request("SELECT ".A::DOMAINE_ID." FROM ".A::DOMAINE." WHERE ".A::DOMAINE_NOM." = ?", [$id_domaine], true, true)[0];
 
       //Erreur ici
+      //Utiliser domaine->detient_domaine($asso)
       $id_association_domaine = BF::request("SELECT ".A::EVENT_ID_ASSO." FROM ".A::EVENT." WHERE ".A::EVENT_ID_DOMAINE." = ?", [$id_domaine], true, true)[0];
 
       return array(
@@ -297,5 +314,43 @@ class User implements Suppression, GestionLogo{
   public function suppr_logo(){
     
   }
+  
+  /**
+   * Method user_exists
+   *
+   * @param string $email $email [explicite description]
+   * @param string $tel $tel [explicite description]
+   *
+   * @return bool
+   */
+  public static function user_exists($email,$tel){
+    $count =BF::request("SELECT COUNT(*) FROM ".A::USER." WHERE (".A::USER_EMAIL." = ? OR ".A::USER_TEL." = ?)",[$email,$tel]);
+    return $count> 0?true:false;
+  }
+  
+  /**
+   * Method user_email_exists
+   *
+   * @param string $email $email [explicite description]
+   *
+   * @return bool
+   */
+  public static function user_email_exists($email){
+    $count =BF::request("SELECT COUNT(*) FROM ".A::USER." WHERE ".A::USER_EMAIL." = ?",[$email]);
+    return $count> 0?true:false;
+  }
+  
+  /**
+   * Method user_tel_exists
+   *
+   * @param string $tel $tel [explicite description]
+   *
+   * @return bool
+   */
+  public static function user_tel_exists($tel){
+    $count =BF::request("SELECT COUNT(*) FROM ".A::USER." WHERE ".A::USER_TEL." = ?",[$tel]);
+    return $count> 0?true:false;
+  }
+
 }
 ?>

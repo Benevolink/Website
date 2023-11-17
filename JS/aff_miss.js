@@ -50,6 +50,7 @@ function afficher_missions(titre,liste){
           })
         ])
       ]);
+      //
       wrapper.append(div);
       wrapper.on("click",function(event){
         if(!(event.target.getAttribute("class")=="priority_target")){
