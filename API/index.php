@@ -55,6 +55,8 @@ switch($type){
     case "event":
         require __DIR__."/controller/Event.php";
         break;
+    case "domaine":
+        require __DIR__."/controller/Domaine.php";
     default:
     break;
 }
