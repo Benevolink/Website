@@ -1,50 +1,17 @@
-export class Event{
+import { APIObjet } from './APIObjet.js';
 
-    constructor(id_event){
-        this.id_event = id_event;
+
+export class Event extends APIObjet{
+
+    constructor(id){
+        this.id = id;
     }
 
-    getInfo(info_name){
-        return $.ajax({
-            url: abs_path("NOMFICHIER.php"),
-            method: "POST",
-            dataType: "json",
-            data: {
-                id_asso: this.id_asso
-            }
-        }).then(function(rep) {
-            console.log(rep);
-            return rep[info_name];
-        });
+    getInfos(){
+        return this
+        .APICall("event","get_all",{id_event : this.id});
     }
 
-    getName(){
-        return this.getInfo("nom_event");
-    }
-
-    getDesc(){
-        return this.getInfo("desc_event");
-    }
-
-    getVisu(){
-        return this.getInfo("visu");
-    }
-
-    getIdlieu(){
-        return this.getInfo("id_lieu");
-    }
-
-    getNbPersonnes(){
-        return this.getInfo("nb_personnes");
-    }
-
-    getIdHoraire(){
-        return this.getInfo("id_horaire");
-    }
-
-    getIdDomaine(){
-        return this.getInfo("id_domaine");
-    }
 
     //a partir de id_lieu, id_horaire, id_domaine : déterminer département, date_debut/heure_debut, nom_domaine
 

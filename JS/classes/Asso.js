@@ -1,56 +1,44 @@
+import { APIObjet } from './APIObjet.js';
 import {Event} from './Event.js';
 import {User} from './User.js';
 
-export class Asso{
+export class Asso extends APIObjet{
 
-    constructor(id_asso){
-        this.id_asso = id_asso;
+    constructor(id){
+        this.id = id;
     }
 
-    getInfo(info_name){
-        return $.ajax({
-            url: abs_path("NOMFICHIER.php"),
-            method: "POST",
-            dataType: "json",
-            data: {
-                id_asso: this.id_asso
-            }
-        }).then(function(rep) {
-            console.log(rep);
-            return rep[info_name];
-        });
+    getInfos(){
+        return this
+        .APICall("asso","get_all",{id_asso : this.id});
     }
 
-    getName(){
-        return this.getInfo("nom");
-        }
+    /**
+     * Utilisé pour les recherches d'assos
+     */
+    getListeAssos(searchEntry){
+        return this
+        .APICall("asso","search",{recherche : searchEntry});
+    }
+
     
 
-    getLogo(){
-        return this.getInfo("logo");
-        }
+    
     
 
-    getDesc(){
-        return this.getInfo("desc");
-        }
-    
 
-    getDescMissions(){
-        return this.getInfo("desc_missions");
-        }
-    
-    
-    getEmail(){
-        return this.getInfo("email");
-        }
-    
 
-    getTel(){
-        return this.getInfo("tel");
-        }
-    
-    
+
+
+
+
+
+
+
+
+
+
+
     //bouger ça ailleurs
     afficher_liste_events(){
         //ajax pour récupérer liste events puis appel à la classe Event pour afficher
