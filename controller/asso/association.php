@@ -21,5 +21,6 @@ $is_admin = $user->est_admin_asso($id_asso);
 $est_dans_asso = $user->suit_asso($id_asso);
 ob_start();
 require_once BF::abs_path("view/".$file_name,true);
+require_once BF::abs_path("JS/after".$file_name,true);
 BF::afficher_template();
 ?>

@@ -1,8 +1,6 @@
 
 
 <?php
-//TOUTES LES REQUETES BDD SERONT DANS libs
-$req = "SELECT valeur FROM prop_evenements WHERE id_event = ? AND prop_nom = ?"; //requete SQL utilisée en masse sur la page
 
 /**
  * Affiche les éléments pour la date
@@ -31,7 +29,7 @@ function afficher_dates(){
 function afficher_frequence(){
     global $event;
     $frequence = "";
-    $freq = $event->get_prop_evenement("freq");
+    $freq = $event->get_prop_value("freq");
     if(BF::equals($freq,"annu")? 1 : 0){
         $frequence = "Annuelle";
     }elseif(BF::equals($freq,"mens")? 1 : 0){
@@ -49,7 +47,7 @@ function afficher_frequence(){
 function afficher_visu(){
     global $event;
     $vis = "";
-    $visu = $event->get_prop_evenement("visu");
+    $visu = $event->get_prop_value("visu");
 
     if($visu? 1 : 0){
         $vis = $visu;
@@ -58,39 +56,17 @@ function afficher_visu(){
 }
 
 
-/** 
-* Récupère les infos d'un événement
-*
-* @return $infos
-**/
-function get_infos($id_event){
-    global $infos;
-    $infos = BF::request("SELECT * FROM evenements WHERE id_event = ?",[$id_event],true,false,PDO::FETCH_ASSOC)[0];
-    return $infos;
-}
 
 
-/** 
-* Récupère le logo d'un événement
-*
-* @return $logo
-**/
-function get_logo($id_event){
-    global $req;
-    $logo = BF::request($req, [$id_event,"logo"],true,true);
-    return $logo;
-}
 
 
 /** 
 * Récupère la description d'un événement
-*
 * @return $desc
 **/
 function get_desc($id_event){
-    global $req;
-    $desc = BF::request($req, [$id_event,"desc"],true,true);
-    return $desc;
+    global $event;
+    return $event->get_prop_value("desc");
 }
 
 ?>

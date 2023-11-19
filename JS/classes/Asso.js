@@ -5,6 +5,7 @@ import {User} from './User.js';
 export class Asso extends APIObjet{
 
     constructor(id){
+        super();
         this.id = id;
     }
 
@@ -13,10 +14,15 @@ export class Asso extends APIObjet{
         .APICall("asso","get_all",{id_asso : this.id});
     }
 
+    getListeEvents(){
+        return this
+        .APICall("asso","get_all_events",{id_asso : this.id});
+    }
+
     /**
      * Utilisé pour les recherches d'assos
      */
-    getListeAssos(searchEntry){
+    static getListeAssos(searchEntry){
         return this
         .APICall("asso","search",{recherche : searchEntry});
     }
