@@ -12,6 +12,11 @@ export class Event extends APIObjet{
         .APICall("event","get_all",{id_event : this.id});
     }
 
+    static getAllEvents(){
+        return this
+        .APICallStatic("event","user_get_all",{});
+    }
+
     static insert(array){
         return this.APICallStatic("event","insert",{array : array});
     }

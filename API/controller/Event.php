@@ -10,6 +10,26 @@ switch($fonction){
         $user = new User();
         return_json($user->infos_events());
         exit();
+    case "join":
+        if(!(isset($_POST["id_asso"]) && is_numeric($_POST["id_asso"]))){
+            return_statut(false);
+            exit();
+        }
+        require_once BF::abs_path("libs/User.php",true);
+        $user = new User();
+        $user->rejoindre_asso($_POST["id_asso"]);
+        return_statut(true);
+        exit();
+    case "leave":
+        if(!(isset($_POST["id_asso"]) && is_numeric($_POST["id_asso"]))){
+            return_statut(false);
+            exit();
+        }
+        require_once BF::abs_path("libs/User.php",true);
+        $user = new User();
+        $user->quitter_asso($_POST["id_asso"]);
+        return_statut(true);
+        exit();
     case "insert":
         try{
             
@@ -19,6 +39,14 @@ switch($fonction){
             if(is_string($array))
                 $array = json_decode($_POST["array"]); 
             
+            require_once BF::abs_path("libs/User.php");
+            if(!BF::is_connected())
+                goto insert_exit_fail;
+
+            $user = new User();
+            if(!$user->est_admin_asso($array["id_asso"]))
+                goto insert_exit_fail;
+
             APIEvent::insert($array["date_debut"],$array["date_fin"],$array["heure_debut"],$array["heure_fin"],$array["id_asso"],$array["nom"],$array["nb_personnes"],$array["visu"],$array["description"],"",$array["lieu"]);
             
             return_statut(true);

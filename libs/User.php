@@ -186,7 +186,13 @@ class User implements Suppression, GestionLogo{
    */
   public function rejoindre_asso($id_asso){
     $req = "INSERT INTO ".A::MEMBRESASSOS." (".A::MEMBRESASSOS_ID_ASSO.",".A::MEMBRESASSOS_ID_USER.",".A::MEMBRESASSOS_STATUT.") VALUES (? , ?, ?)";
-    BF::request($req,[$id_asso,$this->id,0],false);
+    $statut = 0; //En attente
+    if(BF::is_connected()){
+      $user = new User();
+      if($user->est_admin_asso($id_asso))
+        $statut = 3; //Si l'utilisateur est admin de l'asso, il est directement admin de l'event
+    }
+    BF::request($req,[$id_asso,$this->id,$statut],false);
   }
   
   /**
@@ -358,7 +364,7 @@ class User implements Suppression, GestionLogo{
    * @return bool
    */
   public function is_admin_glob(){
-    $i = BF::request("SELECT ".A::USER_ACCOUNT_STATUS." FROM ".A::USER." WHERE ".A::USER_ID." = ?",[$this->user_id]);
+    $i = BF::request("SELECT ".A::USER_ACCOUNT_STATUS." FROM ".A::USER." WHERE ".A::USER_ID." = ?",[$this->id]);
     return $i > 0?true:false;
   }
 }
