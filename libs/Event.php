@@ -106,8 +106,8 @@ class Event implements Suppression, GestionMembres, GestionLogo, GestionPropriet
      *
      * @return array
      */
-    public function all_infos(){
-        return BF::request("SELECT * FROM ".A::EVENT." WHERE ".A::EVENT_ID." = ?",[$this->id],true,false,PDO::FETCH_ASSOC);
+    public function get_all(){
+        return BF::request("SELECT * FROM ".A::EVENT." WHERE ".A::EVENT_ID." = ?",[$this->id],true,true,PDO::FETCH_ASSOC);
     }
     /**
      * Renvoie la liste de tous les membres (id, nom et role)
