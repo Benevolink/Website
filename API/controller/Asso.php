@@ -14,5 +14,12 @@ switch($fonction){
         $asso = new APIAsso($_POST["id_asso"]);
         return_json($asso->get_all());
         exit();
-        
+    case "get_all_events":
+        if(!isset($_POST["id_asso"])){
+            return_statut(false);
+            exit();
+        }
+        $asso = new APIAsso($_POST["id_asso"]);
+        return_json($asso->get_infos_events());
+        exit();
 }

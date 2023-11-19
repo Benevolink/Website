@@ -21,6 +21,7 @@ export class Event extends APIObjet{
         return this.APICallStatic("event","insert",{array : array});
     }
 
+
     //a partir de id_lieu, id_horaire, id_domaine : déterminer département, date_debut/heure_debut, nom_domaine
 
 
