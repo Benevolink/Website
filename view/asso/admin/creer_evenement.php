@@ -7,6 +7,7 @@
             <label for="nom" style="font-weight: bold;">Nom de l'évènement :</label>
             <input type="text" name="nom" id="nom" required>
         </div>
+        <input type ="hidden" name="id_asso" value ="<?= $id_asso ?>"/>
         
         <div class="case">
             

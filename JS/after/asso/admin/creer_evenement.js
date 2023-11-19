@@ -24,8 +24,9 @@ document.getElementById('heure_fin').defaultValue="00:00";
 var form = $("#form_event");
 form.on("submit",function(event){
     event.preventDefault();
-    array = new FormData(form[0]);
-    
+    var array = new FormData(form[0]);
+    array = Object.fromEntries(array.entries());
+    console.log(array);
     import(abs_path("JS/classes/Event.js")).then((module) => {
         
         module.Event.insert(array).done(function(data){

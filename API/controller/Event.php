@@ -12,14 +12,27 @@ switch($fonction){
         exit();
     case "insert":
         try{
-            $array = json_decode($_POST["array"]); 
-            APIEvent::insert($array["date_debut"],$array["date_fin"],$array["heure_debut"],$array["heure_fin"],$array["id_asso"],$array["nom_event"],$array["nb_personnes"],$array["visu"],$array["desc"],$array["departement"],$array["adresse"]);
+            
+            if(!isset($_POST["array"]))
+                goto insert_exit_fail;
+            $array = $_POST["array"];
+            if(is_string($array))
+                $array = json_decode($_POST["array"]); 
+            
+            APIEvent::insert($array["date_debut"],$array["date_fin"],$array["heure_debut"],$array["heure_fin"],$array["id_asso"],$array["nom"],$array["nb_personnes"],$array["visu"],$array["description"],"",$array["lieu"]);
+            
             return_statut(true);
+            exit();
+            insert_exit_fail:
+            return_statut(false);
+            exit();
+            
         }
         catch(Exception $e){
-            return_statut(false,$e->getMessage());  
+            return_statut(false,$e->getMessage()); 
+            exit(); 
         }
-        exit();
+        
         
         
 
