@@ -11,24 +11,33 @@ switch($fonction){
         return_json($user->infos_events());
         exit();
     case "join":
-        if(!(isset($_POST["id_asso"]) && is_numeric($_POST["id_asso"]))){
+        if(!(isset($_POST["id_event"]) && is_numeric($_POST["id_event"]))){
             return_statut(false);
             exit();
         }
         require_once BF::abs_path("libs/User.php",true);
         $user = new User();
-        $user->rejoindre_asso($_POST["id_asso"]);
+        $user->rejoindre_event($_POST["id_event"]);
         return_statut(true);
         exit();
     case "leave":
-        if(!(isset($_POST["id_asso"]) && is_numeric($_POST["id_asso"]))){
+        if(!(isset($_POST["id_event"]) && is_numeric($_POST["id_event"]))){
             return_statut(false);
             exit();
         }
         require_once BF::abs_path("libs/User.php",true);
         $user = new User();
-        $user->quitter_asso($_POST["id_asso"]);
+        $user->quitter_event($_POST["id_event"]);
         return_statut(true);
+        exit();
+    case "user_statut":
+        if(!(isset($_POST["id_event"]) && is_numeric($_POST["id_event"]))){
+            return_statut(false);
+            exit();
+        }
+        require_once BF::abs_path("libs/User.php",true);
+        $user = new User();
+        return_json(array("statut"=>1,"user_statut" => $user->statut_event($_POST["id_event"])));
         exit();
     case "insert":
         try{
@@ -63,6 +72,5 @@ switch($fonction){
         
         
         
-
 
 }

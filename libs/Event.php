@@ -177,6 +177,10 @@ class Event implements Suppression, GestionMembres, GestionLogo, GestionPropriet
     public function suppr_prop($prop_name){
         
     }
+
+    public function asso_get_id(){
+        return BF::request("SELECT ".A::EVENT_ID_ASSO." FROM ".A::EVENT." WHERE ".A::EVENT_ID." = ?",[$this->id],true,true)[0];
+    }
 }
 
 ?>

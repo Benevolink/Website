@@ -367,5 +367,78 @@ class User implements Suppression, GestionLogo{
     $i = BF::request("SELECT ".A::USER_ACCOUNT_STATUS." FROM ".A::USER." WHERE ".A::USER_ID." = ?",[$this->id]);
     return $i > 0?true:false;
   }
+  
+  /**
+   * Method rejoindre_event
+   * Mets le statut à 0 si le membre n'est pas admin de l'asso
+   * Sinon, mets le statut à 3
+   *
+   * 
+   * @param $id_event $id_event [explicite description]
+   *
+   * @return void|bool
+   */
+  public function rejoindre_event($id_event){
+
+
+    //Si l'utilisateur est déjà membre, on ne réitère pas l'opération
+    $statut_event = $this->statut_event($id_event);
+    if($statut_event != false){
+      return false;
+    }
+
+    //Vérification du rôle du membre dans l'asso
+    require_once BF::abs_path("libs/Event.php",true);
+    $event = new Event($id_event);
+    $id_asso = $event->asso_get_id();
+    if($this->est_admin_asso($id_asso)){
+      $statut = 3;
+    }
+    else{
+      $statut = 0;
+    }
+
+    
+    BF::request("INSERT INTO ".A::MEMBRESEVENTS."(".A::MEMBRESEVENTS_ID_EVENT.",".A::MEMBRESEVENTS_ID_USER.",".A::MEMBRESASSOS_STATUT.") VALUES (?,?,?)",[$id_event,$this->id,$statut]);
+    
+  }
+  
+  /**
+   * Method quitter_event
+   *
+   * @param $id_event $id_event [explicite description]
+   *
+   * @return void
+   */
+  public function quitter_event($id_event){
+    BF::request("DELETE FROM ".A::MEMBRESEVENTS." WHERE ".A::MEMBRESASSOS_ID_USER." = ? AND ".A::MEMBRESEVENTS_ID_EVENT." = ?",[$this->id,$id_event],false);
+  }
+  
+  /**
+   * Method event_statut
+   *
+   * @param $id_event $id_event [explicite description]
+   *
+   * @return int|bool
+   */
+  public function statut_event($id_event){
+    $statut = BF::request("SELECT ".A::MEMBRESEVENTS_STATUT." FROM ".A::MEMBRESEVENTS." WHERE ".A::MEMBRESEVENTS_ID_USER." = ? AND ".A::MEMBRESEVENTS_ID_EVENT." = ?",[$this->id,$id_event],true,true);
+    if(is_array($statut) && !empty($statut)){
+      return $statut[0];
+    }else{
+      return false;
+    }
+  }
+    
+  /**
+   * Method est_admin_event
+   *
+   * @param $id_event $id_event [explicite description]
+   *
+   * @return bool
+   */
+  public function est_admin_event($id_event){
+    return ($this->statut_event($id_event)>2) ? true : false;
+  }
 }
 ?>

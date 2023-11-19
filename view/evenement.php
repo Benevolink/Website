@@ -1,4 +1,5 @@
 <link href="<?= BF::abs_path("CSS/evenement.css") ?>" rel="stylesheet"/>
+<input type = "hidden" id="value_id_event" value="<?= $id_event ?>"/>
 <div class="case" style="width: 800px;<?php if($iframe){echo "margin: 0px;";} //controller?>">
     <div class="titre_event">
         <?= $infos["nom_event"] ?>
@@ -46,6 +47,9 @@
             <?= $desc ?>
         </div>
     </div>
+    <div id="bouton_rejoindre">
+        Rejoindre
+    </div>
 </div>
 <div style = "height: 20px;">
 </div>
@@ -66,3 +70,4 @@ if($iframe){
 
 }
 ?>
+<script type="text/javascript" src="<?= BF::abs_path("JS/after/evenement.js")?>"></script>
