@@ -1,7 +1,7 @@
 
 
 export class APIObjet{
-    APICall(type,fonction,params){
+    static APICallStatic(type,fonction,params){
         let infos = {type: type, fonction: fonction};
         let datas = Object.assign({},infos,params);
         return $.ajax({
@@ -11,4 +11,8 @@ export class APIObjet{
             data: datas
         });
     }
+    APICall(type,fonction,params){
+        return APIObjet.APICallStatic(type,fonction,params);
+    }
+    
 }
