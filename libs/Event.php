@@ -65,7 +65,7 @@ class Event implements Suppression, GestionMembres, GestionLogo, GestionPropriet
      *
      * @return Event
      */
-    public function insert($date_debut, $date_fin, $heure_debut, $heure_fin, $id_asso, $nom_event, $nb_personnes, $visu, $desc, $departement, $adresse) {
+    public static function insert($date_debut, $date_fin, $heure_debut, $heure_fin, $id_asso, $nom_event, $nb_personnes, $visu, $desc, $departement, $adresse) {
         global $db;
         /*
         permet de créer un évènement

@@ -1,14 +1,18 @@
-
-
-export class APIObjet{
-    APICall(type,fonction,params){
-        let infos = {type: type, fonction: fonction};
-        let datas = Object.assign({},infos,params);
+export class APIObjet {
+    static APICallStatic(type, fonction, params) {
+        let infos = { type: type, fonction: fonction };
+        var datas = Object.assign({}, infos, params);
+        datas = JSON.parse(JSON.stringify(datas));
+        // Retourne directement l'objet $.ajax
         return $.ajax({
-            url: abs_path("NOMFICHIER.php"),
+            url: abs_path("API/index.php"),
             method: "POST",
             dataType: "json",
             data: datas
         });
+    }
+
+    APICall(type, fonction, params) {
+        return APIObjet.APICallStatic(type, fonction, params);
     }
 }

@@ -9,9 +9,6 @@
 
   
 <?php
-if($table == NULL){
-  exit("La recherche est vide !");
-}
 foreach($table as $index => $row){
   ?>
   <tr onclick="<?='window.location.href='."'".'asso/association.php?id='.$row["id"]."';"?>" >

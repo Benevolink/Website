@@ -37,15 +37,7 @@
  
   <div id="list_assos_integrees">
     Vos associations
-    <?php
-    require "C:\\Program Files (x86)\\EasyPHP-Devserver-17\\eds-www\\Website\\libs\\User.php";
-    $user = new User();
-    $liste_assos_util = $user->liste_assos();
-    
-    foreach ($liste_assos_util as $association) {
-        echo '<p>' . $association['nom'] . '</p>';
-    }
-    ?>
+    <?= afficher_liste_assos() ?>
 </div>
 
   <div id="list_assos_en_attentes"> Vos associations en attente </div>
