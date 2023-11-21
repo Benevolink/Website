@@ -11,7 +11,9 @@ function afficher_infos_1(){
 <br>
 <div> <h2> Mes informations </h2> </div>
   <br>
-      Nom: <?= $table["pseudo"] ?>
+    Nom: <?= $table["nom"] ?>
+  <br>
+    Prenom : <?= $table["prenom"] ?>
   <br>
       Tel : <?=$table["tel"]?>
   <br>
@@ -30,7 +32,9 @@ function afficher_infos_2(){
   ?>
   <!-- <img id="image_logo" src="<?= $user->logo() ?>" style="width: 200px; border-radius: 200px; border: 10px black solid; cursor: pointer;"> -->
   <br>
-  Nom: <?= $table["pseudo"] ?>
+    Nom: <?= $table["nom"] ?>
+  <br>
+    Prenom : <?= $table["prenom"] ?>
   <br>
   Tel: <?= $table["tel"] ?>
   <br>
