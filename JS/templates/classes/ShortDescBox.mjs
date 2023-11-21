@@ -1,7 +1,7 @@
 import { HTMLElement } from "../HTMLElement.mjs";
 
 export class ShortDescBox extends HTMLElement{
-    constructor(title, desc, logo, status){
+    constructor(title, desc, logo, status, link_page){
         super();
 
         this.JQElement = $('div').attr({
@@ -16,12 +16,18 @@ export class ShortDescBox extends HTMLElement{
 
         const logoElement = $('<img>').attr({
             src: logo,
-            alt: "Logo"
+            alt: "logo"
         });
         this.JQElement.append(logoElement);
 
         const statusElement = $('<span>').text(status);
         this.JQElement.append(statusElement);
+
+        if (link) {
+            this.JQElement.on('click', function () {
+                window.location.href = link;
+            });
+        }s
 
     }
 
