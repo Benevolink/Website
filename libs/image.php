@@ -20,17 +20,18 @@ class image {
      * 
      * Permet d'obtenir le lien (contenu dans le champs 'logo' de la table de donnée) menant vers l'image
      * 
-     * @return char
+     * @return string
      */
 
-    public static function getImage($id,$table){
+    public function getImage($id,$table){
+        global $db;
 
         $req_image = "SELECT logo FROM".$table." WHERE id=? ";
         $req_image_2 = $db->prepare($req_image);
         $req_image_2->execute([$id]);
         $image = $req_image_2->fetch(PDO::FETCH_ASSOC);
 
-        if(count($image)==0){return -1;}
+        if(count($image)==0){echo "L'image n'a pas été trouvée";}
 
         return $image[0];
 
@@ -44,13 +45,13 @@ class image {
      * @return image
      */
 
-    public static function setImage(){
-        $this->$name=$_FILES['file']['name'];
-        $this->$type=$_FILE['file']['type'];
-        $this->$size=$_FILE['file']['size'];
-        $this->$tmp_name=$_FILE['file']['tmp_name'];
-        $this->$error=$_FILE['file']['error'];
-        $this->fullpath=$_FILE['file']['fullpath'];
+    public function setImage(){
+        $this->name=$_FILES['file']['name'];
+        $this->type=$_FILES['file']['type'];
+        $this->size=$_FILES['file']['size'];
+        $this->tmp_name=$_FILES['file']['tmp_name'];
+        $this->error=$_FILES['file']['error'];
+        $this->fullpath=$_FILES['file']['fullpath'];
         return $this;
     }
     
@@ -80,6 +81,7 @@ class image {
     */ 
 
     public function placer_image($image,$table,$chemin){
+        global $db;
         
 
         $unique = 0;
@@ -136,7 +138,7 @@ class image {
         
         for ($i=0; $i<strlen($image->tmp_name)-5; $i++) {
           
-            if ($nom_image[$i]==".") {
+            if ($image->name[$i]==".") {
             echo "Il ne peut y avoir d'autres points que celui de l'extension"; 
              }
         }
@@ -146,7 +148,7 @@ class image {
      * 
      * @param $lien_image [Un lien vers l'image à modifier. L'image doit DEJA être mise dans la base de donnée]
      * 
-     * @return message_erreur
+     * @return int
      * Permet de modifier et de mettre aux normes une image DEJA dans la base de donnée. Retourne 1 si l'opération a réussi et 0 sinon.
      */
 
