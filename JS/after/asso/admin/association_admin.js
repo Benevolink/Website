@@ -4,8 +4,8 @@ $(document).ready(()=>{
         let asso = new module.Asso(id_asso);
         liste_membres = $("#liste_membres li");
         liste_membres.toArray().forEach(element => {
-            id = $(element).attr('id_user');
-            select = $(element).children("select").get(0);
+            let id = $(element).attr('id_user');
+            let select = $(element).children("select").get(0);
             $(select).attr({
                 id_user : id
             });
@@ -16,18 +16,19 @@ $(document).ready(()=>{
                 $(select).prop('disabled','disabled');
             }else{
                 $(select).on("change",function(event){
-                    let id_l =  $(this).attr('id_user');
-                    asso.user_modif_statut(id_l,$(select).val()).done((rep)=>{
+                    asso.user_modif_statut(id,$(select).val()).done((rep)=>{
+                        console.log("Succès du changement de statut !");
                         if(!rep["statut"]==1)
                             console.log("Erreur lors de la modification du statut user");
                     }).fail((erreur)=>{
-                        console.error("",erreur);
+                        console.error("Erreur lors du changement de statut : ",erreur);
                     });
                     
                 })
             }
             asso.user_get_statut(id).done((rep)=>{
                 console.log(rep);
+                console.log(id);
                 if(rep["statut"]==1){
                     let statut = rep["user_statut"];
                     $(select).val(statut);
