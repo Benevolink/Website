@@ -45,14 +45,40 @@ class image {
      * @return image
      */
 
-    public function setImage(){
-        $this->name=$_FILES['file']['name'];
-        $this->type=$_FILES['file']['type'];
-        $this->size=$_FILES['file']['size'];
-        $this->tmp_name=$_FILES['file']['tmp_name'];
-        $this->error=$_FILES['file']['error'];
-        $this->fullpath=$_FILES['file']['fullpath'];
+    public function setImage($file){
+        $this->name=$file['name'];
+        $this->type=$file['type'];
+        $this->size=$file['size'];
+        $this->tmp_name=$file['tmp_name'];
+        $this->error=$file['error'];
+        $this->fullpath=$file['fullpath'];
         return $this;
+    }
+
+    public function get_image($id,$table){
+        global $db;
+        $req_logo = "SELECT logo FROM".$table." WHERE id=? ";//on vérifie que le nom n'est pas déjà pris
+        $req_logo_2 = $db->prepare($req_logo);
+        $req_logo_2->execute(array($id));
+        $logo = $req_logo_2->fetch(PDO::FETCH_ASSOC);
+        if(count($logo)== 0){echo "l'id n'existe pas dans la table".$table;}
+        if(count($logo)!= 0){return $logo[0];}
+    }
+    public function deleteImage($id,$table){
+        global $db;
+        //supprimer l'image puis le lien dans la table
+        $req_logo = "SELECT logo FROM".$table." WHERE id=? ";//on vérifie que le nom n'est pas déjà pris
+        $req_logo_2 = $db->prepare($req_logo);
+        $req_logo_2->execute(array($id));
+        $logo = $req_logo_2->fetch(PDO::FETCH_ASSOC);
+        if(count($logo)== 0){return 0;}
+        if(count($logo)!= 0){
+            //on supprime l'image situé à l'emplacement $logo
+            if(unlink($logo["0"])==false){return 0;}            
+        }
+        $req_suppr = "DELETE logo FROM".$table." WHERE id=?";
+        $req_suppr_2 = $db->prepare($req_suppr);
+        $req_suppr_2->execute(array($id));
     }
     
 
@@ -171,9 +197,11 @@ class image {
         list($width, $height) = getimagesize($lien_image);
         if($width== 0|| $height== 0){return 0;}
 
-        $image_p = imagecreatetruecolor(600,600);
+        $image_p = imagescale($im_php,600,600, IMG_BICUBIC);
+          
+       
         //on redimentionne l'image et on vérifie qu'il n'y a pas d'erreur
-        if(imagecopyresampled($image_p, $im_php, 0, 0, 0, 0, 600, 600, $width, $height)==false){return 0;}
+        if($image_p==false){return 0;}
 
         
         if(imagejpeg($image_p, $lien_image)==false){return 0;} //même lien que l'image originale, donc normalement écrase l'image originale (il faudra néanmoins vérifier dans la doc)

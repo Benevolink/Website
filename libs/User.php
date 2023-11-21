@@ -8,6 +8,7 @@ use AttributsTables as A;
  * Abstraction table users
  */
 class User{
+  //faire une fonction pour ajouter un logo, pour le supprimer, pour le récupérer
   public $id;  
   /**
    * Method __construct
