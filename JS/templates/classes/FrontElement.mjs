@@ -15,6 +15,6 @@ export class FrontElement extends HTMLElement{
             id : id
         });
         //Ajout de la croix pour quitter
-        this.listElements.push(new LeaveCross("FrontElement"));
+        this.append(new LeaveCross("FrontElement"));
     }
 }
