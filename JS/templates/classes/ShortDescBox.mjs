@@ -9,19 +9,19 @@ export class ShortDescBox extends HTMLElement{
         })
 
         const titleElement = $('<h2>').text(title);
-        this.append(titleElement);
+        this.JQElement.append(titleElement);
 
         const descElement = $('<p>').text(desc);
-        this.append(descElement);
+        this.JQElement.append(descElement);
 
         const logoElement = $('<img>').attr({
             src: logo,
             alt: "Logo"
         });
-        this.append(logoElement);
+        this.JQElement.append(logoElement);
 
         const statusElement = $('<span>').text(status);
-        this.append(statusElement);
+        this.JQElement.append(statusElement);
 
     }
 
