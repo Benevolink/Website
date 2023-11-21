@@ -2,7 +2,7 @@
 $file_name = "asso/admin/".basename(__FILE__);
 require_once 'links.php';
 require_once BF::abs_path("functions/security_functions.php",true);
-require_once BF::abs_path("libs/Asso;php",true);
+require_once BF::abs_path("libs/Asso.php",true);
 if(BF::is_posted(["nom","uploadedfile","desc", "desc_missions", "adresse", "domaine", "email", "tel"])){
     $association = $_POST["nom"];
     $description = $_POST["desc"];
