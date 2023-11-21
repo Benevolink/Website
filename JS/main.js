@@ -49,8 +49,6 @@ function message_alerte(msg){
   ]);
   
   $("#croix_msg").on("click",function(){del_msg();});
-  
-  
 }
 
 function authentification(){
@@ -361,6 +359,9 @@ function afficher_interets(div){
     console.log(error);
   })
 }
+
+
+
 function resize(boite,repete){
   let height = $(window).height();;
   let boite_bottom = boite.position().top + boite.offset().top + boite.outerHeight(true);
@@ -388,6 +389,8 @@ function resize(boite,repete){
     resize(boite,false)
   }
 }
+
+
 function inscr_envoie(){
   let form = document.getElementById("form_connex");
   let password = document.getElementById("mdp").value;
