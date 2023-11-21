@@ -23,12 +23,9 @@ export class ShortDescBox extends HTMLElement{
         const statusElement = $('<span>').text(status);
         this.JQElement.append(statusElement);
 
-        if (link) {
-            this.JQElement.on('click', function () {
-                window.location.href = link;
-            });
-        }s
-
+        this.JQElement.on('click', function () {
+            window.location.href = link_page;
+        });
     }
 
 }
