@@ -82,7 +82,7 @@
                 <div class="thumbnail text-center">
                     <div class="caption" id="thumbnail_1">
                         <h2>Entrez les informations principales de votre association :</h2>
-                        <form action="controller/asso/admin/creation_asso_sql.php" method="post" enctype="multipart/form-data">
+                        <form action="creation_asso_sql.php" method="post" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="nomAssociation">
                                     <span class="glyphicon glyphicon-text-background" aria-hidden="true"></span> Nom de
@@ -116,9 +116,7 @@
                                 <input type="file" class="form-control" id="logoAssociation" name="logoAssociation"
                                     accept="image/*" required>
                             </div>
-                            <button type="submit" class="btn btn-primary" id="btn_validation" data-toggle="modal"
-                                data-target="#confirmationModal">Valider</button>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -126,7 +124,6 @@
                 <div class="thumbnail text-center">
                     <div class="caption" id="thumbnail_3">
                         <h2>Renseignez plus d'informations sur le type de mission que vous proposez :</h2>
-                        <form action="controller/asso/admin/creation_asso_sql.php" method="post" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="nomAssociation"> <span class="glyphicon glyphicon-sort-by-alphabet"
                                         aria-hidden="true"></span> Domaines souhaités </label>

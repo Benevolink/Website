@@ -4,8 +4,6 @@ require_once 'links.php';
 require_once BF::abs_path("functions/security_functions.php", true);
 require_once BF::abs_path("libs/Asso.php", true);
 
-echo("Le fichier controller est atteint.");
-
 if (BF::is_posted(["nom", "uploadedfile", "desc", "desc_missions", "adresse", "domaine", "email", "tel"])) {
     $association = $_POST["nom"];
     $description = $_POST["desc"];
@@ -43,6 +41,8 @@ if (BF::is_posted(["nom", "uploadedfile", "desc", "desc_missions", "adresse", "d
         echo "domaine:";
     }
 }
+$this_directory = __DIR__;
+$file_to_include = $this_directory."\creation_asso.php";
+require_once $file_to_include;
 
-require_once BF::abs_path("model/" . $file_name);
 ?>
