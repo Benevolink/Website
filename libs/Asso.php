@@ -115,8 +115,21 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
    * A faire, crée une asso
    * @todo 
    */
-  public static function insert(){
-  }
+  public static function insert($nom, $description, $domaines, $missions, $lieu, $email, $telephone) {
+
+    //On insère d'abord le lieu
+    BF::request("INSERT INTO ".A::LIEU." (".A::LIEU_DEPARTEMENT.", ".A::LIEU_ADRESSE.") VALUES (?, ?)",[$departement,$adresse]);
+    $id_lieu = $db->lastInsertId();
+
+    // On insère les données de l'association dans la base de données
+    $assoInsertQuery = "INSERT INTO " . A::ASSO . " (" . A::ASSO_NOM . ", " . A::ASSO_DESCRIPTION . ", " . A::ASSO_DOMAINES . ", " . A::ASSO_DESCRIPTION_MISSIONS . ", " . A::ASSO_ID_LIEU . ", " . A::ASSO_EMAIL . ", " . A::ASSO_TELEPHONE . ") VALUES (?, ?, ?, ?, ?, ?, ?)";
+    BF::request($evenementInsertQuery,[$nom, $description, $domaines, $missions, $id_lieu, $email, $telephone], false);
+
+    $id_asso = $db->lastInsertId();
+
+    return new Asso($id_asso);
+}
+
 
   /**
    * A faire
