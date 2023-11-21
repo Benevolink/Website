@@ -116,6 +116,14 @@ if($_SERVER["REQUEST_METHOD"] === "POST" && BF::is_connected() && BF::is_posted(
 }
 ?>
 <link rel="stylesheet" href= "<?= BF::abs_path("CSS/creation_event.css") ?>">
+
+<style>
+    body {
+        font-family: 'Corps', sans-serif;
+    }
+
+</style>
+
 <div class= "case" style="width: min-content; min-width: 600px; margin: 10px;">
     <h2 style="margin: auto;width: max-content;">Créer un évènement</h2>
 
