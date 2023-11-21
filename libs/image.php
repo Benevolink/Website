@@ -30,9 +30,9 @@ class image {
         $req_image_2->execute([$id]);
         $image = $req_image_2->fetch(PDO::FETCH_ASSOC);
 
-        if(count($image)==0){return -1}
+        if(count($image)==0){return -1;}
 
-        return $image[0]
+        return $image[0];
 
     }
 
@@ -51,7 +51,7 @@ class image {
         $this->$tmp_name=$_FILE['file']['tmp_name'];
         $this->$error=$_FILE['file']['error'];
         $this->fullpath=$_FILE['file']['fullpath'];
-        return $this
+        return $this;
     }
     
 
