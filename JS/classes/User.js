@@ -12,5 +12,6 @@ export class User extends APIObjet{
     }
 
         //a partir de id_lieu : déterminer département
-             
+           
+
 }

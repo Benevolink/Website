@@ -5,8 +5,11 @@ export class ShortDescBox extends HTMLElement{
         super();
 
         this.JQElement = $('div').attr({
-            id : "ShortDescBox"
-        })
+            class : "ShortDescBox"
+        }).css({
+            border: '1px solid black',
+            borderRadius: '30px'
+        });
 
         const titleElement = $('<h2>').text(title);
         this.JQElement.append(titleElement);
