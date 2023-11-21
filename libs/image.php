@@ -154,14 +154,32 @@ class image {
 
     public static function modifier_image($lien_image){
         $name=basename($lien_image);
+
         $ext=pathinfo($name,PATHINFO_EXTENSION);
-        if(strcmp($ext,"jpg")==0 ||strcmp($ext,"jpeg")==0){$im_php = imagecreatefromjpeg($lien_image);}
-        elseif(strcmp($ext,"png")==0){$im_php = imagecreatefrompng($lien_image);}
+        if(strcmp($ext,"jpg")==0 ||strcmp($ext,"jpeg")==0){
+            $im_php = imagecreatefromjpeg($lien_image);
+            if($im_php==false){return 0;}
+        }
+
+        elseif(strcmp($ext,"png")==0){
+            $im_php = imagecreatefrompng($lien_image);
+            if($im_php==false){return 0;}
+        }
         else{return 0;}
+
         //mettre les modifications souhaitées
-        $new_name = str_replace('-1920x1080', '-640x'.$new_height, basename($lien_image)); // A revoir
-        imagejpeg($im_php, $lien_image); //même lien que l'image originale, donc normalement écrase l'image originale (il faudra néanmoins vérifier dans la doc)
+        list($width, $height) = getimagesize($lien_image);
+        if($width== 0|| $height== 0){return 0;}
+
+        $image_p = imagecreatetruecolor(600,600);
+        //on redimentionne l'image et on vérifie qu'il n'y a pas d'erreur
+        if(imagecopyresampled($image_p, $im_php, 0, 0, 0, 0, 600, 600, $width, $height)==false){return 0;}
+
+        
+        if(imagejpeg($image_p, $lien_image)==false){return 0;} //même lien que l'image originale, donc normalement écrase l'image originale (il faudra néanmoins vérifier dans la doc)
         //revoir les messages d'erreur en fonction des fonctions de modification
+
+        return 1;
     }
 
 
