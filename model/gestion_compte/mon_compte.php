@@ -9,7 +9,7 @@ function afficher_infos_1(){
   global $table;
   ?>
   <br>
-      Nom: <?= $table["pseudo"] ?>
+      Nom: <?= $table["nom"]." ".$table["prenom"] ?>
   <br>
       Tel : <?=$table["tel"]?>
   <br>
