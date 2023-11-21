@@ -30,9 +30,9 @@ class image {
         $req_image_2->execute([$id]);
         $image = $req_image_2->fetch(PDO::FETCH_ASSOC);
 
-        if(count($image)==0){return -1}
+        if(count($image)==0){return -1;}
 
-        return $image[0]
+        return $image[0];
 
     }
 
@@ -48,10 +48,10 @@ class image {
         $this->$name=$_FILES['file']['name'];
         $this->$type=$_FILE['file']['type'];
         $this->$size=$_FILE['file']['size'];
-        $this->$tmp_name=['file']['tmp_name'];
-        $this->$error=['file']['error'];
-        $this->fullpath=['file']['fullpath'];
-        return $this
+        $this->$tmp_name=$_FILE['file']['tmp_name'];
+        $this->$error=$_FILE['file']['error'];
+        $this->fullpath=$_FILE['file']['fullpath'];
+        return $this;
     }
     
 
@@ -76,7 +76,8 @@ class image {
     récupérées dans FILE. De ce que j'ai compris après le chargement de l'image pas la méthode POST l'image est stockée quelque part
     et toutes les fonctions permettant de déplacer une image et tout prennent en argument le nom de l'imgage puis vont la chercher. 
     Le champs tmp_nom est le champs contenant le nom de l'image sur le serveur (celui qui nous intéresse) et le champs name contient 
-    le nom d'origine de l'image (il ne nous intéresse pas)*/ 
+    le nom d'origine de l'image (il ne nous intéresse pas)
+    */ 
 
     public function placer_image($image,$table,$chemin){
         
