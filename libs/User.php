@@ -174,7 +174,7 @@ class User{
     $req = "INSERT INTO ".A::MEMBRESASSOS." (".A::MEMBRESASSOS_ID_ASSO.",".A::MEMBRESASSOS_ID_USER.",".A::MEMBRESASSOS_STATUT.") VALUES (? , ?, ?)";
     BF::request($req,[$id_asso,$this->id,0],false);
   }
-
+  
   public function set_user_image($image){
     global $db;
     $id_user=$this->id;//erreur à corriger
