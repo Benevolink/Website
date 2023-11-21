@@ -55,7 +55,7 @@ class cal_Event{
      * 
      * @throws false si l'évènement n'a pas lieu ce jour-ci
      * 
-     * @return array([int $debut,int $fin]) renvoie les dates de début et de fin
+     * @return bool|array([int $debut,int $fin]) renvoie les dates de début et de fin
      */
 
     public function get_start_end_within_day($date_debut_jour){
