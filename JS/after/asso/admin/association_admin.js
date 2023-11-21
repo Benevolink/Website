@@ -9,6 +9,23 @@ $(document).ready(()=>{
             $(select).attr({
                 id_user : id
             });
+            if(id_user == id){
+                $(select).css({
+                    cursor: "not-allowed"
+                });
+                $(select).prop('disabled','disabled');
+            }else{
+                $(select).on("change",function(event){
+                    let id_l =  $(this).attr('id_user');
+                    asso.user_modif_statut(id_l,$(select).val()).done((rep)=>{
+                        if(!rep["statut"]==1)
+                            console.log("Erreur lors de la modification du statut user");
+                    }).fail((erreur)=>{
+                        console.error("",erreur);
+                    });
+                    
+                })
+            }
             asso.user_get_statut(id).done((rep)=>{
                 console.log(rep);
                 if(rep["statut"]==1){
@@ -21,16 +38,7 @@ $(document).ready(()=>{
             }).fail((err)=>{
                 console.error("",err);
             });
-            $(select).on("change",function(event){
-                let id_l =  $(this).attr('id_user');
-                asso.user_modif_statut(id_l,$(select).val()).done((rep)=>{
-                    if(!rep["statut"]==1)
-                        console.log("Erreur lors de la modification du statut user");
-                }).fail((erreur)=>{
-                    console.error("",erreur);
-                });
-                
-            })
+           
         });
     });
 })

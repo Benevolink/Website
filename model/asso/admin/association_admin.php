@@ -64,7 +64,7 @@ function affichage_liste_membres(){
   $membres = get_liste_membres();
   foreach ($membres as $membre): ?>
     <li class="liste" id_user="<?= $membre[AttributsTables::USER_ID]?>"><?php
-      echo $membre['nom']; 
+      echo $membre['nom']." "; 
       echo $membre['prenom']; 
       afficher_role($membre['statut'],$id_asso,$membre['id_user']); ?>
       

@@ -1,5 +1,6 @@
 <script type="text/javascript">
     id_asso = <?= $_GET["id_asso"] ?>;
+    id_user = <?php $user = new User(); echo $user->id; ?>;
 </script>
   <script type="text/javascript" src="<?= BF::abs_path("JS/after/asso/admin/association_admin.js")?>"></script>
   

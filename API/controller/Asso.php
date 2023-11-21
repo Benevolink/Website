@@ -52,6 +52,10 @@ switch($fonction){
         $id_asso = $_POST["id_asso"];
         require_once BF::abs_path("libs/User.php",true);
         $user = new User();
+        if($user->id == $id_user_cible){
+            return_statut(false,"Vous ne pouvez pas modifier votre propre rôle.");
+            exit();
+        }
         if(!$user->est_admin_asso($id_asso))
         {
             return_statut(false,"Vous n'avez pas les droits pour effectuer cette action.");
