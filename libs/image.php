@@ -88,11 +88,11 @@ class image {
     /**
      * Method placer_image
      *
-     * @param $image $image [est "l'image" donc un objet de la classe image]
+     * 
      * @param $table $table [la table où le chemin de l'asso sera stockée]
      * @param $chemin $chemin [chemin depuis la racine où l'on souhaite que l'image soit stockée]
      *
-     * Permet de rentrer de manière sécurisée un image dans la base de donnée 
+     * Permet de rentrer de manière sécurisée l'image $this dans la base de donnée 
      * @return void
      */
     
@@ -106,12 +106,12 @@ class image {
     le nom d'origine de l'image (il ne nous intéresse pas)
     */ 
 
-    public function placer_image($image,$table,$chemin){
+    public function placer_image($table,$chemin){
         global $db;
         
 
         $unique = 0;
-        $ext = pathinfo($image->tmp_name, PATHINFO_EXTENSION);
+        $ext = pathinfo($this->tmp_name, PATHINFO_EXTENSION);
 
 
         while($unique!=1){
@@ -129,19 +129,19 @@ class image {
         }
         //changer le nom
         $image_name=strval($image_name_num);
-        rename($image->tmp_name,$image_name);
-        $image->tmp_name=$image_name;
+        rename($this->tmp_name,$image_name);
+        $this->tmp_name=$image_name;
 
         //Mettre l'image dans le fichier logo/user/
         $destinationPath = $chemin.$image_name.".".$ext;
         array_map('unlink', glob($chemin.$image_name.".*")); //On supprime les fichiers résiduels
-        if(move_uploaded_file($image->tmp_name, $destinationPath)) { 
-            echo "Le fichier ".  basename( $image->name)." a bien été téléversé";
+        if(move_uploaded_file($this->tmp_name, $destinationPath)) { 
+            echo "Le fichier ".  basename( $this->name)." a bien été téléversé";
         } //la fonction move_uploaded_file déplace le fichier dans destination et renvoie un si l'opération est un succés 0 sinon
         else{
             echo "Il y a eu une erreur pour poster le fichier, réessayez.";
         }
-        
+        $this->fullpath=$destinationPath;
         //rename($destinationPath, $newDestinationPath);
         //UPDATE le chemin vers l'image dans la BDD
         BF::request("UPDATE" .$table. " SET logo = ? WHERE id = ?",[$destinationPath,$id]);
@@ -150,10 +150,10 @@ class image {
   
   
 }
-    public static function verifier_format($image){
+    public function verifier_format(){
         $allowed_extensions = array('jpg', 'jpeg', 'png');
        
-        $extension = pathinfo($image->tmp_name, PATHINFO_EXTENSION);
+        $extension = pathinfo($this->tmp_name, PATHINFO_EXTENSION);
     
     //on vérifie le format de l'image
         if (!in_array($extension, $allowed_extensions)) {
@@ -162,9 +162,9 @@ class image {
         }
         //Vérifier qu'il n'y a pas de points autres que celui de l'extension dans le nom de l'image pour éviter une double extension
         
-        for ($i=0; $i<strlen($image->tmp_name)-5; $i++) {
+        for ($i=0; $i<strlen($this->tmp_name)-5; $i++) {
           
-            if ($image->name[$i]==".") {
+            if ($this->name[$i]==".") {
             echo "Il ne peut y avoir d'autres points que celui de l'extension"; 
              }
         }
@@ -178,7 +178,7 @@ class image {
      * Permet de modifier et de mettre aux normes une image DEJA dans la base de donnée. Retourne 1 si l'opération a réussi et 0 sinon.
      */
 
-    public static function modifier_image($lien_image){
+    public function modifier_image($lien_image){
         $name=basename($lien_image);
 
         $ext=pathinfo($name,PATHINFO_EXTENSION);
