@@ -237,5 +237,13 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
     
   }
 
+  public function get_role_membre($id_membre){
+    try{
+      $req = "SELECT ".A::MEMBRESASSOS_STATUT." FROM ".A::MEMBRESASSOS." WHERE ".A::MEMBRESASSOS_ID_ASSO." = ? AND ".A::MEMBRESASSOS_ID_USER." = ?";
+    return BF::request($req,[$this->id,$id_membre],true,true,PDO::FETCH_ASSOC)[A::MEMBRESASSOS_STATUT];
+  }catch(Exception $e){
+      exit($e->getMessage());
+    }
+  }
 }
 ?>

@@ -1,5 +1,10 @@
+<script type="text/javascript">
+    id_asso = <?= $_GET["id_asso"] ?>;
+</script>
+  <script type="text/javascript" src="<?= BF::abs_path("JS/after/asso/admin/association_admin.js")?>"></script>
+  
   <link rel="stylesheet" href="<?= BF::abs_path("CSS/association_admin.css") ?>"/>
-  <a href="<?= 'creer_evenement.php?id_asso='.$_GET["id_asso"] ?>">
+    <a href="<?= 'creer_evenement.php?id_asso='.$_GET["id_asso"] ?>">
       Créer un évènement
   </a>
   <br>
