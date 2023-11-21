@@ -24,18 +24,17 @@ class image {
      */
 
     public function getImage($id,$table){
+        
         global $db;
-
-        $req_image = "SELECT logo FROM".$table." WHERE id=? ";
-        $req_image_2 = $db->prepare($req_image);
-        $req_image_2->execute([$id]);
-        $image = $req_image_2->fetch(PDO::FETCH_ASSOC);
-
-        if(count($image)==0){echo "L'image n'a pas été trouvée";}
-
-        return $image[0];
-
+        $req_logo = "SELECT logo FROM".$table." WHERE id=? ";//on vérifie que le nom n'est pas déjà pris
+        $req_logo_2 = $db->prepare($req_logo);
+        $req_logo_2->execute(array($id));
+        $logo = $req_logo_2->fetch(PDO::FETCH_ASSOC);
+        if(count($logo)== 0){echo "l'id n'existe pas dans la table".$table."";}
+        if(count($logo)!= 0){return $logo[0];}
     }
+
+    
 
     /**
      *  Method setImage
@@ -53,16 +52,6 @@ class image {
         $this->error=$file['error'];
         $this->fullpath=$file['fullpath'];
         return $this;
-    }
-
-    public function get_image($id,$table){
-        global $db;
-        $req_logo = "SELECT logo FROM".$table." WHERE id=? ";//on vérifie que le nom n'est pas déjà pris
-        $req_logo_2 = $db->prepare($req_logo);
-        $req_logo_2->execute(array($id));
-        $logo = $req_logo_2->fetch(PDO::FETCH_ASSOC);
-        if(count($logo)== 0){echo "l'id n'existe pas dans la table".$table;}
-        if(count($logo)!= 0){return $logo[0];}
     }
     public function deleteImage($id,$table){
         global $db;

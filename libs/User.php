@@ -120,7 +120,7 @@ class User{
    *
    * @return string
    */
-  public function logo(){
+  public function get_user_image(){
     
     $req_filename = "SELECT ".A::USER_LOGO." FROM ".A::USER." WHERE ".A::USER_ID."=? ";//on vérifie que le nom n'est pas déjà pris
     $filename_tab = BF::request($req_filename,[$this->id],true,true,PDO::FETCH_ASSOC);
@@ -181,7 +181,8 @@ class User{
     $image_user = new image;
     $image_user->setImage($image);
     $image_user->verifier_format();
-    $image_user->placer_image("user","media/img");
+    $image_user->placer_image("user","media/img/");
+    $image_user->modifier_image($image_user->fullpath);
 
   }
   
