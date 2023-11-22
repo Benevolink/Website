@@ -25,25 +25,25 @@ switch($fonction){
         exit();
     case "set_pp":
         $user = new APIUser();
-        $user->id=$_POST["id_user"];
+        $user->id=$_SESSION["id_user"];
         $user->set_user_image($_POST["photo_profil"]);
         return_statut(true);
         exit();
     case "change_pp":
         $user = new APIUser();
-        $user->id=$_POST["id_user"];
+        $user->id=$_SESSION["id_user"];
         $user->change_user_image($_POST["photo_profil"]);
         return_statut(true);
         exit();
     case "suppr_pp":
         $user = new APIUser();
-        $user->id=$_POST["id_user"];
+        $user->id=$_SESSION["id_user"];
         $user->suppr_image_user();
         return_statut(true);
         exit();
     case "get_pp":
         $user = new APIUser();
-        $user->id=$_POST["id_user"];
+        $user->id=$_SESSION["id_user"];
         $array = array("statut" => 1,"lien_image" => $user->get_image_user());
         return_json($array);
         exit();
