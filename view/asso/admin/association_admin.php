@@ -1,4 +1,8 @@
   <link rel="stylesheet" href="<?= BF::abs_path("CSS/association_admin.css") ?>"/>
+  <link rel ="stylesheet" href="<?= BF::abs_path("CSS/main.css")?>">
+  <link rel="icon" type="image/x-icon" sizes="16x16" href="<?= BF::abs_path("media/img/Logo_3.png") ?>"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
   <a href="<?= 'creer_evenement.php?id_asso='.$_GET["id_asso"] ?>">
       Créer un évènement
   </a>
@@ -6,17 +10,62 @@
   <a href="<?= BF::abs_path('controller/asso/sondage/creer_sondage.php?id_asso='.$_GET["id_asso"]) ?>">
       Créer un sondage
   </a>
-  <div class="cote_a_cote">
-    
-    <div class="scroller" id ="liste_membres">
-      <h1>Liste des membres de l'association</h1>
-      <ul>
-        <?= affichage_liste_membres();?>
-      </ul>
+
+  
+  <div class="row">
+    <div id="colonne1" class="col-md-6">
+      <div id="liste_membres">
+        <h1 id="titre_membre"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Liste des membres de l'association</h1>
+        <ul>
+          <?= affichage_liste_membres();?>
+        </ul>
+      </div>
     </div>
-    <div class="scroller">
+    <div id="division"> </div>
+    
+    <div class="col-md-6">
+      <div>
+      <h1 id="titre_membre"><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> Liste des membres <br> en attente</h1>     
     </div>
   </div>
+</div>
+
+
+  <style>
+  .liste {
+    border-bottom: 1px solid #ccc; /* Ajoute une bordure inférieure de couleur grise */
+    padding-bottom: 5px; /* Ajoute un espacement en bas de chaque élément de la liste */
+    margin-bottom: 10px; /* Ajoute une marge en bas de chaque élément de la liste */
+    display: flex; /* Utilise Flexbox pour aligner le texte et le statut horizontalement */
+    justify-content: space-between; /* Espace équitablement les éléments à l'intérieur de la liste */
+    background-color: #ffffff;
+    font-family: Corps;
+    src: url(fonts/Nexa.woff2) format("woff2");
+    font-size: 17px;
+  }
+
+  .role {
+    color: #555; /* Couleur du texte pour le statut du membre */
+    background-color: #ffffff;
+    font-family: Corps;
+    src: url(fonts/Nexa.woff2) format("woff2");
+    font-size: 17px;
+  }
+
+  #titre_membre{
+    font-family: Corps;
+    src: url(fonts/Nexa.woff2) format("woff2");
+    font-weight: bold;
+    text-align: center;
+  }
+
+  #colonne1{
+    
+    border-right: 1px solid #ccc; /* Ajoute une bordure droite de couleur grise entre les colonnes */
+    padding-right: 15px; /* Ajoute une marge à droite pour séparer le contenu de la bordure */
+  }
+</style>
+
 
 <?php //VERSION DU POLE CSS ?>
   <!DOCTYPE html>
@@ -42,55 +91,7 @@
         }
     </style>
 </head>
-<body>
-    <h1>Liste des Membres de l'Association</h1>
-    <table>
-        <tr>
-            <th>Nom</th>
-            <th>Statut</th>
-        </tr>
-        <tr>
-            <td>Test 1</td>
-            <td>Admin</td>
-        </tr>
-        <tr>
-            <td>Test 2</td>
-            <td>Membre</td>
-        </tr>
-        <tr>
-            <td>Test 3</td>
-            <td>Membre</td>
-        </tr>
-        <tr>
-            <td>Test 4</td>
-            <td>Admin</td>
-        </tr>
-        <tr>
-            <td>Test 5</td>
-            <td>En attente</td>
-        </tr>
-        <tr>
-            <td>Test 6</td>
-            <td>Membre</td>
-        </tr>
-        <tr>
-            <td>Test 7</td>
-            <td>En attente</td>
-        </tr>
-        <tr>
-            <td>Test 8</td>
-            <td>Membre</td>
-        </tr>
-        <tr>
-            <td>Test 9</td>
-            <td>Admin</td>
-        </tr>
-        <tr>
-            <td>Test 10</td>
-            <td>Admin</td>
-        </tr>
-    </table>
-</body>
+
 </html>
 <!DOCTYPE html>
 <html lang="en">
@@ -141,31 +142,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-VE4wUyZRJqB8M6wOhEMDp2Fzpkw2qUxy6Wt8zQV32l+qHRZeZJ/x5QJ5tgXC9KzS" crossorigin="anonymous">
 </head>
 <body>
-    <h1 class="text-center">Liste des Membres de l'Association</h1>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <img src="..." alt="Image Membre">
-                    <div class="caption">
-                        <h3>Nom Membre 1</h3>
-                        <p>Statut : Admin</p>
-                        <!-- Ajoutez d'autres détails du membre ici -->
-                        <p>
-                            <a href="#" class="btn btn-primary" role="button">Voir profil</a>
-                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
-                                <span class="glyphicon glyphicon-trash"></span> Supprimer
-                            </button>
-                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#reportModal">
-                                Signaler
-                            </button>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <!-- Répétez ce bloc pour chaque membre -->
-        </div>
-    </div>
 
     <!-- Modale pour la suppression -->
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">

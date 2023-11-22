@@ -1,9 +1,10 @@
   <link rel="stylesheet" href="<?= BF::abs_path("CSS/association.css")?>">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 <body>
-  <img id="logo" src="<?= BF::abs_path($prop_all["asso_info"][AttributsTables::ASSO_LOGO]) ?>" class="img_asso">
-  <label class="titre_asso" for="logo"><?= BF::XSS($prop_all["asso_info"][AttributsTables::ASSO_NOM]) ?></label>
+  <img src="<?= BF::abs_path($prop_all["asso_info"][AttributsTables::ASSO_LOGO]) ?>"  id="logoImg" class="img-responsive img-thumbnail rounded">
+  <label id="titre_asso" for="logo"><?= BF::XSS($prop_all["asso_info"][AttributsTables::ASSO_NOM]) ?></label>
   <br>
-  <?= $nombre ?> followers.
+  <h4 id="follower"> Il y a <?= $nombre ?> membre(s) dans l'association. </h4>
   <br>
   
   <?php if($est_dans_asso){ ?>
@@ -32,3 +33,27 @@
   
 <div id="wrapper_all"></div>
   
+<style>
+  #logoImg{
+    width: 18%;
+    height: auto;
+    display:block;
+    margin: auto; /* Ajoutez cette ligne pour centrer horizontalement */
+
+  }
+  #titre_asso{
+    font-weight: bold;
+    font-family: Corps;
+    src: url(fonts/Nexa.woff2) format("woff2");
+    font-size: 40px;
+    text-align: center;
+  }
+
+  #follower{
+    font-family: Corps;
+  src: url(fonts/Nexa.woff2) format("woff2");
+  text-align: center;
+  }
+ 
+
+</style>
