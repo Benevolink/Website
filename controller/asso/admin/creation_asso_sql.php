@@ -41,6 +41,7 @@ if (BF::is_posted(["nom", "uploadedfile", "desc", "desc_missions", "adresse", "d
         echo "domaine:";
     }
 }
+
 $this_directory = __DIR__;
 $file_to_include = $this_directory."\creation_asso.php";
 require_once $file_to_include;
