@@ -10,29 +10,9 @@ if(BF::is_posted(["nom","uploadedfile","desc", "desc_missions", "adresse", "doma
     $logo = $_POST["uploadedfile"];
     $email = $_POST["email"];
     $telephone = $_POST["tel"];
-    if(secure_image($_FILES['uploadedfile']['name'])==1){
-        echo "Le fichier n'est pas au bon format";
-        exit(0);
-    }
-    if(secure_image( $_FILES['uploadedfile']['name'])==2){
-        echo "Le nom du fichier ne doit pas contenir de point sauf pour l'extention";
-        exit(0);
-    }
-    //Mise au bon format de l'image (jpg et la bonne taille)
-    $extension = pathinfo($_FILES['uploadedfile']['name'], PATHINFO_EXTENSION);
-    if($extension=="php"){
-        $logo=imagecreatefrompng($logo);
-    }
-    if($extension=="gif"){
-        $logo=imagecreatefromgif($logo);
-    }
-    if($extension=="jpeg"){
-        $logo=imagecreatefromjpeg($logo);
-    }
-    $size_w=304;
-    $size_h=166;
-    $logo=imagecrop($logo,['x'=>0,'y'=>0,'width'=>$size_w,'height'=>$size_h]);
-    Asso::insert_asso($association,$description,$description_missions,$logo,$email,$telephone);
+    Asso::insert($association,$description,$description_missions,$logo,$email,$telephone,[]);
+    Header("Location :".BF::abs_path("controller/static/form-merci.php",true));
+    exit();
 
 }else{
     echo "Il manque des données dans le formulaire envoyé.";

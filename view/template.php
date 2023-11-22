@@ -11,7 +11,6 @@ header('Cache-Control: private',true);
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 
   <script src="<?= BF::abs_path("JS/jquery.js")?>"></script>
-  <?php include __DIR__."/../JS/abs_path.php";?>
   <script src="<?= BF::abs_path("JS/main.js")?>"></script>
   <?php require_once BF::abs_path("JS/abs_path.php",true); ?>
   
@@ -116,7 +115,7 @@ if(!(isset($iframe) ? 1 : 0)){
     </ul>
     <form class="navbar-form navbar-left" action="<?= BF::abs_path("controller/search.php")?>" method="get">
       <div class="form-group">
-        <input type="text"  class="form-control input-large" placeholder="Rechercher une mission ou association">
+        <input type="text" name="Recherche"  class="form-control input-large" placeholder="Rechercher une mission ou association">
       </div>
       <button type="submit" class="btn btn-default input-large">Rechercher</button>
     </form>
