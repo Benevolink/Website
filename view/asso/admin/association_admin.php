@@ -20,7 +20,11 @@
         <?= affichage_liste_membres();?>
       </ul>
     </div>
-    <div class="scroller">
+    <div class="scroller" id = "liste_attente">
+    <h1>Liste des utilisateurs en attente</h1>
+      <ul>
+        <?= affichage_liste_en_attente();?>
+      </ul>
     </div>
   </div>
 
