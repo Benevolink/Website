@@ -12,5 +12,10 @@ export class User extends APIObjet{
     }
 
         //a partir de id_lieu : déterminer département
-             
+      
+    getEvents(){
+        return this
+        .APICall("event","user_get_all",{id_user : this.id});
+    }
+
 }
