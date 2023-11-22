@@ -46,11 +46,13 @@ switch($fonction){
         
         $expected_parameters = ["nom", "desc", "desc_missions", "uploadedfile", "email", "tel"];
 
-        $status_array = [];
+        $status_array = []; // Initialisation du tableau vide
+        $parametres_enregistres = true; // Booléen pour suivre l'enregistrement des paramètres
 
         foreach ($expected_parameters as $param) {
             if (!isset($_POST[$param])) {
                 $status_array[$param] = ["statut" => 0];
+                $parametres_enregistres = false; // Si au moins un paramètre est manquant, le booléen est mis à false
                 return_statut(false, "$param: Paramètre manquant");
                 exit();
             } else {
@@ -59,16 +61,23 @@ switch($fonction){
         }
 
         // Si on arrive ici, tous les paramètres sont présents
-        $association = $_POST["nom"];
-        $description = $_POST["desc"];
-        $description_missions = $_POST["desc_missions"];
-        $logo = $_FILES["uploadedfile"]["name"];
-        $email = $_POST["email"];
-        $telephone = $_POST["tel"];
+        if ($parametres_enregistres) {
+            $association = $_POST["nom"];
+            $description = $_POST["desc"];
+            $description_missions = $_POST["desc_missions"];
+            $logo = $_FILES["uploadedfile"]["name"];
+            $email = $_POST["email"];
+            $telephone = $_POST["tel"];
 
-        Asso::insert($association, $description, $description_missions, $logo, $email, $telephone, []);
-        return_statut(true, "L'association a été insérée avec succès");
-        exit();
+            Asso::insert($association, $description, $description_missions, $logo, $email, $telephone, []);
+
+            return_statut(true, "L'association a été insérée avec succès");
+            exit();
+        } else {
+            $status_array["statut"] = 0;
+            return_json($status_array);
+            exit();
+}
 
 
 
