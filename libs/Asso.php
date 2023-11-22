@@ -51,9 +51,9 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
    * @return array
    */
   public function get_all_membres(){
-    $req  = "SELECT u.".A::USER_NOM.", u.".A::USER_PRENOM.", ma.*
-    FROM ".A::MEMBRESASSOS."
-    INNER JOIN ".A::USER." u ON membres_assos ma.".A::MEMBRESASSOS_ID_USER." = u.".A::USER_ID."
+    $req  = "SELECT u.".A::USER_ID.", u.".A::USER_NOM.", u.".A::USER_PRENOM.", ma.*
+    FROM ".A::MEMBRESASSOS." ma
+    INNER JOIN ".A::USER." u ON ma.".A::MEMBRESASSOS_ID_USER." = u.".A::USER_ID."
     WHERE ma.".A::MEMBRESASSOS_ID_ASSO." = ?";
     $array = BF::request($req,[$this->id],true,false,PDO::FETCH_ASSOC);
     return $array;
