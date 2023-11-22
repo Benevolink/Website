@@ -23,6 +23,12 @@ switch($fonction){
         $user = new APIUser();
         $user->api_liste_asso();
         exit();
+    case "set_image":
+        $user = new APIUser();
+        $user->id=$_POST["id_user"];
+        $user->set_user_image($_POST["photo_profil"]);
+        exit();
+    
     default:
         echo "Veuillez spécifier une fonction";
         exit();
