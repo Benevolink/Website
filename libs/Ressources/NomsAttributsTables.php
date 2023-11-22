@@ -145,6 +145,8 @@ interface AttributsUsers{
     const USER_PRENOM = "prenom";
     const USER_ETAT_COMPTE = "account_status";
     const USER_LOGO = "logo";
+
+    const USER_ACCOUNT_STATUS = "account_status";
 }
 
 

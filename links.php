@@ -3,6 +3,9 @@ if(file_exists(__DIR__.'/../../eds-www')){
     $path_html = '/Website';
 }else if(file_exists(__DIR__.'/../../../www')){
     $path_html = '/projet WEB 2/Website';
+}
+else if(file_exists(__DIR__.'/../../www')){
+    $path_html = '/Website';
 }else{
     $path_html = '';
     

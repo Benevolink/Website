@@ -29,20 +29,22 @@
   <div id="list_assos"> 
   
     <!--
-    Essaie 1 pour séparer les assos si elles sont en attentes ou intégrées
+    Essai 1 pour séparer les assos si elles sont en attentes ou intégrées
     <div class="titre_1"> Vos associations </div>
-  <div classe="titre_1">Vos associations en attente </div> -->
+  <div classe="titre_1"> Vos associations en attente </div> -->
   </div>
-  
-<!--
-  Essaie 2 
-  <div id="list_assos_integrees">Vos associations</div>
 
-  <div id="list_assos_en_attentes"> Vos associations en attente</div>
-  -->
+ 
+  <div id="list_assos_integrees">
+    Vos associations
+    <?= afficher_liste_assos() ?>
+</div>
+
+  <div id="list_assos_en_attentes"> Vos associations en attente </div>
 
   </div>
 
  
   <div class="ajouter_asso" onclick="location.href = 'admin/creation_asso.php';" style="border: 0.5px solid #E5EB99;"> 
 </div>
+

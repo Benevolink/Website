@@ -51,9 +51,9 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
    * @return array
    */
   public function get_all_membres(){
-    $req  = "SELECT u.".A::USER_NOM.", u.".A::USER_PRENOM.", ma.*
-    FROM ".A::MEMBRESASSOS."
-    INNER JOIN ".A::USER." u ON membres_assos ma.".A::MEMBRESASSOS_ID_USER." = u.".A::USER_ID."
+    $req  = "SELECT u.".A::USER_ID.", u.".A::USER_NOM.", u.".A::USER_PRENOM.", ma.*
+    FROM ".A::MEMBRESASSOS." ma
+    INNER JOIN ".A::USER." u ON ma.".A::MEMBRESASSOS_ID_USER." = u.".A::USER_ID."
     WHERE ma.".A::MEMBRESASSOS_ID_ASSO." = ?";
     $array = BF::request($req,[$this->id],true,false,PDO::FETCH_ASSOC);
     return $array;
@@ -68,7 +68,7 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
    */  
   public static function recherche_asso($searchQuery) {
     $searchQuery = "%" . $searchQuery . "%";
-    return BF::request("SELECT ".A::ASSO_ID.", ".A::ASSO_NOM." FROM ".A::ASSO." WHERE ".A::ASSO_NOM." LIKE ? ORDER BY ".A::ASSO_NOM." ASC", [$searchQuery], true, false, PDO::FETCH_ASSOC);
+    return BF::request("SELECT * FROM ".A::ASSO." WHERE ".A::ASSO_NOM." LIKE ? ORDER BY ".A::ASSO_NOM." ASC", [$searchQuery], true, false, PDO::FETCH_ASSOC);
   }
   
   /**
@@ -83,16 +83,16 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
   public function prop_association() {
     $id_asso = $this->id;
     // Sélectionner les propriétés de l'association
-    $propAssos = BF::request("SELECT * FROM ".A::PROPASSO." WHERE ".A::PROPASSO_ID_ASSO." = ?", [$id_asso], true, false, PDO::FETCH_ASSOC);
+    $propAssos = BF::request("SELECT * FROM ".A::PROPASSO." WHERE ".A::PROPASSO_ID_ASSO." = ?", [$id_asso], true, true, PDO::FETCH_ASSOC);
 
     // Sélectionner les informations de l'association
-    $assoInfo = BF::request("SELECT * FROM ".A::ASSO." WHERE ".A::ASSO_ID." = ?", [$id_asso], true, false, PDO::FETCH_ASSOC);
+    $assoInfo = BF::request("SELECT * FROM ".A::ASSO." WHERE ".A::ASSO_ID." = ?", [$id_asso], true, true, PDO::FETCH_ASSOC);
 
     // Compter les membres de l'association
     $membresCount = BF::request("SELECT COUNT(*) FROM ".A::MEMBRESASSOS." WHERE ".A::MEMBRESASSOS_ID_ASSO." = ?", [$id_asso], true, true)[0];
 
     return array(
-        'prop_assos' => $propAssos,
+        'prop_asso' => $propAssos,
         'asso_info' => $assoInfo,
         'membres_count' => $membresCount
     );
@@ -108,14 +108,60 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
    * @return array
    */
   public function get_infos_events(){
-    return BF::request("SELECT e.".A::EVENT_ID.", e.".A::EVENT_NOM.", ho.".A::HORAIRE_DATE_DEBUT.", ho.".A::HORAIRE_DATE_FIN.", a.".A::ASSO_NOM.", a.".A::ASSO_ID." FROM ((".A::EVENT." e JOIN ".A::ASSO." a ON e.".A::EVENT_ID." = a.".A::ASSO_ID.") JOIN ".A::HORAIRE." ho ON e.".A::EVENT_ID_HORAIRE." = ho.".A::HORAIRE_ID.") WHERE a.".A::ASSO_ID." = ?",[$this->id],true,false,PDO::FETCH_ASSOC);
+    return BF::request("SELECT e.".A::EVENT_ID.", e.".A::EVENT_NOM.", ho.".A::HORAIRE_DATE_DEBUT.", ho.".A::HORAIRE_DATE_FIN.", a.".A::ASSO_NOM.", a.".A::ASSO_ID." FROM ((".A::EVENT." e JOIN ".A::ASSO." a ON e.".A::EVENT_ID_ASSO." = a.".A::ASSO_ID.") JOIN ".A::HORAIRE." ho ON e.".A::EVENT_ID_HORAIRE." = ho.".A::HORAIRE_ID.") WHERE a.".A::ASSO_ID." = ?",[$this->id],true,false,PDO::FETCH_ASSOC);
+  }
+  
+  /**
+   * Renvoie toutes les données de l'association
+   *
+   * @return array
+   */
+  public function get_all(){
+    return BF::request("SELECT * FROM ".A::ASSO." WHERE ".A::ASSO_ID." = ?",[$this->id],true,true,PDO::FETCH_ASSOC);
   }
 
   /**
    * A faire, crée une asso
    * @todo 
    */
-  public static function insert(){
+  public static function insert($nom, $description, $description_missions, $logo, $email, $tel, $domaines){
+    global $db;
+    require_once __DIR__."/Domaine.php";
+    require_once __DIR__."/Lieu.php";
+    require_once __DIR__."/User.php";
+    /**
+     * Partie logo à ajouter quand Charlotte aura fini
+     * @todo
+     */
+    // On se connecte à la BDD
+    $db->beginTransaction();
+    // On insère les données reçues dans la table "assos"
+    $req = $db->prepare("INSERT INTO ".A::ASSO." (".A::ASSO_NOM.", ".A::ASSO_DESCRIPTION.", ".A::ASSO_DESCRIPTION_MISSIONS.", ".A::ASSO_EMAIL.", ".A::ASSO_TELEPHONE.", ".A::ASSO_LOGO.") VALUES(?, ?, ?, ?, ?, ?)");
+    BF::request($req,[$nom,$description,$description_missions,$email,$tel,$logo,$adresse]);
+    // Récupérer l'ID de l'association qui vient d'être créée
+        
+    $id = $db->lastInsertId();
+    $db->commit();
+
+
+    //Ajout des centres d'intérêt
+    $asso = new Asso($id);
+    foreach ($domaines as $idDomaine){
+      $domaine = new Domaine($idDomaine);
+      $domaine->insert_jonction($asso);
+    }
+
+    //Insertion du lieu
+    Lieu::insert($adresse);
+    $id_lieu = $db->lastInsertId();
+    //Ajout du lieu dans l'asso
+    BF::request("UPDATE ".A::ASSO." SET ".A::ASSO_ID_LIEU." = ? WHERE ".A::ASSO_ID." = ?",[$id_lieu,$id]);
+
+    //Ajout de l'utilisateur en tant qu'admin de l'asso crée
+    $user = new User();
+    $asso->ajouter_membre($user,3);
+    
+
   }
 
   /**
@@ -128,10 +174,9 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
 
   /**
    * Ajoute un membre
-   * @todo 
    */
   public function ajouter_membre($user, $role = null){
-
+    BF::request("INSERT INTO ".A::MEMBRESASSOS." (".A::MEMBRESASSOS_ID_ASSO.",".A::MEMBRESASSOS_ID_USER.",".A::MEMBRESASSOS_STATUT.") VALUES (?,?,?)",[$this->id,$user->id,$role]);
   }
 
   /**
