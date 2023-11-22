@@ -1,3 +1,5 @@
+import { Asso } from 'JS/classes/Asso.js';
+
 function createAsso(nom, desc, desc_missions, uploadedfile, adresse, email, tel){
     var asso = new Asso();
     var rep = asso.APICall("asso","insert",
