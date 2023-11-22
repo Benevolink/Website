@@ -41,7 +41,9 @@ switch($fonction){
     case "get_pp":
         $user = new APIUser();
         $user->id=$_POST["id_user"];
-        return $user->get_image_user();
+        $array = array("statut" => 1,"lien_image" => $user->get_image_user());
+        return_json($array);
+        exit();
     default:
         echo "Veuillez spécifier une fonction";
         exit();
