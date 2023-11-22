@@ -1,3 +1,9 @@
+*{
+  font-family: Corps;
+  src: url(fonts/Nexa.woff2) format("woff2");
+  font-size: 17px;
+}
+
 #list_assos{
   clear:both;
   border-radius: 20px;

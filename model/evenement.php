@@ -29,7 +29,7 @@ function afficher_dates(){
 function afficher_frequence(){
     global $event;
     $frequence = "";
-    $freq = $event->get_prop_evenement("freq");
+    $freq = $event->get_prop_value("freq");
     if(BF::equals($freq,"annu")? 1 : 0){
         $frequence = "Annuelle";
     }elseif(BF::equals($freq,"mens")? 1 : 0){
@@ -47,12 +47,26 @@ function afficher_frequence(){
 function afficher_visu(){
     global $event;
     $vis = "";
-    $visu = $event->get_prop_evenement("visu");
+    $visu = $event->get_prop_value("visu");
 
     if($visu? 1 : 0){
         $vis = $visu;
     }
     echo " Visibilité : ".$vis;
+}
+
+
+
+
+
+
+/** 
+* Récupère la description d'un événement
+* @return $desc
+**/
+function get_desc($id_event){
+    global $event;
+    return $event->get_prop_value("desc");
 }
 
 ?>

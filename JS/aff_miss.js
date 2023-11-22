@@ -13,7 +13,7 @@ function afficher_missions(titre,liste){
       cursor: "pointer"
     });
     liste.forEach((e)=>{
-      let div = $("<div>").attr({class: "wrapper_enfant", id_event: e.id});
+      let div = $("<div>").attr({class: "wrapper_enfant", id_event: e.id_event});
       div.append([
         $("<div>").append([
           $("<div>").append(e.nom_event).css({
@@ -39,7 +39,7 @@ function afficher_missions(titre,liste){
             })
           }).on("click",function(event){
             event.preventDefault();
-            window.location.href = abs_path("controller/asso/association.php?id="+e.id);
+            window.location.href = abs_path("controller/asso/association.php?id="+id_asso);
           }).attr({
             class: "priority_target"
           }),
@@ -50,14 +50,15 @@ function afficher_missions(titre,liste){
           })
         ])
       ]);
+      //
       wrapper.append(div);
       wrapper.on("click",function(event){
         if(!(event.target.getAttribute("class")=="priority_target")){
-          window.location.href = abs_path("controller/evenement.php?id_event="+e.id);
+          window.location.href = abs_path("controller/evenement.php?id_event="+$(event.target).attr('id_event'));
         }
       
-    });
-    main.append(wrapper);
+      });
+      main.append(wrapper);
     });
     
     

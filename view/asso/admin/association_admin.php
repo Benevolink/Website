@@ -8,7 +8,7 @@
   </a>
   <div class="cote_a_cote">
     
-    <div class="scroller">
+    <div class="scroller" id ="liste_membres">
       <h1>Liste des membres de l'association</h1>
       <ul>
         <?= affichage_liste_membres();?>

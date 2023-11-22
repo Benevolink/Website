@@ -25,25 +25,24 @@ else{$("#Rejoindre").text($("#Rejoindre").text().replace("Rejoindre","Quitter"))
     }
     xhttp.send();
   }
+
+
+
   $(document).ready(function(){
-      $.ajax({
-        url: abs_path("functions/ajax/liste_missions.php"),
-        method: "GET",
-        dataType: "json",
-        data: {
-          id_asso: id_asso
-        }
-        
-      })
-      .done(function(rep){
-        console.log(rep);
-        afficher_missions("Missions en cours ou à venir :",rep);
+
+
+    import(abs_path('JS/classes/Asso.js')).then((module)=>{
+      let asso = new module.Asso(id_asso);
+      asso.getListeEvents().done(function(data){
+        console.log(data);
+        afficher_missions("Missions en cours ou à venir :",data);
         ajouter_events_missions();
-      })
-      .fail(function(error){
+      }).fail(function(error){
         alert("La requête s'est terminée en échec. Infos : " + JSON.stringify(error));
         message_alerte("Impossible d'obtenir la liste de vos missions");
       });
-      
     });
+        
+      
+  });
 </script>
