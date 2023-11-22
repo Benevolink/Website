@@ -2,7 +2,6 @@
 require_once __DIR__."/../functions/basic_functions.php";
 require_once BF::abs_path("db.php",true);
 require_once __DIR__."/Ressources/NomsAttributsTables.php";
-require_once __DIR__."/image.php";
 use AttributsTables as A;
 
 /**
@@ -133,6 +132,7 @@ class User{
   }
 
   public function get_image_user(){
+    require_once __DIR__."/image.php";
     global $db;
     $image = new image;
     $test =  $image->getImage($this->id,"users");
@@ -141,6 +141,7 @@ class User{
   }
 
   public function suppr_image_user(){
+    require_once __DIR__."/image.php";
     global $db;
     $image = new image;
     $image->deleteImage($this->id,"users");
@@ -192,6 +193,7 @@ class User{
 
   public function set_user_image($image){
     global $db;
+    require_once __DIR__."/image.php";
     $image_user = new image;
     $image_user->setImage($image);
     $image_user->verifier_format();
@@ -202,6 +204,7 @@ class User{
 
   public function change_user_image($image){
     global $db;
+    require_once __DIR__."/image.php";
     $image_user = new image;
     $image_user->setImage($image);
     $image_user->verifier_format();
