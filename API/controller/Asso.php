@@ -44,7 +44,7 @@ switch($fonction){
         exit();
     case "insert":
         
-        $expected_parameters = ["nom", "desc", "desc_missions", "uploadedfile", "email", "tel"];
+        $expected_parameters = ["nom", "desc", "desc_missions", "uploadedfile", "adresse", "email", "tel"];
 
         $status_array = []; // Initialisation du tableau vide
         $parametres_enregistres = true; // Booléen pour suivre l'enregistrement des paramètres
@@ -68,10 +68,11 @@ switch($fonction){
         $description = $_POST["desc"];
         $description_missions = $_POST["desc_missions"];
         $logo = $_FILES["uploadedfile"]["name"];
+        $adresse = $_POST["adresse"];
         $email = $_POST["email"];
         $telephone = $_POST["tel"];
 
-        Asso::insert($association, $description, $description_missions, $logo, $email, $telephone, []);
+        Asso::insert($association, $description, $description_missions, $logo,$adresse, $email, $telephone, []);
 
         return_statut(true, "L'association a été insérée avec succès");
         exit();
