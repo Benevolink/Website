@@ -8,7 +8,9 @@ use AttributsTables as A;
 /**
  * Abstraction table users
  */
+
 class User implements Suppression, GestionLogo{
+
   public $id;  
   /**
    * Method __construct
@@ -145,6 +147,23 @@ class User implements Suppression, GestionLogo{
     }
     return BF::abs_path($filename);
   }
+
+  public function get_image_user(){
+    require_once __DIR__."/image.php";
+    global $db;
+    $image = new image;
+    $test =  $image->getImage($this->id,"users");
+    if($test==0){return "media/img/user_anonyme.jpg";}
+    else{return BF::abs_path($test);}
+  }
+
+  public function suppr_image_user(){
+    require_once __DIR__."/image.php";
+    global $db;
+    $image = new image;
+    $image->deleteImage($this->id,"users");
+  }
+
   
   /**
    * Ajoute un utilisateur dans la bdd
@@ -194,6 +213,31 @@ class User implements Suppression, GestionLogo{
     }
     BF::request($req,[$id_asso,$this->id,$statut],false);
   }
+
+  public function set_user_image($image){
+    global $db;
+    require_once __DIR__."/image.php";
+    $image_user = new image;
+    $image_user->setImage($image);
+    $image_user->verifier_format();
+    $image_user->placer_image("users","media/img/",$this->id);
+    $image_user->modifier_image($image_user->fullpath);
+
+  }
+
+  public function change_user_image($image){
+    global $db;
+    require_once __DIR__."/image.php";
+    $image_user = new image;
+    $image_user->setImage($image);
+    $image_user->verifier_format();
+    $image_user->deleteImage($this->id,"users");
+    $image_user->placer_image("users","media/img/",$this->id);
+    $image_user->modifier_image($image_user->fullpath);
+
+
+  }
+  
   
   /**
    * /!\Fonction non fonctionnelle. Il y a une erreur dedans
