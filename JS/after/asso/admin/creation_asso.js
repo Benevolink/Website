@@ -1,9 +1,9 @@
-function createAsso(nom, logo, desc, desc_missions, adresse, tel, email){
-    asso = new Asso();
-    rep = asso.APICall("asso","insert",
-    {nom : nom, logo : logo, desc : desc, desc_missions : desc_missions, adresse : adresse, tel : tel, email : email});
-    if(rep["status"]==0){
-        
+function createAsso(nom, desc, desc_missions, uploadedfile, adresse, email, tel){
+    var asso = new Asso();
+    var rep = asso.APICall("asso","insert",
+    {nom : nom, desc : desc, desc_missions : desc_missions, uploadedfile : uploadedfile, adresse : adresse, email : email, tel : tel});
+    if(rep["statut"]==0){
+        alert("Les informations renseignées sont invalides ou incomplètes. Veuillez vérifier votre saisie.");
     }
     else{
         window.location.href = abs_path("controller/static/form-merci.php");
