@@ -120,7 +120,7 @@ class User{
    *
    * @return string
    */
-  public function get_user_image(){
+  public function logo(){
     
     $req_filename = "SELECT ".A::USER_LOGO." FROM ".A::USER." WHERE ".A::USER_ID."=? ";//on vérifie que le nom n'est pas déjà pris
     $filename_tab = BF::request($req_filename,[$this->id],true,true,PDO::FETCH_ASSOC);
@@ -131,6 +131,15 @@ class User{
     }
     return BF::abs_path($filename);
   }
+
+  public function get_image_user(){
+    global $db;
+    $image = new image;
+    $test =  $image->getImage($this->id,"users");
+    if($test==0){return false;}
+    else{return BF::abs_path($test);}
+  }
+
   
   /**
    * Ajoute un utilisateur dans la bdd

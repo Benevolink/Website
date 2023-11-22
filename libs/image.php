@@ -30,8 +30,8 @@ class image {
         $req_logo_2 = $db->prepare($req_logo);
         $req_logo_2->execute(array($id));
         $logo = $req_logo_2->fetch(PDO::FETCH_ASSOC);
-        if(count($logo)== 0){echo "l'id n'existe pas dans la table".$table."";}
-        if(count($logo)!= 0){return $logo[0];}
+        if(count($logo)== 0){return 0;}
+        else {return $logo[0];}
     }
 
     
