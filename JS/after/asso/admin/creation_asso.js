@@ -5,6 +5,6 @@ function createAsso(nom, logo, desc, desc_missions, adresse, tel, email){
         
     }
     else{
-
+        window.location.href = abs_path("controller/static/form-merci.php");
     }
 }
