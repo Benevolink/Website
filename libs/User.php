@@ -140,6 +140,12 @@ class User{
     else{return BF::abs_path($test);}
   }
 
+  public function suppr_image_user(){
+    global $db;
+    $image = new image;
+    $image->deleteImage($this->id,"users");
+  }
+
   
   /**
    * Ajoute un utilisateur dans la bdd
