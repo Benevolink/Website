@@ -28,8 +28,6 @@ export class Asso extends APIObjet{
     }
 
     
-
-    
     
 
 
