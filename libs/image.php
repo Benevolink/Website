@@ -1,7 +1,10 @@
 <?php
 require_once __DIR__."/../functions/basic_functions.php";
 require_once BF::abs_path("db.php",true);
-
+require_once __DIR__."/Ressources/NomsAttributsTables.php";
+require_once __DIR__."/Ressources/LibsInterfaces.php";
+use AttributsTables as A;
+  
 
 class image {
     
@@ -26,7 +29,18 @@ class image {
     public function getImage($id,$table){
         
         global $db;
-        $req_logo = "SELECT logo FROM".$table." WHERE id=? ";//on vérifie que le nom n'est pas déjà pris
+        switch($table){
+            case A::USER:
+                $id = A::USER_ID;
+                break;
+            case A::ASSO:
+                $id = A::ASSO_ID;
+                break;
+            case A::EVENT:
+                $id = A::EVENT_ID;
+                break;
+        }
+        $req_logo = "SELECT logo FROM".$table." WHERE ".$id."=? ";//on vérifie que le nom n'est pas déjà pris
         $req_logo_2 = $db->prepare($req_logo);
         $req_logo_2->execute(array($id));
         $logo = $req_logo_2->fetch(PDO::FETCH_ASSOC);
@@ -55,8 +69,19 @@ class image {
     }
     public function deleteImage($id,$table){
         global $db;
+        switch($table){
+            case A::USER:
+                $id = A::USER_ID;
+                break;
+            case A::ASSO:
+                $id = A::ASSO_ID;
+                break;
+            case A::EVENT:
+                $id = A::EVENT_ID;
+                break;
+        }
         //supprimer l'image puis le lien dans la table
-        $req_logo = "SELECT logo FROM".$table." WHERE id=? ";//on vérifie que le nom n'est pas déjà pris
+        $req_logo = "SELECT logo FROM".$table." WHERE ".$id."=? ";//on vérifie que le nom n'est pas déjà pris
         $req_logo_2 = $db->prepare($req_logo);
         $req_logo_2->execute(array($id));
         $logo = $req_logo_2->fetch(PDO::FETCH_ASSOC);
@@ -65,7 +90,7 @@ class image {
             //on supprime l'image situé à l'emplacement $logo
             if(unlink($logo["0"])==false){return 0;}            
         }
-        $req_suppr = "DELETE logo FROM".$table." WHERE id=?";
+        $req_suppr = "DELETE logo FROM".$table." WHERE ".$id."=?";
         $req_suppr_2 = $db->prepare($req_suppr);
         $req_suppr_2->execute(array($id));
     }
