@@ -10,6 +10,7 @@ function creer_select_categorie($key,$value){
     <?php
   }
 ?>
+
 <script src="<?= BF::abs_path("functions/classes/calendar/jquery.js")?>"></script>
 
 
@@ -25,7 +26,7 @@ function creer_select_categorie($key,$value){
       }
       ?>
   </form>
-    
+
   </div>
 
 <style>

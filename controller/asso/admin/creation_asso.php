@@ -1,3 +1,4 @@
+<!--<script src=abs_path("JS/asso/admin/creation_asso.js")></script> -->
 <?php
 $a_jour = true;
 $file_name = "asso/admin/".basename(__FILE__);
