@@ -1,5 +1,11 @@
+<script type="text/javascript">
+    id_asso = <?= $_GET["id_asso"] ?>;
+    id_user = <?php $user = new User(); echo $user->id; ?>;
+</script>
+  <script type="text/javascript" src="<?= BF::abs_path("JS/after/asso/admin/association_admin.js")?>"></script>
+  
   <link rel="stylesheet" href="<?= BF::abs_path("CSS/association_admin.css") ?>"/>
-  <a href="<?= 'creer_evenement.php?id_asso='.$_GET["id_asso"] ?>">
+    <a href="<?= 'creer_evenement.php?id_asso='.$_GET["id_asso"] ?>">
       Créer un évènement
   </a>
   <br>
@@ -14,7 +20,11 @@
         <?= affichage_liste_membres();?>
       </ul>
     </div>
-    <div class="scroller">
+    <div class="scroller" id = "liste_attente">
+    <h1>Liste des utilisateurs en attente</h1>
+      <ul>
+        <?= affichage_liste_en_attente();?>
+      </ul>
     </div>
   </div>
 

@@ -330,34 +330,31 @@ function inscr(){
 }
 
 function afficher_interets(div){
-  $.ajax({
-    url: abs_path('functions/ajax/liste_interets.php'),
-    method: 'GET',
-    dataType: 'json',
-    data: {
-    }
-  }).done(function(rep){
-    console.log(rep);
-    rep.forEach((e)=>{
-      div.append([
-        $('<label>').attr({
-          for: e['nom_domaine']
-        }).css({
-        }).append(e['nom_domaine']),
-        $('<input>').attr({
-          type: 'checkbox',
-          name: e['nom_domaine'],
-          id: e['nom_domaine'],
-          id_domaine: e['id_domaine']
-        }).css({
-          marginRight: '20px'
-        })
-      ])
-    });
+  import(abs_path("JS/classes/Domaine.js")).then((module)=>{
+    module.Domaine.get_all().done(function(rep){
+      rep.forEach((e)=>{
+        div.append([
+          $('<label>').attr({
+            for: e['nom_domaine']
+          }).css({
+          }).append(e['nom_domaine']),
+          $('<input>').attr({
+            type: 'checkbox',
+            name: e['nom_domaine'],
+            id: e['nom_domaine'],
+            id_domaine: e['id_domaine']
+          }).css({
+            marginRight: '20px'
+          })
+        ])
+      });
+  });
+  
 
-  }).fail(function(error){
+  });
+  /*.fail(function(error){
     console.log(error);
-  })
+  })*/
 }
 
 

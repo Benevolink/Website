@@ -42,5 +42,46 @@ switch($fonction){
         $user->quitter_asso($_POST["id_asso"]);
         return_statut(true);
         exit();
-    
+    case "user_modif_statut":  
+        if(!(isset($_POST["id_user"]) && isset($_POST["id_asso"]) && isset($_POST["nouveau_statut"]) && is_numeric($_POST["nouveau_statut"]))){
+            return_statut(false,"Formulaire incomplet");
+            exit();
+        }
+        $nouveau_statut = $_POST["nouveau_statut"];
+        $id_user_cible = $_POST["id_user"];
+        $id_asso = $_POST["id_asso"];
+        require_once BF::abs_path("libs/User.php",true);
+        $user = new User();
+        if($user->id == $id_user_cible){
+            return_statut(false,"Vous ne pouvez pas modifier votre propre rôle.");
+            exit();
+        }
+        if(!$user->est_admin_asso($id_asso))
+        {
+            return_statut(false,"Vous n'avez pas les droits pour effectuer cette action.");
+            exit();
+        }
+        $user_cible = new User($id_user_cible);
+        $asso = new Asso($id_asso);
+        $asso->modifier_role_membre($user_cible,$nouveau_statut);
+        return_statut(true);
+        exit();
+    case "user_get_statut":
+        if(!(isset($_POST["id_user"]) && isset($_POST["id_asso"]))){
+            return_statut(false,"Formulaire incomplet");
+            exit();
+        }
+        $id_user_cible = $_POST["id_user"];
+        $id_asso = $_POST["id_asso"];
+        require_once BF::abs_path("libs/User.php",true);
+        $user = new User();
+        if(!$user->est_admin_asso($id_asso))
+        {
+            return_statut(false,"Vous n'avez pas les droits pour effectuer cette action.");
+            exit();
+        }
+        $asso = new Asso($id_asso);
+        $role = $asso->get_role_membre($id_user_cible);
+        return_json(array("statut"=>1, "user_statut"=>$role));
+        exit();
 }

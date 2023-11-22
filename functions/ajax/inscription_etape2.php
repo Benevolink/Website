@@ -105,7 +105,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $est_bloque = false;
 
     // Requête SQL d'insertion pour la table "users"
-    $insertUserQuery = "INSERT INTO users (nom, prenom, date_de_naissance, email, mdp, tel, visu, id_lieu, est_bloque)
+    $insertUserQuery = "INSERT INTO users (nom, prenom, date_de_naissance, email, mdp, tel, visu, id_lieu, account_status)
                         VALUES (:nom, :prenom, :date_de_naissance, :email, :mdp, :tel, :visu, :id_lieu, :est_bloque)";
     
     $stmt = $db->prepare($insertUserQuery);
