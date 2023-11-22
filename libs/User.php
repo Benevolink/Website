@@ -174,17 +174,29 @@ class User{
     $req = "INSERT INTO ".A::MEMBRESASSOS." (".A::MEMBRESASSOS_ID_ASSO.",".A::MEMBRESASSOS_ID_USER.",".A::MEMBRESASSOS_STATUT.") VALUES (? , ?, ?)";
     BF::request($req,[$id_asso,$this->id,0],false);
   }
-  
+
   public function set_user_image($image){
     global $db;
-    $id_user=$this->id;//erreur à corriger
     $image_user = new image;
     $image_user->setImage($image);
     $image_user->verifier_format();
-    $image_user->placer_image("user","media/img/");
+    $image_user->placer_image("users","media/img/",$this->id);
     $image_user->modifier_image($image_user->fullpath);
 
   }
+
+  public function change_user_image($image){
+    global $db;
+    $image_user = new image;
+    $image_user->setImage($image);
+    $image_user->verifier_format();
+    $image_user->deleteImage($this->id,"users");
+    $image_user->placer_image("users","media/img/",$this->id);
+    $image_user->modifier_image($image_user->fullpath);
+
+
+  }
+  
   
   /**
    * /!\Fonction non fonctionnelle. Il y a une erreur dedans

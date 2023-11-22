@@ -95,7 +95,7 @@ class image {
     le nom d'origine de l'image (il ne nous intéresse pas)
     */ 
 
-    public function placer_image($table,$chemin){
+    public function placer_image($table,$chemin,$id){
         global $db;
         
 
@@ -109,9 +109,9 @@ class image {
             $req_noms = "SELECT logo FROM".$table." WHERE basename(logo)=? ";//on vérifie que le nom n'est pas déjà pris
             $req_noms_2 = $db->prepare($req_noms);
             $req_noms_2->execute([$image_name_num]);
-            $id = $req_noms_2->fetch(PDO::FETCH_ASSOC);
+            $nom = $req_noms_2->fetch(PDO::FETCH_ASSOC);
 
-            if (count($id) == 0) {
+            if (count($nom) == 0) {
       //donc si le nom est bien unique on peut juste sortir de la boucle
                 $unique = 1;
             }
