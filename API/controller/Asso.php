@@ -42,5 +42,32 @@ switch($fonction){
         $user->quitter_asso($_POST["id_asso"]);
         return_statut(true);
         exit();
+    case "insert":
+        
+        $expected_parameters = ["nom", "desc", "desc_missions", "uploadedfile", "adresse", "email", "tel"];
+
+        $status_array = [];
+
+        foreach ($expected_parameters as $param) {
+            if (!isset($_POST[$param])) {
+                return_statut(false, "$param: Paramètre manquant");
+                exit();
+            }
+        }
+
+        // Si on arrive ici, tous les paramètres sont présents
+        $association = $_POST["nom"];
+        $description = $_POST["desc"];
+        $description_missions = $_POST["desc_missions"];
+        $logo = $_FILES["uploadedfile"]["name"];
+        $adresse = $_POST["adresse"];
+        $email = $_POST["email"];
+        $telephone = $_POST["tel"];
+
+        Asso::insert($association, $description, $description_missions, $logo, $adresse, $email, $telephone, []);
+        return_statut(true, "L'association a été insérée avec succès");
+        exit();
+
+
     
 }
