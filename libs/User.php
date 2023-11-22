@@ -153,7 +153,7 @@ class User implements Suppression, GestionLogo{
     global $db;
     $image = new image;
     $test =  $image->getImage($this->id,"users");
-    if($test==0){return false;}
+    if($test==0){return "media/img/user_anonyme.jpg";}
     else{return BF::abs_path($test);}
   }
 
