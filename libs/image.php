@@ -47,7 +47,7 @@ class image {
         $req_logo_2 = $db->prepare($req_logo);
         $req_logo_2->execute(array($id));
         $logo = $req_logo_2->fetch(PDO::FETCH_NUM);
-        if(count($logo)== 0){return 0;}
+        if(count($logo)== 0){return false;}
         else {return $logo[0];}
     }
 
@@ -134,23 +134,28 @@ class image {
 
     public function placer_image($table,$chemin,$id){
         global $db;
-        
+        switch($table){
+            case A::USER:
+                $id = A::USER_ID;
+                break;
+            case A::ASSO:
+                $id = A::ASSO_ID;
+                break;
+            case A::EVENT:
+                $id = A::EVENT_ID;
+                break;
+        }
 
-        $unique = 0;
+        $unique = false;
         $ext = pathinfo($this->tmp_name, PATHINFO_EXTENSION);
 
 
-        while($unique!=1){
+        while(!$unique){
             $image_name_num = uniqid();
-
-            $req_noms = "SELECT logo FROM".$table." WHERE basename(logo)=? ";//on vérifie que le nom n'est pas déjà pris
-            $req_noms_2 = $db->prepare($req_noms);
-            $req_noms_2->execute([$image_name_num]);
-            $nom = $req_noms_2->fetch(PDO::FETCH_ASSOC);
-
-            if (count($nom) == 0) {
+            
+            if ($this->getImage($image_name_num,$table) != false) {
       //donc si le nom est bien unique on peut juste sortir de la boucle
-                $unique = 1;
+                $unique = true;
             }
         }
         //changer le nom
@@ -170,7 +175,15 @@ class image {
         $this->fullpath=$destinationPath;
         //rename($destinationPath, $newDestinationPath);
         //UPDATE le chemin vers l'image dans la BDD
-        BF::request("UPDATE" .$table. " SET logo = ? WHERE id = ?",[$destinationPath,$id]);
+        if(BF::equals($table,A::EVENT))
+        {
+            require_once BF::abs_path("libs/Event.php",true);
+            $event = new Event($id);
+            $event->insert_prop("logo",$destinationPath);
+        }
+            
+        else
+            BF::request("UPDATE $table SET logo = ? WHERE $id = ?",[$destinationPath,$id]);
         
  
   
