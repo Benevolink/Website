@@ -40,7 +40,9 @@ class image {
                 $id = A::EVENT_ID;
                 break;
         }
-        if($table)
+        if(BF::equals($table,A::EVENT))
+            $req_logo = "SELECT logo FROM".A::PROPEVENT." WHERE ".$id."=? "
+        else
         $req_logo = "SELECT logo FROM".$table." WHERE ".$id."=? ";//on vérifie que le nom n'est pas déjà pris
         $req_logo_2 = $db->prepare($req_logo);
         $req_logo_2->execute(array($id));
@@ -83,7 +85,7 @@ class image {
         }
         //supprimer l'image puis le lien dans la table
         if(BF::equals($table,A::EVENT))
-            $req_logo = "SELECT ".A::PROPASSO_VALEUR." FROM ".A::PROPASSO." WHERE ".A::PROPASSO_NOM." = 'logo' AND ".$id."=? ";
+            $req_logo = "SELECT ".A::PROPEVENT_VALEUR." FROM ".A::PROPEVENT." WHERE ".A::PROPEVENT_NOM." = 'logo' AND ".$id."=? ";
         else
             $req_logo = "SELECT logo FROM".$table." WHERE ".$id."=? ";//on vérifie que le nom n'est pas déjà pris
         $req_logo_2 = $db->prepare($req_logo);
@@ -95,7 +97,7 @@ class image {
             if(unlink($logo[0])==false){return 0;}            
         }
         if(BF::equals($table,A::EVENT))
-            $req_suppr = "DELETE FROM ".A::PROPASSO." WHERE ".A::PROPASSO_NOM." = 'logo' AND ".$id."=? ";
+            $req_suppr = "DELETE FROM ".A::PROPEVENT." WHERE ".A::PROPEVENT_NOM." = 'logo' AND ".$id."=? ";
         else
             $req_suppr = "UPDATE $table
             SET logo = NULL
