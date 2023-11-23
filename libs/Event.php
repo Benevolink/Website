@@ -146,7 +146,7 @@ class Event implements Suppression, GestionMembres, GestionLogo, GestionPropriet
    * @
    * @todo
    */
-  public function image_set(){
+  public function image_set($image){
     
   }
 

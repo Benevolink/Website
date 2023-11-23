@@ -198,7 +198,7 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
    * Ajoute un logo à l'asso
    * @todo
    */
-  public function image_set(){
+  public function image_set($image){
     
   }
 

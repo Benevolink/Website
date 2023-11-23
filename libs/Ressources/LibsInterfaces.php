@@ -32,7 +32,7 @@ interface GestionLogo{
     public function image_get();
 
     //Paramètres dans la fonction à rajouter
-    public function image_set();
+    public function image_set($image);
 
     /**
      * Supprime le logo s'il existe
