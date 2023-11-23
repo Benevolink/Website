@@ -170,7 +170,7 @@ class User implements Suppression, GestionLogo{
     $image_user = new image;
     $image_user->setImage($image);
     $image_user->verifier_format();
-    $image_user->placer_image("users","media/img/",$this->id);
+    $image_user->placer_image(A::USER,"media/img/",$this->id);
     $image_user->modifier_image($image_user->fullpath);
 
   }
