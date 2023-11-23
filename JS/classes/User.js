@@ -25,9 +25,11 @@ export class User extends APIObjet{
     }
 
     static setLogo(file_content){
-        let data = FormData();
+        let data = new FormData();
         data.append("id_user",this.id);
         data.append("photo_profil",file_content);
+        data.append("type","user");
+        data.append("fonction","set_pp");
         return $.ajax({
             url: abs_path("API/index.php"),
             method: "POST",
