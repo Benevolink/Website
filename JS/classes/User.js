@@ -24,7 +24,7 @@ export class User extends APIObjet{
         APICall("user","get_pp",{});
     }
 
-    setLogo(file_content){
+    static setLogo(file_content){
         let data = FormData();
         data.append("id_user",this.id);
         data.append("photo_profil",file_content);

@@ -4,12 +4,6 @@ function modif_image(logo_chemin){
   image.setAttribute("src",logo_chemin);
   image.addEventListener("click",function(){
   //On ajoute un fond sombre
-  $('body').append(
-    $('<div>').attr({
-      class: "background_sombre",
-      id: 'background_sombre'
-    })
-  );
     
   let background = $("<div>").attr({
     class : "background_sombre",
@@ -91,7 +85,16 @@ function modif_image(logo_chemin){
     let valid = $("<div>").attr({
       class : "bouton_inscr",
       id : "valid"
-    }).click(modif_avatar()).text("Valider");
+    }).click(()=>{
+      import(abs_path("JS/classes/User.js")).then((module)=>{
+        let file_content = $("#input_upload")[0].files[0];
+        module.User.setLogo(file_content).done((data)=>{
+          console.log(data);
+        }).fail((err)=>{
+          console.log(err);
+        });
+      });
+    }).text("Valider");
 
     let retour = $("<div>").attr({id : "retour", class : "bouton_inscr"}).text("Retour").css({
       backgroundColor : "red"
