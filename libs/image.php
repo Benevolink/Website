@@ -67,7 +67,7 @@ class image {
         $this->size=$file['size'];
         $this->tmp_name=$file['tmp_name'];
         $this->error=$file['error'];
-        $this->fullpath=$file['fullpath'];
+        $this->fullpath="";
         return $this;
     }
     public function deleteImage($id,$table){
