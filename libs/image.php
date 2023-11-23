@@ -40,6 +40,7 @@ class image {
                 $id = A::EVENT_ID;
                 break;
         }
+        if($table)
         $req_logo = "SELECT logo FROM".$table." WHERE ".$id."=? ";//on vérifie que le nom n'est pas déjà pris
         $req_logo_2 = $db->prepare($req_logo);
         $req_logo_2->execute(array($id));
@@ -81,7 +82,7 @@ class image {
                 break;
         }
         //supprimer l'image puis le lien dans la table
-        if($table == A::EVENT)
+        if(BF::equals($table,A::EVENT))
             $req_logo = "SELECT ".A::PROPASSO_VALEUR." FROM ".A::PROPASSO." WHERE ".A::PROPASSO_NOM." = 'logo' AND ".$id."=? ";
         else
             $req_logo = "SELECT logo FROM".$table." WHERE ".$id."=? ";//on vérifie que le nom n'est pas déjà pris
@@ -93,7 +94,7 @@ class image {
             //on supprime l'image situé à l'emplacement $logo
             if(unlink($logo[0])==false){return 0;}            
         }
-        if($table == A::EVENT)
+        if(BF::equals($table,A::EVENT))
             $req_suppr = "DELETE FROM ".A::PROPASSO." WHERE ".A::PROPASSO_NOM." = 'logo' AND ".$id."=? ";
         else
             $req_suppr = "UPDATE $table
