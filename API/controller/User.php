@@ -27,7 +27,7 @@ switch($fonction){
         $user = new APIUser();
         if(isset($_POST["id_user"]))
             $user->id=$_POST["id_user"];
-        $user->image_set($_POST["photo_profil"]);
+        $user->image_set($_FILES["photo_profil"]);
         return_statut(true);
         exit();
     case "change_pp":
