@@ -11,10 +11,11 @@ function modif_image(logo_chemin){
     })
   );
     
-  let background = document.createElement("div");
-  background.setAttribute("class","background_sombre");
-  background.setAttribute("id","background_sombre");
-  document.body.appendChild(background);
+  let background = $("<div>").attr({
+    class : "background_sombre",
+    id : "background_sombre"
+  })
+  
   
   
   //On crée une boîte pour s'authentifier
@@ -30,92 +31,83 @@ function modif_image(logo_chemin){
       fontSize: '20px'
     }).text("Modifier l'avatar")
   );
-  /*
-  let boite = document.createElement("div");
-  boite.setAttribute("class","boite_auth");
-  boite.setAttribute("id","boite_auth");
-  boite.style.cursor= "auto";
-  let titre = document.createElement("p");
-  titre.style.fontWeight = "bold";
-  titre.style.fontSize = "20px";
-  titre.innerText = "Modifier l'avatar";
-
-  boite.appendChild(titre);
-  */
-    let form =  document.createElement("form");
-      form.setAttribute("class","form_connexion");
-      form.setAttribute("method","post");
-    form.setAttribute("enctype","multipart/form-data");
-  form.setAttribute("id","form_img");
-  form.setAttribute("action","functions/modif_logo.php");
-
-  let img = document.createElement("img");
-  img.setAttribute("src",logo_chemin);
-  img.setAttribute("style","width:200px;border-radius:200px;border: 10px black solid;cursor: pointer;");
-  img.setAttribute("id","img_prev");
-  img.addEventListener("click",function(){
+  let form = $("<form>").attr({
+    class : "form_connexion",
+    method : "post",
+    enctype : "multipart/form-data",
+    id : "form_img",
+    action : ""
+  })
+  let img = $("<img>").attr({
+    src : logo_chemin,
+    id : "img_prev"
+  }).css({
+    width : "200px",
+    borderRadius : "200px",
+    border : "10px black solid",
+    cursor : "pointer"
+  }).on("click",function(event){
     let inp = document.querySelector("#input_upload");
     inp.click();
-  });
-  
-  let input = document.createElement("input");
-  input.setAttribute("name","uploadedfile");
-  input.setAttribute("id","input_upload");
-  input.setAttribute("type","file");
-  input.addEventListener("change",function(){
+  })
+  let input = $("<input>").attr({
+    name : "uploadedfile",
+    id : "input_upload",
+    type : "file",
+  }).css({
+    display : "none",
+    height : "200px",
+    width : "200px",
+    margin : "0px",
+    zIndex : "9999"
+  })
+  .on("change",function(){
     if (this.files && this.files[0]) {
-              var reader = new FileReader();
+        var reader = new FileReader();
 
-              reader.onload = function (e) {
-                  $('#img_prev')
-                      .attr('src', e.target.result)
-                      .width(200)
-                      .height(200);
-              };
+        reader.onload = function (e) {
+            $('#img_prev')
+                .attr('src', e.target.result)
+                .width(200)
+                .height(200);
+        };
 
-              reader.readAsDataURL(this.files[0]);
-          }else{document.write("f");}
-      });
-  input.style.display = "none";
-  input.style.height ="200px";
-  input.style.width ="200px";
-  input.style.margin = "0px";
-  input.style.zIndex = "9999";
+        reader.readAsDataURL(this.files[0]);
+    }else{document.write("f");}
+  });
+  let input2 = $("<input>").attr({
+    name : "uploadedfile",
+    type : "hidden"
+  });
 
-  let input2 = document.createElement("input");
-  input2.setAttribute("name","uploadedfile");
-  input2.setAttribute("type","hidden");
-  form.appendChild(input);
-  form.appendChild(img);
-  form.appendChild(input2);
-
-  boite.append($(form));
-    let valid = document.createElement("div");
-    valid.setAttribute("class","bouton_inscr");
-    valid.innerText = "Valider";
-    valid.setAttribute("onclick","modif_avatar();");
-    valid.setAttribute("id","valid");
+  form.append([
+    input,
+    img,
+    input2
+  ]);
   
-    let retour = document.createElement("div");
-    retour.setAttribute("id","retour");
-    retour.setAttribute("class","bouton_inscr");
-    retour.innerText = "Retour";
-    retour.style.backgroundColor ="red";
+
+  boite.append(form);
+    let valid = $("<div>").attr({
+      class : "bouton_inscr",
+      id : "valid"
+    }).click(modif_avatar()).text("Valider");
+
+    let retour = $("<div>").attr({id : "retour", class : "bouton_inscr"}).text("Retour").css({
+      backgroundColor : "red"
+    }).click(()=>{
+      $("#background_sombre").remove();
+    });
   
-    valid.addEventListener("click",function(){
+    
+  
+    /*valid.addEventListener("click",function(){
       let f = document.querySelector("#form_img");
       f.submit();
-    });
-
-  retour.addEventListener("click",function(){
-    let bg = document.querySelector("#background_sombre");
-    bg.remove();
-      
-  });
-  boite.append($(valid));
-    boite.append($(retour));
-  $(background).append(boite);
-  document.body.appendChild(background);
+    });*/
+  
+  
+  $("body").append(background.append(boite.append([valid,retour])));
 });
 }
   
