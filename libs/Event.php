@@ -146,7 +146,7 @@ class Event implements Suppression, GestionMembres, GestionLogo, GestionPropriet
    * @
    * @todo
    */
-  public function ajouter_logo(){
+  public function image_set(){
     
   }
 
@@ -154,14 +154,14 @@ class Event implements Suppression, GestionMembres, GestionLogo, GestionPropriet
    * Renvoie le chemin du logo pour l'implémenter en HTML
    * @todo
    */
-  public function get_logo(){
+  public function image_get(){
 
   }
   /**
    * Supprime le logo
    * @todo
    */
-  public function suppr_logo(){
+  public function image_suppr(){
     
   }
 

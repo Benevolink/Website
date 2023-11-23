@@ -29,15 +29,15 @@ interface GestionLogo{
     /**
      * Renvoie le chemin du logo pour l'implémenter en HTML
      */
-    public function get_logo();
+    public function image_get();
 
     //Paramètres dans la fonction à rajouter
-    public function ajouter_logo();
+    public function image_set();
 
     /**
      * Supprime le logo s'il existe
      */
-    public function suppr_logo();
+    public function image_suppr();
 }
 
 /**
