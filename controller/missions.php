@@ -10,5 +10,5 @@ require_once BF::abs_path("model/".$file_name,true);
 require_once BF::abs_path("JS/before/".$file_name,true);
 require_once BF::abs_path("view/".$file_name,true);
 require_once BF::abs_path("JS/after/".$file_name,true);
-BF::afficher_template(ob_get_clean());
+BF::afficher_template();
 ?>
