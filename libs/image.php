@@ -41,12 +41,12 @@ class image {
                 break;
         }
         if(BF::equals($table,A::EVENT))
-            $req_logo = "SELECT logo FROM".A::PROPEVENT." WHERE ".$id."=? "
+            $req_logo = "SELECT logo FROM".A::PROPEVENT." WHERE ".A::PROPASSO_NOM." like 'logo' AND $id = ? ";
         else
-        $req_logo = "SELECT logo FROM".$table." WHERE ".$id."=? ";//on vérifie que le nom n'est pas déjà pris
+            $req_logo = "SELECT logo FROM $table WHERE $id = ? ";//on vérifie que le nom n'est pas déjà pris
         $req_logo_2 = $db->prepare($req_logo);
         $req_logo_2->execute(array($id));
-        $logo = $req_logo_2->fetch(PDO::FETCH_ASSOC);
+        $logo = $req_logo_2->fetch(PDO::FETCH_NUM);
         if(count($logo)== 0){return 0;}
         else {return $logo[0];}
     }
