@@ -192,16 +192,14 @@ class image {
     public function verifier_format(){
         $allowed_extensions = array('jpg', 'jpeg', 'png');
        
-        $extension = pathinfo($this->tmp_name, PATHINFO_EXTENSION);
+        $extension = pathinfo($this->name, PATHINFO_EXTENSION);
     
     //on vérifie le format de l'image
         if (!in_array($extension, $allowed_extensions)) {
-        
         echo "Cette extension n'est pas authorisée. Les authorisations authorisées sont jpg, jpeg et png";
         }
         //Vérifier qu'il n'y a pas de points autres que celui de l'extension dans le nom de l'image pour éviter une double extension
-        
-        $taille = explode(".",$this->tmp_name);
+        $taille = count(explode(".",$this->name));
         if($taille>2)
             exit("Nom de fichier invalide : vous essayez d'insérer plusieurs extensions");
         
