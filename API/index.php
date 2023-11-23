@@ -58,6 +58,7 @@ switch($type){
     case "domaine":
         require __DIR__."/controller/Domaine.php";
     default:
+        return_statut(false,"user | asso | event | domaine");
     break;
 }
 ?>
