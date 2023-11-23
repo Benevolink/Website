@@ -201,12 +201,10 @@ class image {
         }
         //Vérifier qu'il n'y a pas de points autres que celui de l'extension dans le nom de l'image pour éviter une double extension
         
-        for ($i=0; $i<strlen($this->tmp_name)-5; $i++) {
-          
-            if ($this->name[$i]==".") {
-            echo "Il ne peut y avoir d'autres points que celui de l'extension"; 
-             }
-        }
+        $taille = explode(".",$this->tmp_name);
+        if($taille>2)
+            exit("Nom de fichier invalide : vous essayez d'insérer plusieurs extensions");
+        
     }
     /**
      * Method modifier_image
