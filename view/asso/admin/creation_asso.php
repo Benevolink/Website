@@ -194,8 +194,8 @@
                   <label for="nomAssociation"> <span class="glyphicon glyphicon-sort-by-alphabet" aria-hidden="true"></span>
                   Domaines souhaités </label>
                 <p>
-                  <?php
-                    show_all_domaines();
+                  <?=
+                    show_all_domaines()
                   ?>
                 </p>
                

@@ -141,30 +141,40 @@ class User implements Suppression, GestionLogo{
     $req_filename = "SELECT ".A::USER_LOGO." FROM ".A::USER." WHERE ".A::USER_ID."=? ";//on vérifie que le nom n'est pas déjà pris
     $filename_tab = BF::request($req_filename,[$this->id],true,true,PDO::FETCH_ASSOC);
     if(isset($filename_tab["logo"])){
-       $filename = "media/img/".$filename_tab["logo"];
+       $filename = BF::abs_path("media/logo/user/",true).$filename_tab["logo"];
     }else{
-      $filename = "media/img/user_anonyme.jpg";
+      $filename = BF::abs_path("media/img/user_anonyme.jpg");
     }
     return BF::abs_path($filename);
   }
 
-  public function get_image_user(){
+  public function image_get(){
     require_once __DIR__."/image.php";
     global $db;
     $image = new image;
-    $test =  $image->getImage($this->id,"users");
-    if($test==0){return "media/img/user_anonyme.jpg";}
-    else{return BF::abs_path($test);}
+    $test =  $image->getImage($this->id,A::USER);
+    if($test==false){return BF::abs_path("media/img/user_anonyme.jpg");}
+    else{return $test;}
   }
 
-  public function suppr_image_user(){
+  public function image_suppr(){
     require_once __DIR__."/image.php";
     global $db;
     $image = new image;
-    $image->deleteImage($this->id,"users");
+    $image->deleteImage($this->id,A::USER);
   }
 
-  
+  public function image_set($image){
+    global $db;
+    require_once __DIR__."/image.php";
+    $image_user = new image;
+    $image_user->setImage($image);
+    $image_user->verifier_format();
+    $image_user->deleteImage($this->id,A::USER);
+    $image_user->placer_image(A::USER,BF::abs_path("media/logo/user/",true),$this->id);
+    $image_user->modifier_image($image_user->fullpath);
+
+  }
   /**
    * Ajoute un utilisateur dans la bdd
    *
@@ -214,25 +224,17 @@ class User implements Suppression, GestionLogo{
     BF::request($req,[$id_asso,$this->id,$statut],false);
   }
 
-  public function set_user_image($image){
-    global $db;
-    require_once __DIR__."/image.php";
-    $image_user = new image;
-    $image_user->setImage($image);
-    $image_user->verifier_format();
-    $image_user->placer_image("users","media/img/",$this->id);
-    $image_user->modifier_image($image_user->fullpath);
-
-  }
+  
 
   public function change_user_image($image){
     global $db;
     require_once __DIR__."/image.php";
     $image_user = new image;
+    $image_user->deleteImage($this->id,A::USER);
     $image_user->setImage($image);
     $image_user->verifier_format();
-    $image_user->deleteImage($this->id,"users");
-    $image_user->placer_image("users","media/img/",$this->id);
+    $image_user->placer_image(A::USER,BF::abs_path("media/logo/user/",true)
+    ,$this->id);
     $image_user->modifier_image($image_user->fullpath);
 
 
@@ -341,6 +343,10 @@ class User implements Suppression, GestionLogo{
    */
   public function infos_events(){
     return BF::request("SELECT e.".A::EVENT_ID.", e.".A::EVENT_NOM.", ho.".A::HORAIRE_DATE_DEBUT.", ho.".A::HORAIRE_DATE_FIN.", a.".A::ASSO_NOM.", a.".A::ASSO_ID." FROM (((".A::EVENT." e JOIN ".A::ASSO." a ON e.".A::EVENT_ID_ASSO." = a.".A::ASSO_ID.") JOIN  ".A::MEMBRESEVENTS." me ON me.".A::MEMBRESEVENTS_ID_EVENT." = e.".A::EVENT_ID." )JOIN ".A::HORAIRE." ho ON ho.".A::HORAIRE_ID." = e.".A::EVENT_ID_HORAIRE.") WHERE me.".A::MEMBRESEVENTS_ID_USER." = ?",[$this->id],true,false,PDO::FETCH_ASSOC);
+  }
+
+  public function get_pseudo(){
+    return BF::request("SELECT ".A::USER_PRENOM." FROM ".A::USER." WHERE ".A::USER_ID." = ?",[$this->id],true,true)[0];
   }
 
   /**

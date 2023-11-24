@@ -20,7 +20,8 @@
 
 
 <link rel="stylesheet" href="<?= BF::abs_path("CSS/mon_compte.css")?>">
-
+<script type="text/javascript" src="<?= BF::abs_path("JS/before/gestion_compte/mon_compte.js")?>">
+</script>
 <div class="liste_prop" style="display: inline-block; margin-left: 100px;">
   
 
@@ -187,3 +188,6 @@
   <div class="col-md-4">.col-md-4</div>
   <div class="col-md-4">.col-md-4</div>
 </div>
+
+<script type="text/javascript" src="<?= BF::abs_path("JS/after/gestion_compte/mon_compte.js")?>">
+</script>

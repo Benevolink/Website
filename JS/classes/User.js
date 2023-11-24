@@ -2,7 +2,8 @@ import { APIObjet } from './APIObjet.js';
 
 export class User extends APIObjet{
 
-    constructor(id_user){
+    constructor(id_user=null){
+        super();
         this.id_user = id_user;
     }
 
@@ -16,6 +17,27 @@ export class User extends APIObjet{
     getEvents(){
         return this
         .APICall("event","user_get_all",{id_user : this.id});
+    }
+
+    getLogo(){
+        return this.
+        APICall("user","get_pp",{});
+    }
+
+    static setLogo(file_content){
+        let data = new FormData();
+        data.append("photo_profil",file_content);
+        data.append("type","user");
+        data.append("fonction","set_pp");
+        return $.ajax({
+            url: abs_path("API/index.php"),
+            method: "POST",
+            dataType: "json",
+            data: data,
+            contentType: false,
+            processData: false,
+        });
+        
     }
 
 }
