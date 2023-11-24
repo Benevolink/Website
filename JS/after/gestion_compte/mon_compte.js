@@ -90,6 +90,7 @@ function modif_image(logo_chemin){
         let file_content = $("#input_upload")[0].files[0];
         module.User.setLogo(file_content).done((data)=>{
           console.log(data);
+          location.reload();
         }).fail((err)=>{
           console.log(err);
         });
