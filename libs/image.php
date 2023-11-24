@@ -15,6 +15,8 @@ class image {
     private $error;
     public $fullpath;
 
+    public $chemin;
+
     /**
      * Method getImage
      * 
@@ -32,12 +34,15 @@ class image {
         switch($table){
             case A::USER:
                 $id_table = A::USER_ID;
-                break;
+                $dir = "media/logo/user/";
+                break;  
             case A::ASSO:
                 $id_table = A::ASSO_ID;
+                $dir = "media/logo/asso/";
                 break;
             case A::EVENT:
                 $id_table = A::EVENT_ID;
+                $dir = "media/logo/event/";
                 break;
         }
         if(BF::equals($table,A::EVENT))
@@ -47,8 +52,15 @@ class image {
         $req_logo_2 = $db->prepare($req_logo);
         $req_logo_2->execute(array($id));
         $logo = $req_logo_2->fetch(PDO::FETCH_NUM);
-        if(count($logo)== 0){return false;}
-        else {return $logo[0];}
+        if(count($logo)==1&&strlen($logo[0])){
+            $file = BF::abs_path($dir.strval($logo[0]));
+            $file_php = BF::abs_path($dir.strval($logo[0]),true);
+        }
+            
+
+        if(count($logo)== 1 &&strlen($logo[0])>0 && file_exists($file_php))
+            return $file;
+        else return false;
     }
 
     
@@ -62,12 +74,15 @@ class image {
      */
 
     public function setImage($file){
+        if($file['error'] != UPLOAD_ERR_OK)
+            exit("Erreur d'upload");
         $this->name=$file['name'];
         $this->type=$file['type'];
         $this->size=$file['size'];
         $this->tmp_name=$file['tmp_name'];
         $this->error=$file['error'];
         $this->fullpath="";
+        $this->chemin = "";
         return $this;
     }
     public function deleteImage($id,$table){
@@ -75,12 +90,15 @@ class image {
         switch($table){
             case A::USER:
                 $id_table = A::USER_ID;
+                $dir = BF::abs_path("media/logo/user/",true);
                 break;
             case A::ASSO:
                 $id_table = A::ASSO_ID;
+                $dir = BF::abs_path("media/logo/asso/",true);
                 break;
             case A::EVENT:
                 $id_table = A::EVENT_ID;
+                $dir = BF::abs_path("media/logo/event/",true);
                 break;
         }
         //supprimer l'image puis le lien dans la table
@@ -95,7 +113,13 @@ class image {
         if(count($logo)!= 0){
             //on supprime l'image situé à l'emplacement $logo
             try {
-                if (file_exists($logo[0]) && unlink($logo[0]) == false) {
+                if (file_exists($dir.$logo[0]) && strlen($logo[0])>0 && unlink($dir.$logo[0]) == false) {
+                    if(BF::equals($table,A::EVENT)){
+                        $req_logo = "DELETE FROM ".A::PROPEVENT." WHERE ".A::PROPEVENT_NOM." = 'logo' AND $id_table = ? ";
+                    }else{
+                        $req_logo = "UPDATE $table SET logo = NULL WHERE $id_table =? ";//on vérifie que le nom n'est pas déjà pris
+                    }
+                    BF::request($req_logo,[$id]);
                     return 0;
                 }
             } catch (Exception $e) {
@@ -159,27 +183,20 @@ class image {
 
 
         while(!$unique){
-            $image_name_num =  preg_replace("/[^a-zA-Z0-9]/", "", uniqid());
-            
+            $image_name_num =  str_replace(" ","",sha1(str_replace(" ","",uniqid("",true))));   
             if ($this->getImage($image_name_num,$table) == false) {
       //donc si le nom est bien unique on peut juste sortir de la boucle
                 $unique = true;
             }
         }
         //changer le nom
-        $image_name=strval($image_name_num);
-        if(rename($this->tmp_name,$image_name))
-            $this->tmp_name=$image_name;
-        else{
-            echo "Erreur rename !";
-            return;
-        }
+        $image_name=$image_name_num;
+        
         //Mettre l'image dans le fichier logo/user/
         $destinationPath = $chemin.$image_name.".".$ext;
-
+        $this->chemin = $chemin;
         array_map('unlink', glob($chemin.$image_name.".*")); //On supprime les fichiers résiduels
-        if(move_uploaded_file(getcwd().$this->tmp_name, $destinationPath)) { 
-            echo "Le fichier ".  basename( $this->name)." a bien été téléversé";
+        if(move_uploaded_file($this->tmp_name, $destinationPath)) { 
         } //la fonction move_uploaded_file déplace le fichier dans destination et renvoie un si l'opération est un succés 0 sinon
         else{
             echo "Il y a eu une erreur pour poster le fichier, réessayez.\n";
@@ -196,7 +213,7 @@ class image {
         }
             
         else
-            BF::request("UPDATE $table SET logo = ? WHERE $id_table = ?",[$destinationPath,$id]);
+            BF::request("UPDATE $table SET logo = ? WHERE $id_table = ?",[basename($destinationPath),$id]);
         
  
   
@@ -231,18 +248,18 @@ class image {
 
         $ext=pathinfo($name,PATHINFO_EXTENSION);
         if(strcmp($ext,"jpg")==0 ||strcmp($ext,"jpeg")==0){
-            $im_php = imagecreatefromjpeg($lien_image);
+            $im_php = imagecreatefromjpeg($this->fullpath);
             if($im_php==false){return 0;}
         }
 
         elseif(strcmp($ext,"png")==0){
-            $im_php = imagecreatefrompng($lien_image);
+            $im_php = imagecreatefrompng($this->fullpath);
             if($im_php==false){return 0;}
         }
         else{return 0;}
 
         //mettre les modifications souhaitées
-        list($width, $height) = getimagesize($lien_image);
+        list($width, $height) = getimagesize($this->fullpath);
         if($width== 0|| $height== 0){return 0;}
 
         $image_p = imagescale($im_php,600,600, IMG_BICUBIC);

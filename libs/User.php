@@ -141,7 +141,7 @@ class User implements Suppression, GestionLogo{
     $req_filename = "SELECT ".A::USER_LOGO." FROM ".A::USER." WHERE ".A::USER_ID."=? ";//on vérifie que le nom n'est pas déjà pris
     $filename_tab = BF::request($req_filename,[$this->id],true,true,PDO::FETCH_ASSOC);
     if(isset($filename_tab["logo"])){
-       $filename = BF::abs_path("media/img/").$filename_tab["logo"];
+       $filename = BF::abs_path("media/logo/user/",true).$filename_tab["logo"];
     }else{
       $filename = BF::abs_path("media/img/user_anonyme.jpg");
     }
@@ -153,8 +153,8 @@ class User implements Suppression, GestionLogo{
     global $db;
     $image = new image;
     $test =  $image->getImage($this->id,A::USER);
-    if($test==0){return BF::abs_path("media/img/user_anonyme.jpg");}
-    else{return BF::abs_path($test);}
+    if($test==false){return BF::abs_path("media/img/user_anonyme.jpg");}
+    else{return $test;}
   }
 
   public function image_suppr(){
@@ -171,7 +171,7 @@ class User implements Suppression, GestionLogo{
     $image_user->setImage($image);
     $image_user->verifier_format();
     $image_user->deleteImage($this->id,A::USER);
-    $image_user->placer_image(A::USER,BF::abs_path("media/img/",true),$this->id);
+    $image_user->placer_image(A::USER,BF::abs_path("media/logo/user/",true),$this->id);
     $image_user->modifier_image($image_user->fullpath);
 
   }
@@ -233,7 +233,8 @@ class User implements Suppression, GestionLogo{
     $image_user->deleteImage($this->id,A::USER);
     $image_user->setImage($image);
     $image_user->verifier_format();
-    $image_user->placer_image(A::USER,BF::abs_path("media/img/"),$this->id);
+    $image_user->placer_image(A::USER,BF::abs_path("media/logo/user/",true)
+    ,$this->id);
     $image_user->modifier_image($image_user->fullpath);
 
 
