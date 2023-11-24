@@ -56,18 +56,5 @@ import(abs_path("JS/classes/User.js")).then((module)=>{
   }).fail((error)=>{
     console.error("Erreur dans la requête AJAX :",error);
   });
-});/*
-let xhttp = new XMLHttpRequest();
-xhttp.open("GET", abs_path("functions/ajax/user_logo.php"));
-xhttp.onload = function(){
-    const xmlDoc = xhttp.responseXML;
-    if(xmlDoc != null){ //On vérifie que la réponse n'est pas nulle
-      const x = xmlDoc.getElementsByTagName("response");
-      if(x.length >= 1){
-        logo_chemin_f(x[0].innerHTML);
-        modif_image(logo_chemin);
-      }
-    }
-}
-xhttp.send();*/
+});
 

@@ -91,7 +91,8 @@ if(!(isset($iframe) ? 1 : 0)){
         <?php
       }else{
         require_once BF::abs_path("libs/User.php",true);
-        $pseudo = $user->get_pseudo(); 
+        $user_logo = new User();
+        $pseudo = $user_logo->get_pseudo(); 
         ?>
         <li><a href="<?= BF::abs_path("controller/gestion_compte/mon_compte.php")?>"> <img id="logo_barre" style="width: 30px;height: 30px;border: 3px solid black;border-radius: 30px;position: absolute; transform: translate(-40px,0px);" src="<?= BF::abs_path("/media/img/user_anonyme.jpg")?>"/><?= $pseudo; ?></a></li>
         <?php
