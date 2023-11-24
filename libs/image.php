@@ -94,7 +94,15 @@ class image {
         if(count($logo)== 0){return 0;}
         if(count($logo)!= 0){
             //on supprime l'image situé à l'emplacement $logo
-            if(unlink($logo[0])==false){return 0;}            
+            try {
+                if (file_exists($logo[0]) && unlink($logo[0]) == false) {
+                    return 0;
+                }
+            } catch (Exception $e) {
+                return 0;
+            }
+            
+                   
         }
         if(BF::equals($table,A::EVENT))
             $req_suppr = "DELETE FROM ".A::PROPEVENT." WHERE ".A::PROPEVENT_NOM." = 'logo' AND ".$id."=? ";
@@ -167,6 +175,8 @@ class image {
             return;
         }
         //Mettre l'image dans le fichier logo/user/
+        $destinationPath = $chemin.$image_name.".".$ext;
+
         array_map('unlink', glob($chemin.$image_name.".*")); //On supprime les fichiers résiduels
         if(move_uploaded_file(getcwd().$this->tmp_name, $destinationPath)) { 
             echo "Le fichier ".  basename( $this->name)." a bien été téléversé";

@@ -230,9 +230,9 @@ class User implements Suppression, GestionLogo{
     global $db;
     require_once __DIR__."/image.php";
     $image_user = new image;
+    $image_user->deleteImage($this->id,A::USER);
     $image_user->setImage($image);
     $image_user->verifier_format();
-    $image_user->deleteImage($this->id,A::USER);
     $image_user->placer_image(A::USER,BF::abs_path("media/img/"),$this->id);
     $image_user->modifier_image($image_user->fullpath);
 
