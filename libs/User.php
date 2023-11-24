@@ -346,7 +346,7 @@ class User implements Suppression, GestionLogo{
   }
 
   public function get_pseudo(){
-    return BF::request("SELECT ".A::USER_PRENOM." FROM ".A::USER." WHERE ".A::USER_ID." = ?",[$this->id],true,true);
+    return BF::request("SELECT ".A::USER_PRENOM." FROM ".A::USER." WHERE ".A::USER_ID." = ?",[$this->id],true,true)[0];
   }
 
   /**

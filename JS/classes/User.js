@@ -2,7 +2,7 @@ import { APIObjet } from './APIObjet.js';
 
 export class User extends APIObjet{
 
-    constructor(id_user){
+    constructor(id_user=null){
         super();
         this.id_user = id_user;
     }

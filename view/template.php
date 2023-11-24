@@ -151,23 +151,18 @@ if(!(isset($iframe) ? 1 : 0)){
 </nav>
 
    <script>
-
-     
-    //Affiche l'avatar de l'utilisateur.
-     let xhttp_barre = new XMLHttpRequest();
-    xhttp_barre.open("GET", "<?= BF::abs_path("/functions/ajax/user_logo.php")?>");
-    xhttp_barre.onload = function(){
-       const xmlDoc = xhttp_barre.responseXML;
-       if(xmlDoc != null){ //On vérifie que la réponse n'est pas nulle
-         const x = xmlDoc.getElementsByTagName("response");
-         if(x.length == 1){
-           $("#logo_barre").attr({
-             src: x[0].innerHTML
-           });
-         }
-       }
-    }
-     xhttp_barre.send();
+    import(abs_path("JS/classes/User.js")).then((module)=>{
+      let user = new module.User();
+      user.getLogo().done((data)=>{
+        console.log(data);
+        if(data["statut"]==1)
+          $("#logo_barre").attr({
+            src : data["lien_image"]
+          });
+      }).fail((err)=>{
+        console.log(err);
+      });
+    });
    </script>
    <?php }?>
 <body <?php if(isset($iframe) ? 1 : 0){ echo 'style="min-height: 0;"';} ?>>
