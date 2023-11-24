@@ -151,7 +151,7 @@ class image {
 
 
         while(!$unique){
-            $image_name_num = uniqid();
+            $image_name_num =  preg_replace("/[^a-zA-Z0-9]/", "", uniqid());
             
             if ($this->getImage($image_name_num,$table) == false) {
       //donc si le nom est bien unique on peut juste sortir de la boucle
@@ -160,13 +160,15 @@ class image {
         }
         //changer le nom
         $image_name=strval($image_name_num);
-        rename($this->tmp_name,$image_name);
-        $this->tmp_name=$image_name;
-
+        if(rename($this->tmp_name,$image_name))
+            $this->tmp_name=$image_name;
+        else{
+            echo "Erreur rename !";
+            return;
+        }
         //Mettre l'image dans le fichier logo/user/
-        $destinationPath = $chemin.$image_name.".".$ext;
         array_map('unlink', glob($chemin.$image_name.".*")); //On supprime les fichiers résiduels
-        if(move_uploaded_file($this->tmp_name, $destinationPath)) { 
+        if(move_uploaded_file(getcwd().$this->tmp_name, $destinationPath)) { 
             echo "Le fichier ".  basename( $this->name)." a bien été téléversé";
         } //la fonction move_uploaded_file déplace le fichier dans destination et renvoie un si l'opération est un succés 0 sinon
         else{
