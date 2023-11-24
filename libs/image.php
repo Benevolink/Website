@@ -13,7 +13,7 @@ class image {
     private $size;
     private $tmp_name;
     private $error;
-    private $fullpath;
+    public $fullpath;
 
     /**
      * Method getImage
@@ -31,19 +31,19 @@ class image {
         global $db;
         switch($table){
             case A::USER:
-                $id = A::USER_ID;
+                $id_table = A::USER_ID;
                 break;
             case A::ASSO:
-                $id = A::ASSO_ID;
+                $id_table = A::ASSO_ID;
                 break;
             case A::EVENT:
-                $id = A::EVENT_ID;
+                $id_table = A::EVENT_ID;
                 break;
         }
         if(BF::equals($table,A::EVENT))
-            $req_logo = "SELECT logo FROM".A::PROPEVENT." WHERE ".A::PROPASSO_NOM." like 'logo' AND $id = ? ";
+            $req_logo = "SELECT logo FROM ".A::PROPEVENT." WHERE ".A::PROPASSO_NOM." like 'logo' AND $id_table = ? ";
         else
-            $req_logo = "SELECT logo FROM $table WHERE $id = ? ";//on vérifie que le nom n'est pas déjà pris
+            $req_logo = "SELECT logo FROM $table WHERE $id_table = ? ";//on vérifie que le nom n'est pas déjà pris
         $req_logo_2 = $db->prepare($req_logo);
         $req_logo_2->execute(array($id));
         $logo = $req_logo_2->fetch(PDO::FETCH_NUM);
@@ -74,20 +74,20 @@ class image {
         global $db;
         switch($table){
             case A::USER:
-                $id = A::USER_ID;
+                $id_table = A::USER_ID;
                 break;
             case A::ASSO:
-                $id = A::ASSO_ID;
+                $id_table = A::ASSO_ID;
                 break;
             case A::EVENT:
-                $id = A::EVENT_ID;
+                $id_table = A::EVENT_ID;
                 break;
         }
         //supprimer l'image puis le lien dans la table
         if(BF::equals($table,A::EVENT))
-            $req_logo = "SELECT ".A::PROPEVENT_VALEUR." FROM ".A::PROPEVENT." WHERE ".A::PROPEVENT_NOM." = 'logo' AND ".$id."=? ";
+            $req_logo = "SELECT ".A::PROPEVENT_VALEUR." FROM ".A::PROPEVENT." WHERE ".A::PROPEVENT_NOM." = 'logo' AND $id_table = ? ";
         else
-            $req_logo = "SELECT logo FROM".$table." WHERE ".$id."=? ";//on vérifie que le nom n'est pas déjà pris
+            $req_logo = "SELECT logo FROM ".$table." WHERE $id_table =? ";//on vérifie que le nom n'est pas déjà pris
         $req_logo_2 = $db->prepare($req_logo);
         $req_logo_2->execute(array($id));
         $logo = $req_logo_2->fetch(PDO::FETCH_NUM);
@@ -136,24 +136,24 @@ class image {
         global $db;
         switch($table){
             case A::USER:
-                $id = A::USER_ID;
+                $id_table = A::USER_ID;
                 break;
             case A::ASSO:
-                $id = A::ASSO_ID;
+                $id_table = A::ASSO_ID;
                 break;
             case A::EVENT:
-                $id = A::EVENT_ID;
+                $id_table = A::EVENT_ID;
                 break;
         }
 
         $unique = false;
-        $ext = pathinfo($this->tmp_name, PATHINFO_EXTENSION);
+        $ext = pathinfo($this->name, PATHINFO_EXTENSION);
 
 
         while(!$unique){
             $image_name_num = uniqid();
             
-            if ($this->getImage($image_name_num,$table) != false) {
+            if ($this->getImage($image_name_num,$table) == false) {
       //donc si le nom est bien unique on peut juste sortir de la boucle
                 $unique = true;
             }
@@ -170,7 +170,8 @@ class image {
             echo "Le fichier ".  basename( $this->name)." a bien été téléversé";
         } //la fonction move_uploaded_file déplace le fichier dans destination et renvoie un si l'opération est un succés 0 sinon
         else{
-            echo "Il y a eu une erreur pour poster le fichier, réessayez.";
+            echo "Il y a eu une erreur pour poster le fichier, réessayez.\n";
+            echo $destinationPath;
         }
         $this->fullpath=$destinationPath;
         //rename($destinationPath, $newDestinationPath);
@@ -183,7 +184,7 @@ class image {
         }
             
         else
-            BF::request("UPDATE $table SET logo = ? WHERE $id = ?",[$destinationPath,$id]);
+            BF::request("UPDATE $table SET logo = ? WHERE $id_table = ?",[$destinationPath,$id]);
         
  
   
