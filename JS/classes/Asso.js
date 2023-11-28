@@ -32,7 +32,10 @@ export class Asso extends APIObjet{
         return this.APICall("asso","user_modif_statut",{id_user : id_user, nouveau_statut : nouveau_statut});
     }
     
-    
+    static insert(nom,desc,desc_missions,uploadedfile,adresse,email,tel){
+        let params = {nom : nom, desc : desc, desc_missions : desc_missions, uploadedfile : uploadedfile, adresse : adresse, email : email, tel : tel};
+        return this.APICallStatic("asso","insert",params);
+    }
 
 
 

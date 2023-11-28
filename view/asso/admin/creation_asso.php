@@ -108,7 +108,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
 
 
-
+<script type="text/javascript" src="<?= BF::abs_path("JS/after/asso/admin/creation_asso.js")?>"></script>
 
 
   <div class="modal fade" tabindex="-1" role="dialog">
@@ -252,7 +252,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Confirmer</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="createAsso();">Confirmer</button>
                 </div>
             </div>
         </div>
