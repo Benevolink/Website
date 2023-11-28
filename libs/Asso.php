@@ -164,7 +164,7 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
     
   }
 
-
+  
   /**
    * A faire
    * @todo permet de supprimer toutes les données relatives à l'association
