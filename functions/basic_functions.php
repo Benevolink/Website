@@ -103,9 +103,9 @@ class BF{
             }
             //Débarassage des //
             $value = implode('/',explode('//',$path.'/'.$string));
-            if(file_exists($value)){
+            /*if(file_exists($value)){
                 return $value;
-            }
+            }*/
             return $value;
         }catch(Exception $e){
             echo 'erreur';

@@ -45,6 +45,4 @@
   </div>
 
  
-  <div class="ajouter_asso" onclick="location.href = 'admin/creation_asso.php';" style="border: 0.5px solid #E5EB99;"> 
-</div>
 

@@ -1,6 +1,17 @@
 <?php 
 require_once __DIR__.'/links.php';
 require_once __DIR__.'/../../basic_functions.php';
+
+function creer_select_categorie($key,$value){
+    ?>
+    <input type="checkbox" name=<?= "'sel_cate_{$key}'"?> id=<?= "'sel_cate_{$key}'" ?> class="cate_missions_checkbox"/>
+    <div class="label_cate"> <?= $value[AttributsTables::DOMAINE_NOM] ?> </div>
+    
+    <br>
+    <?php
+  }
+
+
 ?>
 
 

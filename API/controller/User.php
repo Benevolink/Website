@@ -23,6 +23,44 @@ switch($fonction){
         $user = new APIUser();
         $user->api_liste_asso();
         exit();
+    case "set_pp":
+        $user = new APIUser();
+        $user->image_set($_FILES["photo_profil"]);
+        return_statut(true);
+        exit();
+    case "change_pp":
+        $user = new APIUser();
+        $user->change_user_image($_POST["photo_profil"]);
+        return_statut(true);
+        exit();
+    case "suppr_pp":
+        $user = new APIUser();
+        $user->image_suppr();
+        return_statut(true);
+        exit();
+    case "get_pp":
+        $user = new APIUser();
+        $array = array("statut" => 1,"lien_image" => $user->image_get());
+        return_json($array);
+        exit();
+    case "suppr_compte":
+        if(BF::is_connected()){
+            $id = $_SESSION["user_id"];
+            $user = new APIUser();
+            $user->id = $id;
+            $user->suppr();
+            return_statut(true);
+            }
+        else{return_statut(false);}
+    case "deconnexion":
+        
+        $_SESSION["auth"] = 0;
+        $_SESSION["user_id"]=null;
+
+        header("Location: ../../../index.php");
+        session_destroy();
+        exit();
+        
     default:
         echo "Veuillez spécifier une fonction";
         exit();

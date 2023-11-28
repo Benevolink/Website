@@ -30,7 +30,15 @@ function afficher_role($role,$id_asso,$id_membre){
         break;
     }
     ?>
-      <div class="tag" style=<?php echo '"background-color:'.$color.';"'; ?> onclick=<?php echo "'menu_roles(this,".$id_asso.",".$id_membre.");'";?>> <?php echo $role;?>  </div>
+      <select>
+        <option value="-1">Banni</option>
+        <option value="0">Exclu</option>
+        <option value="1">Membre</option>
+        <option value="2">Modérateur</option>
+        <option value="3">Administrateur</option>
+      </select>
+
+
       <?php
   }
 
@@ -54,14 +62,29 @@ function get_liste_membres(){
 function affichage_liste_membres(){
   global $id_asso;
   $membres = get_liste_membres();
-  foreach ($membres as $membre): ?>
-    <li class="liste"><?php
-      echo $membre['nom']; 
+  foreach ($membres as $membre): 
+    if($membre[AttributsTables::MEMBRESASSOS_STATUT] > 0){?>
+    <li class="liste" id_user="<?= $membre[AttributsTables::USER_ID]?>"><?php
+      echo $membre['nom']." "; 
       echo $membre['prenom']; 
       afficher_role($membre['statut'],$id_asso,$membre['id_user']); ?>
       
     </li>
-  <?php endforeach;
+  <?php } endforeach;
+}
+
+function affichage_liste_en_attente(){
+  global $id_asso;
+  $membres = get_liste_membres();
+  foreach ($membres as $membre): 
+    if($membre[AttributsTables::MEMBRESASSOS_STATUT] <= 0){?>
+    <li class="liste" id_user="<?= $membre[AttributsTables::USER_ID]?>"><?php
+      echo $membre['nom']." "; 
+      echo $membre['prenom']; 
+      afficher_role($membre['statut'],$id_asso,$membre['id_user']); ?>
+      
+    </li>
+  <?php } endforeach;
 }
 
 ?>
