@@ -198,7 +198,7 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
    * Ajoute un logo à l'asso
    * @todo
    */
-  public function ajouter_logo(){
+  public function image_set($image){
     
   }
 
@@ -206,13 +206,13 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
    * Renvoie le chemin du logo pour l'implémenter en HTML
    * @todo
    */
-  public function get_logo(){
+  public function image_get(){
 
   }
   /**
    * Supprime le logo
    */
-  public function suppr_logo(){
+  public function image_suppr(){
 
   }
 
@@ -237,5 +237,13 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
     
   }
 
+  public function get_role_membre($id_membre){
+    try{
+      $req = "SELECT ".A::MEMBRESASSOS_STATUT." FROM ".A::MEMBRESASSOS." WHERE ".A::MEMBRESASSOS_ID_ASSO." = ? AND ".A::MEMBRESASSOS_ID_USER." = ?";
+    return BF::request($req,[$this->id,$id_membre],true,true,PDO::FETCH_ASSOC)[A::MEMBRESASSOS_STATUT];
+  }catch(Exception $e){
+      exit($e->getMessage());
+    }
+  }
 }
 ?>

@@ -1,9 +1,17 @@
+<script type="text/javascript">
+    id_asso = <?= $_GET["id_asso"] ?>;
+    id_user = <?php $user = new User(); echo $user->id; ?>;
+</script>
+  <script type="text/javascript" src="<?= BF::abs_path("JS/after/asso/admin/association_admin.js")?>"></script>
+  
   <link rel="stylesheet" href="<?= BF::abs_path("CSS/association_admin.css") ?>"/>
+
   <link rel ="stylesheet" href="<?= BF::abs_path("CSS/main.css")?>">
   <link rel="icon" type="image/x-icon" sizes="16x16" href="<?= BF::abs_path("media/img/Logo_3.png") ?>"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 
   <a href="<?= 'creer_evenement.php?id_asso='.$_GET["id_asso"] ?>">
+
       Créer un évènement
   </a>
   <br>
@@ -21,11 +29,13 @@
         </ul>
       </div>
     </div>
+
     <div id="division"> </div>
     
     <div class="col-md-6">
       <div>
       <h1 id="titre_membre"><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> Liste des membres <br> en attente</h1>     
+
     </div>
   </div>
 </div>

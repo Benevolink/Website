@@ -55,7 +55,7 @@ class cal_Event{
      * 
      * @throws false si l'évènement n'a pas lieu ce jour-ci
      * 
-     * @return array([int $debut,int $fin]) renvoie les dates de début et de fin
+     * @return bool|array([int $debut,int $fin]) renvoie les dates de début et de fin
      */
 
     public function get_start_end_within_day($date_debut_jour){
@@ -82,12 +82,16 @@ class cal_Event{
      * @return array la liste des ids des events
      */
     public static function get_all_events_id($id_user){
-        $liste_assos = BF::get_user_assos($id_user);
+        $user = new User($id_user);
+        $liste_assos = $user->liste_assos();
         $result = array();
         foreach($liste_assos as $key => $value){
-            $liste_events = BF::get_asso_events($value);
+            $id_asso = $value[AttributsTables::ASSO_ID];
+            $asso = new Asso($id_asso);
+            $liste_events = $asso->get_infos_events();
             foreach($liste_events as $key2 => $value2){
-                $result[] = $value2;
+                $id_event = $value2[AttributsTables::EVENT_ID];
+                $result[] = $id_event;
             }
         }
         return $result;

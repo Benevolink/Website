@@ -29,7 +29,11 @@ export class Asso extends APIObjet{
 
     
     user_modif_statut(id_user,nouveau_statut){
-        return this.APICall("asso","user_modif_statut",{id_user : id_user, nouveau_statut : nouveau_statut});
+        return this.APICall("asso","user_modif_statut",{id_asso : this.id, id_user : id_user, nouveau_statut : nouveau_statut});
+    }
+
+    user_get_statut(id_user){
+        return this.APICall("asso","user_get_statut",{id_asso : this.id, id_user : id_user});
     }
     
     

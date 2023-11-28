@@ -3,3 +3,4 @@
 ./.cache/
 ./.fq0*
 ./.gitignore
+database.sqlite

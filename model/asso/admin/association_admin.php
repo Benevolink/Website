@@ -74,6 +74,7 @@ function get_liste_membres(){
 function affichage_liste_membres(){
   global $id_asso;
   $membres = get_liste_membres();
+
   foreach ($membres as $membre): ?>
     <li class="liste" id_user="<?= $membre[AttributsTables::USER_ID]?>">
       <span class="nom"><?php echo $membre['nom'] . ' ' . $membre['prenom']; ?></span>
@@ -125,7 +126,21 @@ function affichage_liste_membres(){
 </div>
 
     </li>
-  <?php endforeach;
+  <?php } endforeach;
+}
+
+function affichage_liste_en_attente(){
+  global $id_asso;
+  $membres = get_liste_membres();
+  foreach ($membres as $membre): 
+    if($membre[AttributsTables::MEMBRESASSOS_STATUT] <= 0){?>
+    <li class="liste" id_user="<?= $membre[AttributsTables::USER_ID]?>"><?php
+      echo $membre['nom']." "; 
+      echo $membre['prenom']; 
+      afficher_role($membre['statut'],$id_asso,$membre['id_user']); ?>
+      
+    </li>
+  <?php } endforeach;
 }
 
 ?>
