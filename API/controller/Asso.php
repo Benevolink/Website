@@ -100,7 +100,7 @@ switch($fonction){
         }
         $user_cible = new User($id_user_cible);
         $asso = new Asso($id_asso);
-        $asso->modifier_role_membre($user_cible,$nouveau_statut);
+        $asso->modifier_role_membre($id_user_cible,$nouveau_statut);
         return_statut(true);
         exit();
     case "user_get_statut":
