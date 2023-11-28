@@ -126,7 +126,7 @@ function affichage_liste_membres(){
 </div>
 
     </li>
-  <?php } endforeach;
+  <?php  endforeach;
 }
 
 function affichage_liste_en_attente(){

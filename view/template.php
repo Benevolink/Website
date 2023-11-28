@@ -138,7 +138,7 @@ if(!(isset($iframe) ? 1 : 0)){
         </a>
         <ul class="dropdown-menu">
           <li><a href="<?= BF::abs_path("controller/gestion_compte/mon_compte.php")?>">Mon profil</a></li>
-          <li><a href="#">Mes associations</a></li>
+          <li><a href="<?= BF::abs_path("controller/asso/associations_user.php")?>">Mes associations</a></li>
           <li><a href="#">Mes missions</a></li>
           <li><a href="<?= BF::abs_path("controller/planning.php")?>"> Mon planning </a> </li>
           <li role="separator" class="divider"></li>
