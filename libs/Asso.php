@@ -163,7 +163,7 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
     $asso->ajouter_membre($user,3);
     
   }
-}
+
 
   /**
    * A faire
