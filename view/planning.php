@@ -1,14 +1,6 @@
 <?php
-require $path."functions/classes/calendar/index.php";
-require_once BF::abs_path("functions/categories.php",true);
-function creer_select_categorie($key,$value){
-    ?>
-    <input type="checkbox" name=<?= "'sel_cate_{$key}'"?> id=<?= "'sel_cate_{$key}'" ?> class="cate_missions_checkbox"/>
-    <div class="label_cate"> <?= $value['nom'] ?> </div>
-    
-    <br>
-    <?php
-  }
+require_once $path."functions/classes/calendar/index.php";
+
 ?>
 
 <script src="<?= BF::abs_path("functions/classes/calendar/jquery.js")?>"></script>
