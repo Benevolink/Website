@@ -78,7 +78,6 @@ switch($fonction){
         return_statut(true, "L'association a été insérée avec succès");
         exit();
             
-}
 
     case "user_modif_statut":  
         if(!(isset($_POST["id_user"]) && isset($_POST["id_asso"]) && isset($_POST["nouveau_statut"]) && is_numeric($_POST["nouveau_statut"]))){
