@@ -193,7 +193,7 @@ class image {
         $image_name=$image_name_num;
         
         //Mettre l'image dans le fichier logo/user/
-        $destinationPath = $chemin.$image_name.".".$ext;
+        $destinationPath = $chemin.$image_name.".jpg";
         $this->chemin = $chemin;
         array_map('unlink', glob($chemin.$image_name.".*")); //On supprime les fichiers résiduels
         if(move_uploaded_file($this->tmp_name, $destinationPath)) { 
@@ -226,6 +226,7 @@ class image {
     
     //on vérifie le format de l'image
         if (!in_array($extension, $allowed_extensions)) {
+            var_dump($extension);
         echo "Cette extension n'est pas authorisée. Les authorisations authorisées sont jpg, jpeg et png";
         }
         //Vérifier qu'il n'y a pas de points autres que celui de l'extension dans le nom de l'image pour éviter une double extension

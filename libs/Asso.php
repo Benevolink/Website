@@ -68,7 +68,14 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
    */  
   public static function recherche_asso($searchQuery) {
     $searchQuery = "%" . $searchQuery . "%";
-    return BF::request("SELECT * FROM ".A::ASSO." WHERE ".A::ASSO_NOM." LIKE ? ORDER BY ".A::ASSO_NOM." ASC", [$searchQuery], true, false, PDO::FETCH_ASSOC);
+    $array = BF::request("SELECT * FROM ".A::ASSO." WHERE ".A::ASSO_NOM." LIKE ? ORDER BY ".A::ASSO_NOM." ASC", [$searchQuery], true, false, PDO::FETCH_ASSOC);
+    foreach($array as $key => $value){
+      if(strcmp($value[A::ASSO_LOGO],"")){
+        $array[$key][A::ASSO_LOGO] = "media/logo/asso/".$value[A::ASSO_LOGO];
+      }
+        
+    }
+    return $array;
   }
   
   /**
@@ -86,7 +93,7 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
     $propAssos = BF::request("SELECT * FROM ".A::PROPASSO." WHERE ".A::PROPASSO_ID_ASSO." = ?", [$id_asso], true, true, PDO::FETCH_ASSOC);
 
     // Sélectionner les informations de l'association
-    $assoInfo = BF::request("SELECT * FROM ".A::ASSO." WHERE ".A::ASSO_ID." = ?", [$id_asso], true, true, PDO::FETCH_ASSOC);
+    $assoInfo = $this->get_all();
 
     // Compter les membres de l'association
     $membresCount = BF::request("SELECT COUNT(*) FROM ".A::MEMBRESASSOS." WHERE ".A::MEMBRESASSOS_ID_ASSO." = ?", [$id_asso], true, true)[0];
@@ -94,12 +101,14 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
     // Prendre le lieu de l'asso
     $locationAsso = BF::request("SELECT * FROM ".A::LIEU." WHERE ".A::LIEU_ID." = ?", [$assoInfo[AttributsTables::ASSO_ID_LIEU]], true, true, PDO::FETCH_ASSOC);
 
-    return array(
+    $array =  array(
+
         'prop_asso' => $propAssos,
         'asso_info' => $assoInfo,
         'membres_count' => $membresCount,
         'lieu' => $locationAsso
     );
+    return $array;
   }
   
   /**
@@ -121,7 +130,11 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
    * @return array
    */
   public function get_all(){
-    return BF::request("SELECT * FROM ".A::ASSO." WHERE ".A::ASSO_ID." = ?",[$this->id],true,true,PDO::FETCH_ASSOC);
+    $array =  BF::request("SELECT * FROM ".A::ASSO." WHERE ".A::ASSO_ID." = ?",[$this->id],true,true,PDO::FETCH_ASSOC);
+    if(strcmp($array[A::ASSO_LOGO],"")){
+      $array[A::ASSO_LOGO] = "media/logo/asso/".$array[A::ASSO_LOGO];
+    }
+    return $array;
   }
 
 
@@ -129,7 +142,7 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
    * A faire, crée une asso
    * @todo 
    */
-  public static function insert($nom, $description, $description_missions, $logo, $email, $tel, $domaines){
+  public static function insert($nom, $description, $description_missions, $logo, $email, $tel, $domaines,$adresse){
     global $db;
     require_once __DIR__."/Domaine.php";
     require_once __DIR__."/Lieu.php";
@@ -140,11 +153,11 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
      */
     // On se connecte à la BDD
     $db->beginTransaction();
+    
     // On insère les données reçues dans la table "assos"
-    $req = $db->prepare("INSERT INTO ".A::ASSO." (".A::ASSO_NOM.", ".A::ASSO_DESCRIPTION.", ".A::ASSO_DESCRIPTION_MISSIONS.", ".A::ASSO_EMAIL.", ".A::ASSO_TELEPHONE.", ".A::ASSO_LOGO.") VALUES(?, ?, ?, ?, ?, ?)");
-    BF::request($req,[$nom,$description,$description_missions,$email,$tel,$logo,$adresse]);
+    $req = "INSERT INTO ".A::ASSO." (".A::ASSO_NOM.", ".A::ASSO_DESCRIPTION.", ".A::ASSO_DESCRIPTION_MISSIONS.", ".A::ASSO_EMAIL.", ".A::ASSO_TELEPHONE.", ".A::ASSO_LOGO.") VALUES(?, ?, ?, ?, ?, ?)";
+    BF::request($req,[$nom,$description,$description_missions,$email,$tel,""]);
     // Récupérer l'ID de l'association qui vient d'être créée
-        
     $id = $db->lastInsertId();
     $db->commit();
 
@@ -161,12 +174,12 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
     $id_lieu = $db->lastInsertId();
     //Ajout du lieu dans l'asso
     BF::request("UPDATE ".A::ASSO." SET ".A::ASSO_ID_LIEU." = ? WHERE ".A::ASSO_ID." = ?",[$id_lieu,$id]);
-
+    
     //Insertion du logo
     $asso->image_set($logo);
     //Ajout de l'utilisateur en tant qu'admin de l'asso crée
     $user = new User();
-    $asso->ajouter_membre($user,3);
+    $asso->ajouter_membre($user->id,3);
     
   }
 
@@ -304,9 +317,9 @@ public function image_set($image){
   global $db;
   require_once __DIR__."/image.php";
   $image_asso = new image;
+  $image_asso->setImage($image);
   $image_asso->verifier_format();
   $image_asso->deleteImage($this->id,A::ASSO);
-  $image_asso->setImage($image);
   $image_asso->placer_image(A::ASSO,BF::abs_path("media/logo/asso/",true),$this->id);
   $image_asso->modifier_image($image_asso->fullpath);
 
