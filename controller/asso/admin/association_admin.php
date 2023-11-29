@@ -11,7 +11,6 @@
     $user = new User();
     if($user->est_admin_asso($id_asso)){
       require_once BF::abs_path("model/".$file_name,true);
-      require_once BF::abs_path("JS/before/".$file_name,true);
       require BF::abs_path("view/".$file_name,true);
     }else{
       header("Location: ".BF::abs_path("",true));
