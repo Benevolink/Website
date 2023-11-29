@@ -73,7 +73,7 @@ switch($fonction){
         $email = $_POST["email"];
         $telephone = $_POST["tel"];
 
-        Asso::insert($association, $description, $description_missions, $logo,$adresse, $email, $telephone, []);
+        Asso::insert($association, $description, $description_missions, $logo,$adresse, $email, $telephone);
 
         return_statut(true, "L'association a été insérée avec succès");
         exit();
