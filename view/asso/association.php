@@ -1,7 +1,16 @@
   <link rel="stylesheet" href="<?= BF::abs_path("CSS/association.css")?>">
 <body>
   <img id="logo" src="<?= BF::abs_path($prop_all["asso_info"][AttributsTables::ASSO_LOGO]) ?>" class="img_asso">
-  <label class="titre_asso" for="logo"><?= BF::XSS($prop_all["asso_info"][AttributsTables::ASSO_NOM]) ?></label>
+  <label class="titre_asso" for="logo"><?= $prop_all["asso_info"][AttributsTables::ASSO_NOM] ?></label>
+  <br>
+  <p><?= $prop_all["asso_info"][AttributsTables::ASSO_DESCRIPTION] ?></p>
+  <br>
+  <div style="background-color: rgba(200, 200, 200, 0.5);">
+    <p><?= $prop_all["lieu"][AttributsTables::LIEU_ADRESSE] ?>, Département <?= $prop_all["lieu"][AttributsTables::LIEU_DEPARTEMENT] ?></p>
+    <h4>Contact</h4>
+    <p><?= $prop_all["asso_info"][AttributsTables::ASSO_TELEPHONE] ?></p>
+    <p><?= $prop_all["asso_info"][AttributsTables::ASSO_EMAIL] ?></p>
+  </div>
   <br>
   <?= $nombre ?> followers.
   <br>

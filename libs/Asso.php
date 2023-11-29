@@ -91,10 +91,14 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
     // Compter les membres de l'association
     $membresCount = BF::request("SELECT COUNT(*) FROM ".A::MEMBRESASSOS." WHERE ".A::MEMBRESASSOS_ID_ASSO." = ?", [$id_asso], true, true)[0];
 
+    // Prendre le lieu de l'asso
+    $locationAsso = BF::request("SELECT * FROM ".A::LIEU." WHERE ".A::LIEU_ID." = ?", [$assoInfo[AttributsTables::ASSO_ID_LIEU]], true, true, PDO::FETCH_ASSOC);
+
     return array(
         'prop_asso' => $propAssos,
         'asso_info' => $assoInfo,
-        'membres_count' => $membresCount
+        'membres_count' => $membresCount,
+        'lieu' => $locationAsso
     );
   }
   
