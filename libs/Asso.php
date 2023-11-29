@@ -158,6 +158,8 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
     //Ajout du lieu dans l'asso
     BF::request("UPDATE ".A::ASSO." SET ".A::ASSO_ID_LIEU." = ? WHERE ".A::ASSO_ID." = ?",[$id_lieu,$id]);
 
+    //Insertion du logo
+    $asso->image_set($logo);
     //Ajout de l'utilisateur en tant qu'admin de l'asso crée
     $user = new User();
     $asso->ajouter_membre($user,3);
