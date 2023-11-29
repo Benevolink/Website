@@ -198,48 +198,7 @@
                
 
 
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="thumbnail text-center">
-                    <div class="caption" id="thumbnail_1">
-                        <h2>Entrez les informations principales de votre association :</h2>
-                        <form action="creation_asso_sql.php" method="post" enctype="multipart/form-data">
-                            <div class="form-group">
-                                <label for="nomAssociation">
-                                    <span class="glyphicon glyphicon-text-background" aria-hidden="true"></span> Nom de
-                                    l'association :</label>
-                                <input data-toggle="tooltip" data-placement="right" title="Champs obligatoire" type="text"
-                                    class="form-control" id="nomAssociation" name="nomAssociation"
-                                    placeholder="Entrez le nom de votre association">
-                            </div>
-                            <div class="form-group">
-                                <label for="descriptionAssociation">
-                                    <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span> Description de
-                                    l'association :</label>
-                                <textarea data-toggle="tooltip" data-placement="right" title="Champs obligatoire"
-                                    class="form-control" id="descriptionAssociation" name="descriptionAssociation"
-                                    placeholder="Entrez la description de votre association"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="localisation">Votre localisation :</label>
-                                <div class="input-group">
-                                    <input data-toggle="tooltip" data-placement="right" title="Champs obligatoire"
-                                        type="text" class="form-control" id="localisation" name="localisation"
-                                        placeholder="Entrez votre localisation">
-                                    <span class="input-group-addon"><span class="glyphicon glyphicon-map-marker"
-                                            aria-hidden="true"></span></span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="logoAssociation">
-                                    <span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Logo de
-                                    l'association :</label>
-                                <input type="file" class="form-control" id="logoAssociation" name="logoAssociation"
-                                    accept="image/*" required>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        
 
             </div>
             <div class="col-sm-6">

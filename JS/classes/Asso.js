@@ -2,11 +2,13 @@ import { APIObjet } from './APIObjet.js';
 import {Event} from './Event.js';
 import {User} from './User.js';
 
+
 export class Asso extends APIObjet{
 
     constructor(id){
         super();
         this.id = id;
+        console.log("OK");
     }
 
     getInfos(){
