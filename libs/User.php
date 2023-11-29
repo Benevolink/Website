@@ -8,7 +8,9 @@ use AttributsTables as A;
 /**
  * Abstraction table users
  */
+
 class User implements Suppression, GestionLogo{
+
   public $id;  
   /**
    * Method __construct
@@ -76,6 +78,21 @@ class User implements Suppression, GestionLogo{
     }
     return false;
   }
+
+    /**
+   * Vérifie que l'utilisateur suit l'asso (statut > -1)
+   *
+   * @param int $id_asso $id_asso [id association]
+   *
+   * @return bool
+   */
+  public function suit_asso($id_asso){
+    $statut = $this->statut_asso($id_asso);
+    if($statut > -1){
+      return true;
+    }
+    return false;
+  }
     
   /**
    * Quitte l'association
@@ -124,13 +141,40 @@ class User implements Suppression, GestionLogo{
     $req_filename = "SELECT ".A::USER_LOGO." FROM ".A::USER." WHERE ".A::USER_ID."=? ";//on vérifie que le nom n'est pas déjà pris
     $filename_tab = BF::request($req_filename,[$this->id],true,true,PDO::FETCH_ASSOC);
     if(isset($filename_tab["logo"])){
-       $filename = "media/img/".$filename_tab["logo"];
+       $filename = BF::abs_path("media/logo/user/",true).$filename_tab["logo"];
     }else{
-      $filename = "media/img/user_anonyme.jpg";
+      $filename = BF::abs_path("media/img/user_anonyme.jpg");
     }
     return BF::abs_path($filename);
   }
-  
+
+  public function image_get(){
+    require_once __DIR__."/image.php";
+    global $db;
+    $image = new image;
+    $test =  $image->getImage($this->id,A::USER);
+    if($test==false){return BF::abs_path("media/img/user_anonyme.jpg");}
+    else{return $test;}
+  }
+
+  public function image_suppr(){
+    require_once __DIR__."/image.php";
+    global $db;
+    $image = new image;
+    $image->deleteImage($this->id,A::USER);
+  }
+
+  public function image_set($image){
+    global $db;
+    require_once __DIR__."/image.php";
+    $image_user = new image;
+    $image_user->setImage($image);
+    $image_user->verifier_format();
+    $image_user->deleteImage($this->id,A::USER);
+    $image_user->placer_image(A::USER,BF::abs_path("media/logo/user/",true),$this->id);
+    $image_user->modifier_image($image_user->fullpath);
+
+  }
   /**
    * Ajoute un utilisateur dans la bdd
    *
@@ -171,8 +215,31 @@ class User implements Suppression, GestionLogo{
    */
   public function rejoindre_asso($id_asso){
     $req = "INSERT INTO ".A::MEMBRESASSOS." (".A::MEMBRESASSOS_ID_ASSO.",".A::MEMBRESASSOS_ID_USER.",".A::MEMBRESASSOS_STATUT.") VALUES (? , ?, ?)";
-    BF::request($req,[$id_asso,$this->id,0],false);
+    $statut = 0; //En attente
+    if(BF::is_connected()){
+      $user = new User();
+      if($user->est_admin_asso($id_asso))
+        $statut = 3; //Si l'utilisateur est admin de l'asso, il est directement admin de l'event
+    }
+    BF::request($req,[$id_asso,$this->id,$statut],false);
   }
+
+  
+
+  public function change_user_image($image){
+    global $db;
+    require_once __DIR__."/image.php";
+    $image_user = new image;
+    $image_user->deleteImage($this->id,A::USER);
+    $image_user->setImage($image);
+    $image_user->verifier_format();
+    $image_user->placer_image(A::USER,BF::abs_path("media/logo/user/",true)
+    ,$this->id);
+    $image_user->modifier_image($image_user->fullpath);
+
+
+  }
+  
   
   /**
    * /!\Fonction non fonctionnelle. Il y a une erreur dedans
@@ -278,6 +345,10 @@ class User implements Suppression, GestionLogo{
     return BF::request("SELECT e.".A::EVENT_ID.", e.".A::EVENT_NOM.", ho.".A::HORAIRE_DATE_DEBUT.", ho.".A::HORAIRE_DATE_FIN.", a.".A::ASSO_NOM.", a.".A::ASSO_ID." FROM (((".A::EVENT." e JOIN ".A::ASSO." a ON e.".A::EVENT_ID_ASSO." = a.".A::ASSO_ID.") JOIN  ".A::MEMBRESEVENTS." me ON me.".A::MEMBRESEVENTS_ID_EVENT." = e.".A::EVENT_ID." )JOIN ".A::HORAIRE." ho ON ho.".A::HORAIRE_ID." = e.".A::EVENT_ID_HORAIRE.") WHERE me.".A::MEMBRESEVENTS_ID_USER." = ?",[$this->id],true,false,PDO::FETCH_ASSOC);
   }
 
+  public function get_pseudo(){
+    return BF::request("SELECT ".A::USER_PRENOM." FROM ".A::USER." WHERE ".A::USER_ID." = ?",[$this->id],true,true)[0];
+  }
+
   /**
    * Ajoute un logo à l'utilisateur
    * @todo
@@ -298,6 +369,126 @@ class User implements Suppression, GestionLogo{
    */
   public function suppr_logo(){
     
+  }
+  
+  /**
+   * Method user_exists
+   *
+   * @param string $email $email [explicite description]
+   * @param string $tel $tel [explicite description]
+   *
+   * @return bool
+   */
+  public static function user_exists($email,$tel){
+    $count =BF::request("SELECT COUNT(*) FROM ".A::USER." WHERE (".A::USER_EMAIL." = ? OR ".A::USER_TEL." = ?)",[$email,$tel]);
+    return $count> 0?true:false;
+  }
+  
+  /**
+   * Method user_email_exists
+   *
+   * @param string $email $email [explicite description]
+   *
+   * @return bool
+   */
+  public static function user_email_exists($email){
+    $count =BF::request("SELECT COUNT(*) FROM ".A::USER." WHERE ".A::USER_EMAIL." = ?",[$email]);
+    return $count> 0?true:false;
+  }
+  
+  /**
+   * Method user_tel_exists
+   *
+   * @param string $tel $tel [explicite description]
+   *
+   * @return bool
+   */
+  public static function user_tel_exists($tel){
+    $count =BF::request("SELECT COUNT(*) FROM ".A::USER." WHERE ".A::USER_TEL." = ?",[$tel]);
+    return $count> 0?true:false;
+  }
+  
+  /**
+   * Vrai si l'utilisateur est superadmin
+   *
+   * @return bool
+   */
+  public function is_admin_glob(){
+    $i = BF::request("SELECT ".A::USER_ACCOUNT_STATUS." FROM ".A::USER." WHERE ".A::USER_ID." = ?",[$this->id]);
+    return $i > 0?true:false;
+  }
+  
+  /**
+   * Method rejoindre_event
+   * Mets le statut à 0 si le membre n'est pas admin de l'asso
+   * Sinon, mets le statut à 3
+   *
+   * 
+   * @param $id_event $id_event [explicite description]
+   *
+   * @return void|bool
+   */
+  public function rejoindre_event($id_event){
+
+
+    //Si l'utilisateur est déjà membre, on ne réitère pas l'opération
+    $statut_event = $this->statut_event($id_event);
+    if($statut_event != false){
+      return false;
+    }
+
+    //Vérification du rôle du membre dans l'asso
+    require_once BF::abs_path("libs/Event.php",true);
+    $event = new Event($id_event);
+    $id_asso = $event->asso_get_id();
+    if($this->est_admin_asso($id_asso)){
+      $statut = 3;
+    }
+    else{
+      $statut = 0;
+    }
+
+    
+    BF::request("INSERT INTO ".A::MEMBRESEVENTS."(".A::MEMBRESEVENTS_ID_EVENT.",".A::MEMBRESEVENTS_ID_USER.",".A::MEMBRESASSOS_STATUT.") VALUES (?,?,?)",[$id_event,$this->id,$statut]);
+    
+  }
+  
+  /**
+   * Method quitter_event
+   *
+   * @param $id_event $id_event [explicite description]
+   *
+   * @return void
+   */
+  public function quitter_event($id_event){
+    BF::request("DELETE FROM ".A::MEMBRESEVENTS." WHERE ".A::MEMBRESASSOS_ID_USER." = ? AND ".A::MEMBRESEVENTS_ID_EVENT." = ?",[$this->id,$id_event],false);
+  }
+  
+  /**
+   * Method event_statut
+   *
+   * @param $id_event $id_event [explicite description]
+   *
+   * @return int|bool
+   */
+  public function statut_event($id_event){
+    $statut = BF::request("SELECT ".A::MEMBRESEVENTS_STATUT." FROM ".A::MEMBRESEVENTS." WHERE ".A::MEMBRESEVENTS_ID_USER." = ? AND ".A::MEMBRESEVENTS_ID_EVENT." = ?",[$this->id,$id_event],true,true);
+    if(is_array($statut) && !empty($statut)){
+      return $statut[0];
+    }else{
+      return false;
+    }
+  }
+    
+  /**
+   * Method est_admin_event
+   *
+   * @param $id_event $id_event [explicite description]
+   *
+   * @return bool
+   */
+  public function est_admin_event($id_event){
+    return ($this->statut_event($id_event)>2) ? true : false;
   }
 }
 ?>

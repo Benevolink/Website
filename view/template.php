@@ -11,7 +11,6 @@ header('Cache-Control: private',true);
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 
   <script src="<?= BF::abs_path("JS/jquery.js")?>"></script>
-  <?php include __DIR__."/../JS/abs_path.php";?>
   <script src="<?= BF::abs_path("JS/main.js")?>"></script>
   <?php require_once BF::abs_path("JS/abs_path.php",true); ?>
   
@@ -71,41 +70,12 @@ header('Cache-Control: private',true);
 <?php
 if(!(isset($iframe) ? 1 : 0)){
       ?>
-<ul id="barre_titre">
-<!--Barre principale du menu contenant les sous catégories-->
-    <img href="<?= BF::abs_path("index.php") ?>" src="<?= BF::abs_path("media/img/benevolink2.jpg") ?>" alt="Logo de l'image" id="benevolink" onclick="window.location.href = '<?= BF::abs_path('index.php') ?>'">
-    <!-- <li><a href="index.php">Accueil</a></li> -->
-    <li><a href="<?= BF::abs_path("controller/missions.php")?>">Missions</a></li>
-  <?php
-  
-  
-  if(BF::is_connected()){
-    ?><li><a href="<?= BF::abs_path("controller/planning.php") ?>">Planning</a></li><?php
-  }
-    
-  ?>
-    <li><a href="<?= BF::abs_path("controller/asso/associations_user.php")?>">Associations</a></li>
-    <?php 
-      if(!BF::is_connected()){
-        ?>
-        <li style="cursor: pointer;"><a onclick="authentification();">Se connecter</a></li>
-        <?php
-      }else{
-        $pseudo = BF::request("SELECT prenom FROM users WHERE id = ?",[$_SESSION["user_id"]],true)[0][0];
-        ?>
-        <li><a href="<?= BF::abs_path("controller/gestion_compte/mon_compte.php")?>"> <img id="logo_barre" style="width: 30px;height: 30px;border: 3px solid black;border-radius: 30px;position: absolute; transform: translate(-40px,0px);" src="<?= BF::abs_path("/media/img/user_anonyme.jpg")?>"/><?= $pseudo; ?></a></li>
-        <?php
-      }
-    ?>
-    
 
- 
-  
-  </ul>
+
 
   <a href="#" style="display: flex; justify-content: center; align-items: center;">
-    <img id="boutonlogo3" src="<?= BF::abs_path("media/img/benevolink3.png") ?>" 
-      zonclick="window.location.href = '<?= BF::abs_path('index.php') ?>'" style="max-width: 13%;">
+    <img id="boutonlogo3" href="<?= BF::abs_path("index.php") ?>" src="<?= BF::abs_path("media/img/benevolink3.png") ?>" 
+      onclick="window.location.href = '<?= BF::abs_path('index.php') ?>'" style="max-width: 13%;">
   </a>
   
   <div class="navbar navbar-default navbar-shadow" id="bs-example-navbar-collapse-1">
@@ -116,7 +86,7 @@ if(!(isset($iframe) ? 1 : 0)){
     </ul>
     <form class="navbar-form navbar-left" action="<?= BF::abs_path("controller/search.php")?>" method="get">
       <div class="form-group">
-        <input type="text"  class="form-control input-large" placeholder="Rechercher une mission ou association">
+        <input type="text" name="Recherche"  class="form-control input-large" placeholder="Rechercher une mission ou association">
       </div>
       <button type="submit" class="btn btn-default input-large">Rechercher</button>
     </form>
@@ -131,12 +101,12 @@ if(!(isset($iframe) ? 1 : 0)){
       }else{
         $pseudo = BF::request("SELECT prenom FROM users WHERE id = ?",[$_SESSION["user_id"]],true)[0][0]; 
         ?> 
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+        <a href="<?= BF::abs_path("controller/gestion_compte/mon_compte.php")?>" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
           <img id="logo_barre" style="width: 30px;height: 30px;border: 3px solid black;border-radius: 30px;position: absolute; transform: translate(-40px,0px);" src="<?= BF::abs_path("/media/img/user_anonyme.jpg")?>" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?= $pseudo; ?><span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
-          <li><a href="#">Mon profil</a></li>
-          <li><a href="#">Mes associations</a></li>
+          <li><a href="<?= BF::abs_path("controller/gestion_compte/mon_compte.php")?>">Mon profil</a></li>
+          <li><a href="<?= BF::abs_path("controller/asso/associations_user.php")?>">Mes associations</a></li>
           <li><a href="#">Mes missions</a></li>
           <li><a href="<?= BF::abs_path("controller/planning.php")?>"> Mon planning </a> </li>
           <li role="separator" class="divider"></li>
@@ -151,23 +121,18 @@ if(!(isset($iframe) ? 1 : 0)){
 </nav>
 
    <script>
-
-     
-    //Affiche l'avatar de l'utilisateur.
-     let xhttp_barre = new XMLHttpRequest();
-    xhttp_barre.open("GET", "<?= BF::abs_path("/functions/ajax/user_logo.php")?>");
-    xhttp_barre.onload = function(){
-       const xmlDoc = xhttp_barre.responseXML;
-       if(xmlDoc != null){ //On vérifie que la réponse n'est pas nulle
-         const x = xmlDoc.getElementsByTagName("response");
-         if(x.length == 1){
-           $("#logo_barre").attr({
-             src: x[0].innerHTML
-           });
-         }
-       }
-    }
-     xhttp_barre.send();
+    import(abs_path("JS/classes/User.js")).then((module)=>{
+      let user = new module.User();
+      user.getLogo().done((data)=>{
+        console.log(data);
+        if(data["statut"]==1)
+          $("#logo_barre").attr({
+            src : data["lien_image"]
+          });
+      }).fail((err)=>{
+        console.log(err);
+      });
+    });
    </script>
    <?php }?>
 <body <?php if(isset($iframe) ? 1 : 0){ echo 'style="min-height: 0;"';} ?>>

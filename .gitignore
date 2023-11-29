@@ -3,3 +3,6 @@
 ./.cache/
 ./.fq0*
 ./.gitignore
+*.sqlite
+*.sqlite3
+media/logo/

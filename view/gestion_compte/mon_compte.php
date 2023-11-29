@@ -15,13 +15,42 @@
       padding: 8px; /* Espace à l'intérieur des cellules */
       text-align: left; /* Alignement du texte (gauche) */
   }
+
+    .tableau-droite {
+    float: right; 
+    margin-right: 100px; 
+    width: 50%; 
+    box-sizing: border-box; 
+    }
+
+    #centre_interet{
+    position: relative;
+    }
   
+    #titre_asso {
+      text-align: center;
+      font-family: Corps;
+      font-weight: bold;
+      src: url(fonts/Nexa-Heavy.woff2) format("woff2");
+    }
   </style>
 
 
 <link rel="stylesheet" href="<?= BF::abs_path("CSS/mon_compte.css")?>">
+<script type="text/javascript" src="<?= BF::abs_path("JS/before/gestion_compte/mon_compte.js")?>">
+</script>
 
-<div class="liste_prop" style="display: inline-block; margin-left: 100px;">
+<h1 id="titre_asso">Mon profil</h1>
+<br>
+
+<div class="col-md-4">
+<div class="liste_prop" class="thumbnail" style="display: inline-block; margin-left: 100px;">
+    <div>
+    <img id ="image_logo" src="<?= BF::abs_path("/media/img/user_anonyme.jpg")?>" style="width:200px;border-radius:200px;border: 10px black solid;cursor: pointer;"/>
+          
+        <?php afficher_infos_2(); ?>
+    </div>
+    
   
 
   
@@ -38,18 +67,7 @@
       Liste des associations
   </div>
 </div>
-
-
-<div class="col-md-4">
-<div class="liste_prop" class="thumbnail" style="display: inline-block; margin-left: 100px;">
-    <div>
-        <?php afficher_infos_2(); ?>
-    </div>
-    <!-- Reste de votre code... -->
-
-    <div class="tableau-droite">
-        
-    </div>
+    
 
     <script>
         // Fonction pour afficher/masquer les champs d'heure de début et de fin en fonction de la case à cocher
@@ -84,21 +102,11 @@
 </div>
 
 
-    <style>
-      .tableau-droite {
-        float: right; 
-        margin-right: 100px; 
-        width: 50%; 
-        box-sizing: border-box; 
-      }
-
-      #centre_interet{
-        position: relative;
-      }
-    </style>
+   
 </div>
+
       <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-5 col-md-offset-1">
             <table class="bordered-table">
               <h3> Mes Disponibilités </h3>
                 <tr id="dispo_text">
@@ -117,7 +125,7 @@
                     <td>Mardi</td>
                     <td><input type="checkbox" class="checkbox-dispo" onchange="toggleHeureInputs(this)"></td>
                     <td><input type="time" class="heure-debut" style="display: none;"></td>
-                    <td><input type="time" class "heure-fin" style="display: none;"></td>
+                    <td><input type="time" class="heure-fin" style="display: none;"></td>
                 </tr>
                 <tr>
                     <td>Mercredi</td>
@@ -151,7 +159,7 @@
                 </tr>
             </table>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-5 col-md-offset-1">
               <div class="thumbnail" id="centre_interet">
                   
                   <div class="caption">
@@ -169,21 +177,12 @@
                   </div>
               </div>
           </div>
-        <div class="col-md-4">
-
-          <img id ="image_logo" src="<?= BF::abs_path("/media/img/user_anonyme.jpg")?>" style="width:200px;border-radius:200px;border: 10px black solid;cursor: pointer;"/>
-          <?php afficher_infos_1(); ?>
-
-        </div>
-      </div>
-      
-          </div>
+        
       </div>
 
 </div>
 
-<div class="row">
-  <div class="col-md-4">.col-md-4</div>
-  <div class="col-md-4">.col-md-4</div>
-  <div class="col-md-4">.col-md-4</div>
-</div>
+
+
+<script type="text/javascript" src="<?= BF::abs_path("JS/after/gestion_compte/mon_compte.js")?>">
+</script>
