@@ -8,7 +8,9 @@ $liste_assos_util = $user->liste_assos();
 
 
 require_once BF::abs_path("model/".$file_name,true);
-require_once BF::abs_path("view/".$file_name,true);
 BF::afficher_template();
+// j'ai mis ce BF Ici pour afficher correctement le template, mais le bas de page s'affiche en haut c'est biz
+require_once BF::abs_path("view/".$file_name,true);
+
 
 ?>
