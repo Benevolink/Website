@@ -11,6 +11,10 @@
     <p><?= $prop_all["asso_info"][AttributsTables::ASSO_TELEPHONE] ?></p>
     <p><?= $prop_all["asso_info"][AttributsTables::ASSO_EMAIL] ?></p>
   </div>
+  <div style="background-color : rgba(100, 255, 100, 0.5);">
+    <h3>Description des Missions</h3>
+    <p><?= $prop_all["asso_info"][AttributsTables::ASSO_DESCRIPTION_MISSIONS] ?></p>
+  </div>
   <br>
   <?= $nombre ?> followers.
   <br>
