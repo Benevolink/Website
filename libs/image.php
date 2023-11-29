@@ -226,6 +226,7 @@ class image {
     
     //on vérifie le format de l'image
         if (!in_array($extension, $allowed_extensions)) {
+            var_dump($extension);
         echo "Cette extension n'est pas authorisée. Les authorisations authorisées sont jpg, jpeg et png";
         }
         //Vérifier qu'il n'y a pas de points autres que celui de l'extension dans le nom de l'image pour éviter une double extension

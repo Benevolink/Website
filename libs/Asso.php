@@ -125,7 +125,7 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
    * A faire, crée une asso
    * @todo 
    */
-  public static function insert($nom, $description, $description_missions, $logo, $email, $tel, $domaines){
+  public static function insert($nom, $description, $description_missions, $logo, $email, $tel, $domaines,$adresse){
     global $db;
     require_once __DIR__."/Domaine.php";
     require_once __DIR__."/Lieu.php";
@@ -136,11 +136,11 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
      */
     // On se connecte à la BDD
     $db->beginTransaction();
+    
     // On insère les données reçues dans la table "assos"
-    $req = $db->prepare("INSERT INTO ".A::ASSO." (".A::ASSO_NOM.", ".A::ASSO_DESCRIPTION.", ".A::ASSO_DESCRIPTION_MISSIONS.", ".A::ASSO_EMAIL.", ".A::ASSO_TELEPHONE.", ".A::ASSO_LOGO.") VALUES(?, ?, ?, ?, ?, ?)");
-    BF::request($req,[$nom,$description,$description_missions,$email,$tel,$logo,$adresse]);
+    $req = "INSERT INTO ".A::ASSO." (".A::ASSO_NOM.", ".A::ASSO_DESCRIPTION.", ".A::ASSO_DESCRIPTION_MISSIONS.", ".A::ASSO_EMAIL.", ".A::ASSO_TELEPHONE.", ".A::ASSO_LOGO.") VALUES(?, ?, ?, ?, ?, ?)";
+    BF::request($req,[$nom,$description,$description_missions,$email,$tel,""]);
     // Récupérer l'ID de l'association qui vient d'être créée
-        
     $id = $db->lastInsertId();
     $db->commit();
 
@@ -157,12 +157,12 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
     $id_lieu = $db->lastInsertId();
     //Ajout du lieu dans l'asso
     BF::request("UPDATE ".A::ASSO." SET ".A::ASSO_ID_LIEU." = ? WHERE ".A::ASSO_ID." = ?",[$id_lieu,$id]);
-
+    
     //Insertion du logo
     $asso->image_set($logo);
     //Ajout de l'utilisateur en tant qu'admin de l'asso crée
     $user = new User();
-    $asso->ajouter_membre($user,3);
+    $asso->ajouter_membre($user->id,3);
     
   }
 
@@ -300,9 +300,9 @@ public function image_set($image){
   global $db;
   require_once __DIR__."/image.php";
   $image_asso = new image;
+  $image_asso->setImage($image);
   $image_asso->verifier_format();
   $image_asso->deleteImage($this->id,A::ASSO);
-  $image_asso->setImage($image);
   $image_asso->placer_image(A::ASSO,BF::abs_path("media/logo/asso/",true),$this->id);
   $image_asso->modifier_image($image_asso->fullpath);
 
