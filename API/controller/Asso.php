@@ -68,7 +68,7 @@ switch($fonction){
         $association = $_POST["nom"];
         $description = $_POST["desc"];
         $description_missions = $_POST["desc_missions"];
-        $logo = $_FILES["uploadedfile"]["name"];
+        $logo = $_FILES["logoAssociation"];
         $adresse = $_POST["adresse"];
         $email = $_POST["email"];
         $telephone = $_POST["tel"];
