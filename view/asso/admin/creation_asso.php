@@ -59,7 +59,8 @@
 </head>
 
 <body data-spy="scroll" data-target=".navbar" data-offset="50">
-
+    <script type="text/javascript" src="<?= BF::abs_path("JS/after/asso/admin/creation_asso.js")?>">
+    </script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css"
     integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 
@@ -83,7 +84,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-          <button type="button" class="btn btn-primary" data-dismiss="modal">Valider</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" id="bouton_confirm_envoie_asso">Valider</button>
         </div>
       </div>
     </div>
@@ -202,7 +203,7 @@
       </div>
     </div>
   </div>
-
+    
 </body>
 
 </html>

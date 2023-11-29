@@ -15,7 +15,7 @@ $asso = new Asso($id_asso);
 
 $prop_all = $asso->prop_association();
 $nombre = $prop_all["membres_count"][0];
-
+$logo_path = $prop_all['asso_info']['logo'];
 $user = new User();
 $is_admin = $user->est_admin_asso($id_asso);
 $est_dans_asso = $user->suit_asso($id_asso);

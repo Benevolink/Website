@@ -38,9 +38,24 @@ export class Asso extends APIObjet{
         return this.APICall("asso","user_get_statut",{id_asso : this.id, id_user : id_user});
     }
     
-    static insert(nom,desc,desc_missions,uploadedfile,adresse,email,tel){
-        let params = {nom : nom, desc : desc, desc_missions : desc_missions, uploadedfile : uploadedfile, adresse : adresse, email : email, tel : tel};
-        return this.APICallStatic("asso","insert",params);
+    static insert(nom,desc,desc_missions,file_content,adresse,email,tel){
+        let params = {nom : nom, desc : desc, missionsProposees : desc_missions, adresse : adresse, email : email, tel : tel};
+        let data = new FormData();
+        for(let cle in params){
+            data.append(cle,params[cle]);
+        }
+        console.log(file_content);
+        data.append("logoAssociation",file_content);
+        data.append("type","asso");
+        data.append("fonction","insert");
+        return $.ajax({
+            url: abs_path("API/index.php"),
+            method: "POST",
+            dataType: "json",
+            data: data,
+            contentType: false,
+            processData: false,
+        });
     }
 
 
