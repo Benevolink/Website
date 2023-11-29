@@ -193,7 +193,7 @@ class image {
         $image_name=$image_name_num;
         
         //Mettre l'image dans le fichier logo/user/
-        $destinationPath = $chemin.$image_name.".".$ext;
+        $destinationPath = $chemin.$image_name.".jpg";
         $this->chemin = $chemin;
         array_map('unlink', glob($chemin.$image_name.".*")); //On supprime les fichiers résiduels
         if(move_uploaded_file($this->tmp_name, $destinationPath)) { 

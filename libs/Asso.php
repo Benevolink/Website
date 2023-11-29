@@ -68,7 +68,14 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
    */  
   public static function recherche_asso($searchQuery) {
     $searchQuery = "%" . $searchQuery . "%";
-    return BF::request("SELECT * FROM ".A::ASSO." WHERE ".A::ASSO_NOM." LIKE ? ORDER BY ".A::ASSO_NOM." ASC", [$searchQuery], true, false, PDO::FETCH_ASSOC);
+    $array = BF::request("SELECT * FROM ".A::ASSO." WHERE ".A::ASSO_NOM." LIKE ? ORDER BY ".A::ASSO_NOM." ASC", [$searchQuery], true, false, PDO::FETCH_ASSOC);
+    foreach($array as $key => $value){
+      if(strcmp($value[A::ASSO_LOGO],"")){
+        $array[$key][A::ASSO_LOGO] = "media/logo/asso/".$value[A::ASSO_LOGO];
+      }
+        
+    }
+    return $array;
   }
   
   /**
@@ -86,16 +93,17 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
     $propAssos = BF::request("SELECT * FROM ".A::PROPASSO." WHERE ".A::PROPASSO_ID_ASSO." = ?", [$id_asso], true, true, PDO::FETCH_ASSOC);
 
     // Sélectionner les informations de l'association
-    $assoInfo = BF::request("SELECT * FROM ".A::ASSO." WHERE ".A::ASSO_ID." = ?", [$id_asso], true, true, PDO::FETCH_ASSOC);
+    $assoInfo = $this->get_all();
 
     // Compter les membres de l'association
     $membresCount = BF::request("SELECT COUNT(*) FROM ".A::MEMBRESASSOS." WHERE ".A::MEMBRESASSOS_ID_ASSO." = ?", [$id_asso], true, true)[0];
 
-    return array(
+    $array =  array(
         'prop_asso' => $propAssos,
         'asso_info' => $assoInfo,
         'membres_count' => $membresCount
     );
+    return $array;
   }
   
   /**
@@ -117,7 +125,11 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
    * @return array
    */
   public function get_all(){
-    return BF::request("SELECT * FROM ".A::ASSO." WHERE ".A::ASSO_ID." = ?",[$this->id],true,true,PDO::FETCH_ASSOC);
+    $array =  BF::request("SELECT * FROM ".A::ASSO." WHERE ".A::ASSO_ID." = ?",[$this->id],true,true,PDO::FETCH_ASSOC);
+    if(strcmp($array[A::ASSO_LOGO],"")){
+      $array[A::ASSO_LOGO] = "media/logo/asso/".$array[A::ASSO_LOGO];
+    }
+    return $array;
   }
 
 
