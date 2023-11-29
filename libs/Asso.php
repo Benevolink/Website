@@ -158,6 +158,8 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
     //Ajout du lieu dans l'asso
     BF::request("UPDATE ".A::ASSO." SET ".A::ASSO_ID_LIEU." = ? WHERE ".A::ASSO_ID." = ?",[$id_lieu,$id]);
 
+    //Insertion du logo
+    $asso->image_set($logo);
     //Ajout de l'utilisateur en tant qu'admin de l'asso crée
     $user = new User();
     $asso->ajouter_membre($user,3);
@@ -278,28 +280,33 @@ public function modifier_role_membre($user, $role){
   return "Modification de rôle : Suppression - $resultSuppression | Ajout - $resultAjout";
 }
 
-  /**
-   * Ajoute un logo à l'asso
-   * @todo
-   */
-  public function image_set($image){
-    
-  }
+public function image_get(){
+  require_once __DIR__."/image.php";
+  global $db;
+  $image = new image;
+  $test =  $image->getImage($this->id,A::ASSO);
+  if($test==false){return BF::abs_path("media/img/user_anonyme.jpg");}
+  else{return $test;}
+}
 
-  /**
-   * Renvoie le chemin du logo pour l'implémenter en HTML
-   * @todo
-   */
-  public function image_get(){
+public function image_suppr(){
+  require_once __DIR__."/image.php";
+  global $db;
+  $image = new image;
+  $image->deleteImage($this->id,A::ASSO);
+}
 
-  }
-  /**
-   * Supprime le logo
-   */
-  public function image_suppr(){
+public function image_set($image){
+  global $db;
+  require_once __DIR__."/image.php";
+  $image_asso = new image;
+  $image_asso->verifier_format();
+  $image_asso->deleteImage($this->id,A::ASSO);
+  $image_asso->setImage($image);
+  $image_asso->placer_image(A::ASSO,BF::abs_path("media/logo/asso/",true),$this->id);
+  $image_asso->modifier_image($image_asso->fullpath);
 
-  }
-
+}
   /**
    * @todo
    */

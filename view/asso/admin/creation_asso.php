@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-<html lang="fr">
 
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css"
@@ -304,7 +302,3 @@
             });
         });
     </script>
-
-</body>
-
-</html>

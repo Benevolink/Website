@@ -68,17 +68,16 @@ switch($fonction){
         $association = $_POST["nom"];
         $description = $_POST["desc"];
         $description_missions = $_POST["desc_missions"];
-        $logo = $_FILES["uploadedfile"]["name"];
+        $logo = $_FILES["logoAssociation"];
         $adresse = $_POST["adresse"];
         $email = $_POST["email"];
         $telephone = $_POST["tel"];
 
-        Asso::insert($association, $description, $description_missions, $logo,$adresse, $email, $telephone, []);
+        Asso::insert($association, $description, $description_missions, $logo,$adresse, $email, $telephone);
 
         return_statut(true, "L'association a été insérée avec succès");
         exit();
             
-}
 
     case "user_modif_statut":  
         if(!(isset($_POST["id_user"]) && isset($_POST["id_asso"]) && isset($_POST["nouveau_statut"]) && is_numeric($_POST["nouveau_statut"]))){
@@ -101,7 +100,7 @@ switch($fonction){
         }
         $user_cible = new User($id_user_cible);
         $asso = new Asso($id_asso);
-        $asso->modifier_role_membre($user_cible,$nouveau_statut);
+        $asso->modifier_role_membre($id_user_cible,$nouveau_statut);
         return_statut(true);
         exit();
     case "user_get_statut":
