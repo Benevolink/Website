@@ -1,10 +1,26 @@
-function createAsso(nom, logo, desc, desc_missions, adresse, tel, email){
-    rep = this.APICall("asso","insert",
-    {nom : nom, logo : logo, desc : desc, desc_missions : desc_missions, adresse : adresse, tel : tel, email : email});
-    if(rep["statut"]==0){
+
+function createAsso(){
+
+    let formDataTotal = new FormData();
+    $("form").toArray().forEach(element => {
+        let formData = new FormData(element);
+        for (let [key, value] of formData.entries()) {
+            formDataTotal.append(key, value);
+        }
+    });
+    let array = Object.fromEntries(formDataTotal.entries());
+    console.log(array);
+    import(abs_path("JS/classes/Asso.js")).then((module)=>{
         
-    }
-    else{
-        window.location.href = abs_path("controller/static/form-merci.php");
-    }
+        module.Asso.insert(array["nomAssociation"],array["descriptionAssociation"],array["missions"],array["logoAssociation"],array["localisation"],array["emailAssociation"],array["telAssociation"]).
+        done((data)=>{
+            if(data["statut"]==0){
+                alert("Les informations renseignées sont invalides ou incomplètes. Veuillez vérifier votre saisie.");
+            }else{
+                
+                //window.location.href = abs_path("controller/static/form-merci.php");
+            }
+        })
+    });
 }
+

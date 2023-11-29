@@ -2,11 +2,13 @@ import { APIObjet } from './APIObjet.js';
 import {Event} from './Event.js';
 import {User} from './User.js';
 
+
 export class Asso extends APIObjet{
 
     constructor(id){
         super();
         this.id = id;
+        console.log("OK");
     }
 
     getInfos(){
@@ -36,7 +38,10 @@ export class Asso extends APIObjet{
         return this.APICall("asso","user_get_statut",{id_asso : this.id, id_user : id_user});
     }
     
-    
+    static insert(nom,desc,desc_missions,uploadedfile,adresse,email,tel){
+        let params = {nom : nom, desc : desc, desc_missions : desc_missions, uploadedfile : uploadedfile, adresse : adresse, email : email, tel : tel};
+        return this.APICallStatic("asso","insert",params);
+    }
 
 
 
