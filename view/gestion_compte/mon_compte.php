@@ -47,7 +47,7 @@
 <div class="liste_prop" class="thumbnail" style="display: inline-block; margin-left: 100px;">
     <div>
     <img id ="image_logo" src="<?= BF::abs_path("/media/img/user_anonyme.jpg")?>" style="width:200px;border-radius:200px;border: 10px black solid;cursor: pointer;"/>
-          <?php afficher_infos_1(); ?>
+          
         <?php afficher_infos_2(); ?>
     </div>
     
