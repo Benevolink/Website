@@ -154,7 +154,7 @@ public function supprimer_membre($user){
  * @param int $user L'ID de l'utilisateur à ajouter en tant que membre
  * @param string $role Le rôle du membre 
  *
- * @return string Message indiquant le résultat de l'opération
+ * @return bool true si ça a fonctionné, false sinon
  */
 public function ajouter_membre($user, $role = null){
     $id_event = $this->id;
@@ -183,10 +183,10 @@ public function ajouter_membre($user, $role = null){
         BF::request($insertSQL, $insertValues, false, false);
 
         // Retourne un statut ou un message indiquant le résultat de l'opération
-        return "Membre ajouté avec succès à l'événement.";
+        return true;
     } else {
         // L'utilisateur est déjà membre
-        return "L'utilisateur est déjà membre de l'événement.";
+        return false;
     }
 }
 
@@ -198,7 +198,7 @@ public function ajouter_membre($user, $role = null){
  * @param int $user L'ID de l'utilisateur dont le rôle doit être modifié
  * @param string $role Le nouveau rôle du membre
  *
- * @return string Message indiquant le résultat de l'opération
+ * @return bool
  */
 public function modifier_role_membre($user, $role){
     $id_event = $this->id;
@@ -214,10 +214,10 @@ public function modifier_role_membre($user, $role){
         BF::request($updateSQL, [$role, $user, $id_event], false, false);
 
         // Retourne un statut ou un message indiquant le résultat de l'opération
-        return "Le rôle du membre a été modifié avec succès.";
+        return true;
     } else {
         // L'utilisateur n'est pas membre
-        return "L'utilisateur n'est pas membre de l'événement.";
+        return false;
     }
 }
 
