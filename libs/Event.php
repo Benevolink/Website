@@ -127,7 +127,7 @@ class Event implements Suppression, GestionMembres, GestionLogo, GestionPropriet
  *
  * @param int $user L'ID de l'utilisateur à supprimer de l'évènement
  *
- * @return string Message indiquant le résultat de l'opération
+ * @return bool true si le membre a été supprimé, false sinon
  * @todo
  */
 public function supprimer_membre($user){
@@ -141,10 +141,10 @@ public function supprimer_membre($user){
         BF::request("DELETE FROM ".A::MEMBRESEVENTS." WHERE ".A::MEMBRESEVENTS_ID_USER." = ? AND ".A::MEMBRESEVENTS_ID_EVENT." = ?", [$user, $id_event], false, false);
 
         // Retourne un statut ou un message indiquant le résultat de l'opération
-        return "Membre supprimé avec succès de l'événement.";
+        return true;
     } else {
         // L'utilisateur n'est pas membre
-        return "L'utilisateur n'est pas membre de l'événement.";
+        return false;
     }
 }
 
