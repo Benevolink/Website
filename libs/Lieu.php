@@ -29,7 +29,7 @@ class Lieu implements Suppression{
    * @todo
  * Supprime le lieu
  *
- * @return string Message indiquant le résultat de l'opération
+ * @return bool
  */
 public function suppr(){
   $id_lieu = $this->id;
@@ -39,7 +39,7 @@ public function suppr(){
 
   if ($evenementsAssocies > 0) {
       // Il y a des événements associés, gérer ce cas selon les besoins
-      return "Il y a des événements associés à ce lieu. Vous ne pouvez pas le supprimer.";
+      return false;
   } else {
       // Aucun événement associé, on peut supprimer le lieu
 
@@ -47,7 +47,7 @@ public function suppr(){
       BF::request("DELETE FROM ".A::LIEU." WHERE ".A::LIEU_ID." = ?", [$id_lieu], false, false);
 
       // Retourne un statut ou un message indiquant le résultat de l'opération
-      return "Le lieu a été supprimé avec succès.";
+      return true;
   }
 }
 
