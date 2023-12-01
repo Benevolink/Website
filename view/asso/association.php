@@ -8,7 +8,7 @@
   <br>
   
   <?php if($est_dans_asso){ ?>
-    <label for="followed">Rejointe</label>
+    <label for="followed">Rejoindre</label>
     <input id="followed" type="checkbox" disabled="disabled" checked>
   <?php } else { ?>
     <label for="followed">Rejoindre</label>
