@@ -71,39 +71,7 @@ header('Cache-Control: private',true);
 if(!(isset($iframe) ? 1 : 0)){
       ?>
 
-<ul id="barre_titre">
-<!--Barre principale du menu contenant les sous catégories-->
-    <img href="<?= BF::abs_path("index.php") ?>" src="<?= BF::abs_path("media/img/benevolink2.jpg") ?>" alt="Logo de l'image" id="benevolink" onclick="window.location.href = '<?= BF::abs_path('index.php') ?>'">
-    <!-- <li><a href="index.php">Accueil</a></li> -->
-    <li><a href="<?= BF::abs_path("controller/missions.php")?>">Missions</a></li>
-  <?php
-  
-  
-  if(BF::is_connected()){
-    ?><li><a href="<?= BF::abs_path("controller/planning.php") ?>">Planning</a></li><?php
-  }
-    
-  ?>
-    <li><a href="<?= BF::abs_path("controller/asso/associations_user.php")?>">Associations</a></li>
-    <?php 
-      if(!BF::is_connected()){
-        ?>
-        <li style="cursor: pointer;"><a onclick="authentification();">Se connecter</a></li>
-        <?php
-      }else{
-        require_once BF::abs_path("libs/User.php",true);
-        $user_logo = new User();
-        $pseudo = $user_logo->get_pseudo(); 
-        ?>
-        <li><a href="<?= BF::abs_path("controller/gestion_compte/mon_compte.php")?>"> <img id="logo_barre" style="width: 30px;height: 30px;border: 3px solid black;border-radius: 30px;position: absolute; transform: translate(-40px,0px);" src="<?= BF::abs_path("/media/img/user_anonyme.jpg")?>"/><?= $pseudo; ?></a></li>
-        <?php
-      }
-    ?>
-    
 
- 
-  
-  </ul>
 
   <a href="#" style="display: flex; justify-content: center; align-items: center;">
     <img id="boutonlogo3" href="<?= BF::abs_path("index.php") ?>" src="<?= BF::abs_path("media/img/benevolink3.png") ?>" 

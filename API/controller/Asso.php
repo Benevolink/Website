@@ -42,6 +42,43 @@ switch($fonction){
         $user->quitter_asso($_POST["id_asso"]);
         return_statut(true);
         exit();
+
+    case "insert":
+        
+        $expected_parameters = ["nom", "desc", "desc_missions", "uploadedfile", "adresse", "email", "tel"];
+
+        $status_array = []; // Initialisation du tableau vide
+        $parametres_enregistres = true; // Booléen pour suivre l'enregistrement des paramètres
+
+        foreach ($expected_parameters as $param) {
+            if (!isset($_POST[$param])) {
+                $status_array[$param] = ["statut" => 0];
+                $parametres_enregistres = false; // Si au moins un paramètre est manquant, le booléen est mis à false
+            } else {
+                $status_array[$param] = ["statut" => 1];
+            }
+        }
+
+        // Si on arrive ici, tous les paramètres sont présents
+        if ($parametres_enregistres==0) {
+            $status_array["statut"] = 0;
+            return_json($status_array);
+            exit();
+        }
+        $association = $_POST["nom"];
+        $description = $_POST["desc"];
+        $description_missions = $_POST["desc_missions"];
+        $logo = $_FILES["logoAssociation"];
+        $adresse = $_POST["adresse"];
+        $email = $_POST["email"];
+        $telephone = $_POST["tel"];
+
+        Asso::insert($association, $description, $description_missions, $logo,$adresse, $email, $telephone);
+
+        return_statut(true, "L'association a été insérée avec succès");
+        exit();
+            
+
     case "user_modif_statut":  
         if(!(isset($_POST["id_user"]) && isset($_POST["id_asso"]) && isset($_POST["nouveau_statut"]) && is_numeric($_POST["nouveau_statut"]))){
             return_statut(false,"Formulaire incomplet");
@@ -63,7 +100,7 @@ switch($fonction){
         }
         $user_cible = new User($id_user_cible);
         $asso = new Asso($id_asso);
-        $asso->modifier_role_membre($user_cible,$nouveau_statut);
+        $asso->modifier_role_membre($id_user_cible,$nouveau_statut);
         return_statut(true);
         exit();
     case "user_get_statut":
@@ -85,3 +122,4 @@ switch($fonction){
         return_json(array("statut"=>1, "user_statut"=>$role));
         exit();
 }
+
