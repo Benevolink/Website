@@ -4,7 +4,7 @@ require_once __DIR__.'/../../libs/Admin_site.php';
 
 function create_domain($value){
   
-  if (!Admin_site::existence_domain($value)){
+  if (!Admin_site::existence_domain($value) && $value != NULL){
     $res = Admin_site::insert_domain($value);
     return $res;
   }
