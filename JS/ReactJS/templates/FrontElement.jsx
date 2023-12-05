@@ -1,10 +1,10 @@
-import { HTMLElement } from "../HTMLElement.mjs";
-import { LeaveCross } from "./LeaveCross.mjs";
+import { LeaveCross } from "./LeaveCross.jsx";
+import {React,ReactDOM} from "./ReactImport";
 
 export class FrontElement extends React.Component{
-    constructor(props,BackgroundId = false){
+    constructor(props){
         super(props);
-
+        
         //Permet de supprimer le fond sombre derrière également
         this.state = {
             id : "FrontElement"
@@ -12,10 +12,10 @@ export class FrontElement extends React.Component{
 
         
     }
-
+    
     render(){
         <div class = "FrontElement" id = {this.props.id}>
-            <LeaveCross />
+            <LeaveCross onClick={this.props.onDelete}/>
         </div>
     }
 }

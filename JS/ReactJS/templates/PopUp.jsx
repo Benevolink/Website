@@ -1,14 +1,24 @@
-import { HTMLElement } from "../HTMLElement.mjs";
-import { FrontElement } from "./FrontElement.mjs";
-
+import { FrontElement } from "./FrontElement.jsx";
+import {React,ReactDOM} from "./ReactImport";
 export class PopUp extends React.Component{
-    constructor(zIndex = 9000){
-        super();
-        this.JQElement = $('div').attr({
-            id : "PopUpBackground"
-        }).css({
-            zIndex : zIndex
-        });
-        this.append(new FrontElement("PopUpBackground"));
+    constructor(props){
+        super(props);
+        this.state = {
+            showElements: true
+        };
+    }
+    handleDelete(){
+        this.state = {
+            showElements : false
+        }
+    }
+    render(){
+        {
+            this.state.showElements &&
+            <div>
+                <FrontElement onDelete={this.handleDelete()}/>
+            </div>
+        }
+        
     }
 }
