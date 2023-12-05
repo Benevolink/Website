@@ -1,6 +1,6 @@
 import { HTMLElement } from "../HTMLElement.mjs";
 
-export class ShortDescBox extends HTMLElement{
+export class ShortDescBox extends React.Component{
     constructor(title, desc, logo, status, link_page){
         super();
 
