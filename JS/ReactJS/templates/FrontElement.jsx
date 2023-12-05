@@ -7,14 +7,15 @@ export class FrontElement extends React.Component{
         
         //Permet de supprimer le fond sombre derrière également
         this.state = {
-            id : "FrontElement"
+            id : "FrontElement",
+            class : "FrontElement"
         };
 
         
     }
     
     render(){
-        <div class = "FrontElement" id = {this.props.id}>
+        <div {...this.props}>
             <LeaveCross onClick={this.props.onDelete}/>
         </div>
     }
