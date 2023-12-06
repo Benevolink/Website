@@ -183,7 +183,7 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
     $user = new User();
     $asso->ajouter_membre($user->id,3);
     
-  }
+  }}
 
   
   /**
