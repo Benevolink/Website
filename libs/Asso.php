@@ -152,6 +152,8 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
      * @todo
      */
     // On se connecte à la BDD
+    if(strlen($nom)>256){
+      $nom = substr($nom,0,256-strlen($nom));
     $db->beginTransaction();
     
     // On insère les données reçues dans la table "assos"
