@@ -13,11 +13,27 @@
         });
     </script>
     <?php
-    require_once "../../abs_path.php";
+    require_once "../abs_path.php";
     ?>
 
 <?php
+
+$repertoire = "templates"; // Remplacez cela par le chemin de votre répertoire
+
+// Obtenez la liste des fichiers dans le répertoire
+$files = scandir($repertoire);
+
+// Parcours de chaque fichier dans le répertoire
+foreach ($files as $file) {
+    // Ignorer les fichiers "." et ".." qui représentent le répertoire courant et le répertoire parent
+    if ($file != "." && $file != "..") {
+        
+        ?>
+        <script type="text/babel" src = "<?= $repertoire."/".$file ?>"></script>
+        <?php
+        
+    }
+}
+
 ?>
-<script type="text/babel" src = "./LeaveCross.jsx"></script>
-<script type="text/babel" src = "./FrontElement.jsx"></script>
-<script type="text/babel" src = "./PopUp.jsx"></script>
+
