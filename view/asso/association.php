@@ -77,13 +77,13 @@
 
   </div>
   
-  <div class="col-md-4 col-md-offset-1" id="description_asso">
+  <div class="col-md-4 col-md-offset-4" id="description_asso">
   <h3 id="titre_asso">Description des Missions</h3>
   <p><?= $prop_all["asso_info"][AttributsTables::ASSO_DESCRIPTION] ?></p>
 
   </div>
 
-  <br> <br>
+  <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
 
 <div id="wrapper_all"></div>
 
@@ -96,6 +96,7 @@
     src: url(fonts/Nexa-Heavy.woff2) format("woff2");
     margin-left: 40px;
     border: 1px solid #000;
+    border-radius: 10px;
     box-sizing: border-box; 
     padding: 8px; /* Espace à l'intérieur des cellules */
     padding-left: 55px;
@@ -105,13 +106,14 @@
   #contact_adresse{
     font-family: Corps;
     src: url(fonts/Nexa-Heavy.woff2) format("woff2");
-    margin-left: 40px;
+    margin-left: 70px;
+    margin-top: 20px;
     border: 1px solid #000;
+    border-radius: 10px;
     box-sizing: border-box; 
     padding: 8px; /* Espace à l'intérieur des cellules */
     padding-left: 55px;
     font-size: 17px;
-
   }
   #logoImg{
     width: 88%;
@@ -134,5 +136,13 @@
   text-align: center;
   }
  
+  #wrapper_all{
+    font-weight: bold;
+    font-family: Corps;
+    src: url(fonts/Nexa.woff2) format("woff2");
+    font-size: 30px;
+    text-align: center;
+  }
+
 
 </style>
