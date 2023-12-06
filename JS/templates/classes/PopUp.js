@@ -1,5 +1,5 @@
-import { HTMLElement } from "../HTMLElement.mjs";
-import { FrontElement } from "./FrontElement.mjs";
+import { HTMLElement } from "../HTMLElement.js";
+import { FrontElement } from "./FrontElement.js";
 
 export class PopUp extends HTMLElement{
     constructor(zIndex = 9000){

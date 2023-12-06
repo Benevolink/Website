@@ -1,4 +1,4 @@
-import { HTMLElement } from "../HTMLElement.mjs";
+import { HTMLElement } from "../HTMLElement.js";
 
 export class ShortDescBox extends HTMLElement{
     constructor(title, desc, logo, status, link_page){

@@ -1,5 +1,5 @@
-import { HTMLElement } from "../HTMLElement.mjs";
-import { LeaveCross } from "./LeaveCross.mjs";
+import { HTMLElement } from "../HTMLElement.js";
+import { LeaveCross } from "./LeaveCross.js";
 
 export class FrontElement extends HTMLElement{
     constructor(BackgroundId = false){

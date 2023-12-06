@@ -1,4 +1,4 @@
-import { HTMLElement } from "../HTMLElement.mjs";
+import { HTMLElement } from "../HTMLElement.js";
 
 export class LeaveCross extends HTMLElement{
     constructor(targetId){
