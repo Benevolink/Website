@@ -110,7 +110,6 @@
     <ul class="nav navbar-nav" id="nav_navbar">
       <li><a href="#nom_association"> Nom de l'association</a></li>
       <li><a href="#description_association">Description de l'association</a></li>
-      <li><a href="#domaines_souhaites">Domaines souhaités</a></li>
       <li><a href="#missions_proposees">Types de missions proposées</a></li>
       <li><a href="#localisation">Votre localisation</a></li>
     </ul>
@@ -168,15 +167,6 @@
         <div class="caption" id="thumbnail_3">
           <h2>Renseignez plus d'informations sur le type de mission que vous proposez :</h2>
           <form>
-            <div class="form-group">
-              <label for="nomAssociation"> <span class="glyphicon glyphicon-sort-by-alphabet"
-                  aria-hidden="true"></span> Domaines souhaités </label>
-              <p>
-                <?php
-                  show_all_domaines();
-                ?>
-              </p>
-            </div>
             <div class="form-group">
               <label for="missionsProposees"><span class="glyphicon glyphicon-tasks"
                   aria-hidden="true"></span> Types de missions proposées :</label>
