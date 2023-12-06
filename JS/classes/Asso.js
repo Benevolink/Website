@@ -44,7 +44,6 @@ export class Asso extends APIObjet{
         for(let cle in params){
             data.append(cle,params[cle]);
         }
-        console.log(file_content);
         data.append("logoAssociation",file_content);
         data.append("type","asso");
         data.append("fonction","insert");

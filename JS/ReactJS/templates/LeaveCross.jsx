@@ -1,5 +1,5 @@
-import {React,ReactDOM} from "./ReactImport";
-export class LeaveCross extends React.Component{
+
+class LeaveCross extends React.Component{
     constructor(props){
         super(props);
         this.state = {
@@ -7,7 +7,9 @@ export class LeaveCross extends React.Component{
         };
     }
     render(){
-        <img class = {abs_path("media/img/croix.jpg")}/>
+        return(
+        <img class = {this.props.class} src={abs_path("media/img/croix.jpg")}/>
+        )
     }
 
 }
