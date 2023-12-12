@@ -95,7 +95,7 @@ function affichage_liste_membres(){
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-        <button type="button" class="btn btn-primary">Confirmer</button>
+        <button type="button" class="btn btn-primary modal_suppr_conf" id_user = "<?= $membre['id_user']?>" >Confirmer</button>
       </div>
     </div>
   </div>
