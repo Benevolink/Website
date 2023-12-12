@@ -182,7 +182,7 @@ class Event implements Suppression, GestionMembres, GestionLogo, GestionPropriet
         return BF::request("SELECT ".A::EVENT_ID_ASSO." FROM ".A::EVENT." WHERE ".A::EVENT_ID." = ?",[$this->id],true,true)[0];
     }
 
-    public function event_get_filters($lieu=null, $domaine=null){
+    public function event_get_filtered($lieu=null, $domaine=null){
         $query = "SELECT * FROM evenements WHERE 1";
 
         if ($lieu !== null) {
