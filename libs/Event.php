@@ -181,6 +181,28 @@ class Event implements Suppression, GestionMembres, GestionLogo, GestionPropriet
     public function asso_get_id(){
         return BF::request("SELECT ".A::EVENT_ID_ASSO." FROM ".A::EVENT." WHERE ".A::EVENT_ID." = ?",[$this->id],true,true)[0];
     }
+
+    public function event_get_filters($lieu=null, $domaine=null){
+        $query = "SELECT * FROM evenements WHERE 1";
+
+        if ($lieu !== null) {
+            $query .= " AND id_lieu = (SELECT id_lieu FROM lieu WHERE departement = ?)";
+        }
+
+        if ($domaine !== null) {
+            $query .= " AND id_domaine = (SELECT id_domaine FROM domaine WHERE nom_domaine = ?)";
+        }
+
+        $params = [];
+        if ($lieu !== null) {
+            $params[] = $lieu;  // Bind the value for location
+        }
+        if ($domaine !== null) {
+            $params[] = $domaine;   // Bind the value for domaine
+        }
+
+        return BF::request($query, $params, true, true);
+    }
 }
 
 ?>
