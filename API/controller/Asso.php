@@ -88,7 +88,28 @@ switch($fonction){
         return_statut(true, "L'association a été insérée avec succès");
         exit();
             
-
+    case "user_suppr":
+        if(!(isset($_POST["id_user"]) && isset($_POST["id_asso"]))){
+            return_statut(false,"Formulaire incomplet");
+            exit();
+        }
+        $id_user_cible = $_POST["id_user"];
+        $id_asso = $_POST["id_asso"];
+        require_once BF::abs_path("libs/User.php",true);
+        $user = new User();
+        if(!$user->est_admin_asso($id_asso))
+        {
+            return_statut(false,"Vous n'avez pas les droits pour effectuer cette action.");
+            exit();
+        }
+        if($user->id == intval($id_user_cible)){
+            return_statut(false,"Vous ne pouvez pas vous supprimer vous-même");
+            exit();
+        }
+        $asso = new Asso($id_asso);
+        $asso->supprimer_membre($id_user_cible);
+        return_statut(true);
+        exit();
     case "user_modif_statut":  
         if(!(isset($_POST["id_user"]) && isset($_POST["id_asso"]) && isset($_POST["nouveau_statut"]) && is_numeric($_POST["nouveau_statut"]))){
             return_statut(false,"Formulaire incomplet");

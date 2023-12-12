@@ -70,7 +70,9 @@ export class Asso extends APIObjet{
         return this.APICall("asso","get_logo",{id_asso: this.id});
     }
 
-
+    user_suppr(id_cible){
+        return this.APICall("asso","user_suppr",{id_asso: this.id, id_user : id_cible});
+    }
 
 
     user_join(){

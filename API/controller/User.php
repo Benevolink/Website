@@ -66,6 +66,4 @@ switch($fonction){
         exit();
     
 }
-
-
 ?>
