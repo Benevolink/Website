@@ -73,7 +73,7 @@
                 </select>
             </div>
             <div style="clear:both;"></div>
-            <p>Image évènement : <input name="uploadedfile" type="file" />
+            <p>Image évènement : <input name="uploadedfile" type="file" id="image_file" />
                   <input type="hidden" name="uploadedfile" /></p>
 
         </div>

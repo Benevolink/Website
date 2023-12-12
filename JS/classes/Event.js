@@ -18,8 +18,23 @@ export class Event extends APIObjet{
         .APICallStatic("event","user_get_all",{});
     }
 
-    static insert(array){
-        return this.APICallStatic("event","insert",{array : array});
+    static insert(array,file_content){
+        let data = new FormData();
+        console.log(array);
+        Object.entries(array).forEach(([cle, valeur]) => {
+            data.append("array["+cle+"]",valeur);
+        });
+        data.append("logoEvent",file_content);
+        data.append("type","event");
+        data.append("fonction","insert");
+        return $.ajax({
+            url: abs_path("API/index.php"),
+            method: "POST",
+            dataType: "json",
+            data: data,
+            contentType: false,
+            processData: false,
+        });
     }
 
     user_join(){

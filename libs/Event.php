@@ -65,7 +65,7 @@ class Event implements Suppression, GestionMembres, GestionLogo, GestionPropriet
      *
      * @return Event
      */
-    public static function insert($date_debut, $date_fin, $heure_debut, $heure_fin, $id_asso, $nom_event, $nb_personnes, $visu, $desc, $departement, $adresse) {
+    public static function insert($date_debut, $date_fin, $heure_debut, $heure_fin, $id_asso, $nom_event, $nb_personnes, $visu, $desc, $departement, $adresse,$logo) {
         global $db;
         /*
         permet de créer un évènement
@@ -86,7 +86,12 @@ class Event implements Suppression, GestionMembres, GestionLogo, GestionPropriet
   
         $id_event = $db->lastInsertId();
   
-        return new Event($id_event);
+        //Insertion du logo
+        $event = new Event($id_event);
+        $event->image_set($logo);
+
+        
+        return $event;
     }
     
     /**
@@ -222,35 +227,41 @@ public function modifier_role_membre($user, $role){
 }
 
 
-    /**
-   * Ajoute un logo à l'event
-   * @
-   * @todo
-   */
-  public function image_set($image){
-    
+public function image_get(){
+    require_once __DIR__."/image.php";
+    global $db;
+    $image = new image;
+    $test =  $image->getImage($this->id,A::EVENT);
+    if($test==false){return BF::abs_path("media/img/user_anonyme.jpg");}
+    else{return $test;}
   }
-
-  /**
-   * Renvoie le chemin du logo pour l'implémenter en HTML
-   * @todo
-   */
-  public function image_get(){
-
-  }
-  /**
-   * Supprime le logo
-   * @todo
-   */
+  
   public function image_suppr(){
-    
+    require_once __DIR__."/image.php";
+    global $db;
+    $image = new image;
+    $image->deleteImage($this->id,A::EVENT);
+  }
+  
+  public function image_set($image){
+    global $db;
+    require_once __DIR__."/image.php";
+    $image_asso = new image;
+    $image_asso->setImage($image);
+    $image_asso->verifier_format();
+    $image_asso->deleteImage($this->id,A::EVENT);
+    $image_asso->placer_image(A::EVENT,BF::abs_path("media/logo/event/",true),$this->id);
+    $image_asso->modifier_image($image_asso->fullpath);
+  
   }
 
   /**
    * @todo
    */
   public function insert_prop($prop_name,$prop_value){
-
+    BF::request("DELETE FROM ".A::PROPEVENT." WHERE ".A::PROPEVENT_ID_EVENT." = ? AND ".A::PROPEVENT_NOM." LIKE ?",[$this->id,$prop_value]);
+    $req = "INSERT INTO ".A::PROPEVENT." (".A::PROPEVENT_ID_EVENT.",".A::PROPEVENT_NOM.",".A::PROPEVENT_VALEUR.") VALUES (?,?,?)";
+    BF::request($req,[$this->id,$prop_name,$prop_value]);
   }
   /**
    * @todo
