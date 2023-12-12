@@ -69,6 +69,9 @@ switch($fonction){
             return_statut(false,$e->getMessage()); 
             exit(); 
         }
+
+    case "get_event_by_domain":
+        require_once BF::abs_path("libs/Ressources/missions_filters.php", true);
     
     
 }

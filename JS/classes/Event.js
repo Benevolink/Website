@@ -34,5 +34,8 @@ export class Event extends APIObjet{
         return this.APICall("event","user_statut",{id_event : this.id});
     }
 
+    static filter_search(filters){
+        return this.APICall("event", "get_event_by_domain", {lst : filters});
+    }
 
 }

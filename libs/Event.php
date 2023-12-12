@@ -100,6 +100,10 @@ class Event implements Suppression, GestionMembres, GestionLogo, GestionPropriet
         return BF::request("SELECT ".A::PROPEVENT_VALEUR." FROM ".A::PROPEVENT." WHERE ".A::PROPEVENT_ID_EVENT." = ? AND ".A::PROPEVENT_NOM." = ?", [$this->id, $propNom], true, true)[0];
     }
 
+    public function get_name_by_id(){
+        $name = BF::request("SELECT ".A::EVENT_NOM." FROM ".A::EVENT." WHERE ".A::EVENT_ID." = ?", [$this->id]);
+        return $name;
+    }
         
     /**
      * Renvoie toutes les infos de l'évènement associé

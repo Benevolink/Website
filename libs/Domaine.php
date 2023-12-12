@@ -37,6 +37,14 @@ class Domaine{
     public static function get_all(){
         return BF::request("SELECT * FROM ".A::DOMAINE,[],true,false,PDO::FETCH_ASSOC);
     }
+
+    /**
+     * Renvoie les id des événements concernés par le domaine.
+     */
+    public function get_event_id_by_domain(){
+        $events = BF::request("SELECT ".A::DOMAINEJONCTION_ID_JONCTION." FROM ".A::DOMAINEJONCTION." WHERE ".A::DOMAINEJONCTION_ID_DOMAINE." = ? AND ".A::DOMAINEJONCTION_TYPE." = 2",[$this->id],true,true,PDO::FETCH_ASSOC);
+        return $events;
+    }
     
     /**
      * Method insert
