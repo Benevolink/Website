@@ -195,10 +195,10 @@ class Event implements Suppression, GestionMembres, GestionLogo, GestionPropriet
 
         $params = [];
         if ($lieu !== null) {
-            $params[] = $lieu;  // Bind the value for location
+            $params[] = $lieu;  
         }
         if ($domaine !== null) {
-            $params[] = $domaine;   // Bind the value for domaine
+            $params[] = $domaine;  
         }
 
         return BF::request($query, $params, true, true);
