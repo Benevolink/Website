@@ -69,6 +69,6 @@ switch($fonction){
             return_statut(false,$e->getMessage()); 
             exit(); 
         }
-    
+     
     
 }

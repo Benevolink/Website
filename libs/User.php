@@ -106,7 +106,7 @@ class User implements Suppression, GestionLogo{
   }
   
   /**
-   * Renvoie la liste des assos de l'utilisateur sous la forme d'une liste contenant :
+   * Renvoie la liste des assos de l'utilisateur (statut >=0) sous la forme d'une liste contenant :
    *  •  toutes les infos de chaque asso
    *  •  le statut de l'utilisateur dans l'asso
    *
@@ -119,6 +119,43 @@ class User implements Suppression, GestionLogo{
     $req = "SELECT a.*, m.".A::MEMBRESASSOS_STATUT." FROM ".A::ASSO." a JOIN ".A::MEMBRESASSOS." m ON (a.".A::ASSO_ID." = m.".A::MEMBRESASSOS_ID_ASSO." AND m.".A::MEMBRESASSOS_ID_USER." = ? AND m.".A::MEMBRESASSOS_STATUT." >= 0) ORDER BY m.".A::MEMBRESASSOS_STATUT." ASC";
     $table = BF::request($req,[$this->id],true,false,PDO::FETCH_ASSOC);
     return $table;
+  }
+
+
+   /**
+   * Renvoie la liste des assos de l'utilisateur (statut >=1) sous la forme d'une liste contenant :
+   *  •  toutes les infos de chaque asso
+   *  •  le statut de l'utilisateur dans l'asso
+   *
+   * @return array
+   */
+  public function liste_assos_integrees(){
+  
+    /*
+    On renvoie la liste de toutes les assos de l'utilisateur avec le statut
+    */
+    $req = "SELECT a.*, m.".A::MEMBRESASSOS_STATUT." FROM ".A::ASSO." a JOIN ".A::MEMBRESASSOS." m ON (a.".A::ASSO_ID." = m.".A::MEMBRESASSOS_ID_ASSO." AND m.".A::MEMBRESASSOS_ID_USER." = ? AND m.".A::MEMBRESASSOS_STATUT." >= 1) ORDER BY m.".A::MEMBRESASSOS_STATUT." ASC";
+    $table = BF::request($req,[$this->id],true,false,PDO::FETCH_ASSOC);
+    return $table;
+  
+  }
+
+  /**
+   * Renvoie la liste des assos de l'utilisateur (statut ==0) sous la forme d'une liste contenant :
+   *  •  toutes les infos de chaque asso
+   *  •  le statut de l'utilisateur dans l'asso
+   *
+   * @return array
+   */
+  public function liste_assos_en_attente(){
+  
+    /*
+    On renvoie la liste de toutes les assos de l'utilisateur avec le statut
+    */
+    $req = "SELECT a.*, m.".A::MEMBRESASSOS_STATUT." FROM ".A::ASSO." a JOIN ".A::MEMBRESASSOS." m ON (a.".A::ASSO_ID." = m.".A::MEMBRESASSOS_ID_ASSO." AND m.".A::MEMBRESASSOS_ID_USER." = ? AND m.".A::MEMBRESASSOS_STATUT." = 0)";
+    $table = BF::request($req,[$this->id],true,false,PDO::FETCH_ASSOC);
+    return $table;
+  
   }
   
   /**

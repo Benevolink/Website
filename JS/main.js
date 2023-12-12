@@ -422,7 +422,7 @@ function inscr_envoie(){
           top: '0',
           left: '0'
         });
-        setTimeout(()=>{resize(boite)},100);
+        setTimeout(()=>{resize((".boite_auth").first())},500);
         $(window).on("resize",function (event){
           let boite_2 = $(".boite_auth").first();
           resize(boite_2);
