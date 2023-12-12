@@ -33,6 +33,6 @@ export class Event extends APIObjet{
     user_statut(){
         return this.APICall("event","user_statut",{id_event : this.id});
     }
-
+    
 
 }
