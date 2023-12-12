@@ -29,7 +29,7 @@ form.on("submit",function(event){
     console.log(array);
     import(abs_path("JS/classes/Event.js")).then((module) => {
         
-        module.Event.insert(array).done(function(data){
+        module.Event.insert(array,$("#image_file")[0].files[0]).done(function(data){
             if(data["statut"]==1){
                 window.location.href = abs_path("controller/static/form-merci.php");
             }else{

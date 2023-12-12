@@ -46,7 +46,7 @@ class image {
                 break;
         }
         if(BF::equals($table,A::EVENT))
-            $req_logo = "SELECT logo FROM ".A::PROPEVENT." WHERE ".A::PROPASSO_NOM." like 'logo' AND $id_table = ? ";
+            $req_logo = "SELECT ".A::PROPEVENT_VALEUR." FROM ".A::PROPEVENT." WHERE ".A::PROPASSO_NOM." like 'logo' AND $id_table = ? ";
         else
             $req_logo = "SELECT logo FROM $table WHERE $id_table = ? ";//on vérifie que le nom n'est pas déjà pris
         $req_logo_2 = $db->prepare($req_logo);
@@ -209,7 +209,7 @@ class image {
         {
             require_once BF::abs_path("libs/Event.php",true);
             $event = new Event($id);
-            $event->insert_prop("logo",$destinationPath);
+            $event->insert_prop("logo",$image_name.".jpg");
         }
             
         else
@@ -247,7 +247,7 @@ class image {
     public function modifier_image($lien_image){
         $name=basename($lien_image);
 
-        $ext=pathinfo($name,PATHINFO_EXTENSION);
+        $ext=$this->type;
         if(strcmp($ext,"jpg")==0 ||strcmp($ext,"jpeg")==0){
             $im_php = imagecreatefromjpeg($this->fullpath);
             if($im_php==false){return 0;}
