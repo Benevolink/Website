@@ -183,14 +183,14 @@ class Event implements Suppression, GestionMembres, GestionLogo, GestionPropriet
     }
 
     public function event_get_filtered($lieu=null, $domaine=null){
-        $query = "SELECT * FROM evenements WHERE 1";
+        $query = "SELECT * FROM".A::EVENT."WHERE 1";
 
         if ($lieu !== null) {
-            $query .= " AND id_lieu = (SELECT id_lieu FROM lieu WHERE departement = ?)";
+            $query .= " AND".A::ID_LIEU".= (SELECT".A::LIEU_ID."FROM".A::LIEU."WHERE".A::LIEU_DEPARTEMENT".= ?)";
         }
 
         if ($domaine !== null) {
-            $query .= " AND id_domaine = (SELECT id_domaine FROM domaine WHERE nom_domaine = ?)";
+            $query .= " AND".A::DOMAINE_ID."= (SELECT".A::DOMAINE_ID."FROM".A::DOMAINE."WHERE".A::DOMAINE_NOM".= ?)";
         }
 
         $params = [];
