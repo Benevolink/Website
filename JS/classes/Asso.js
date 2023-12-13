@@ -8,7 +8,6 @@ export class Asso extends APIObjet{
     constructor(id){
         super();
         this.id = id;
-        console.log("OK");
     }
 
     getInfos(){
@@ -26,10 +25,19 @@ export class Asso extends APIObjet{
      */
     static getListeAssos(searchEntry){
         return this
-        .APICall("asso","search",{recherche : searchEntry});
+        .APICallStatic("asso","search",{recherche : searchEntry});
     }
 
-    
+    static getListeAssosIntegrees(searchEntry){
+        return this
+        .APICallStatic("asso","get_assos_integrees",{recherche : searchEntry});
+    }
+
+    static getListeAssosEnAttente(searchEntry){
+        return this
+        .APICallStatic("asso","get_assos_en_attente",{recherche : searchEntry});
+    }
+
     user_modif_statut(id_user,nouveau_statut){
         return this.APICall("asso","user_modif_statut",{id_asso : this.id, id_user : id_user, nouveau_statut : nouveau_statut});
     }
@@ -38,18 +46,42 @@ export class Asso extends APIObjet{
         return this.APICall("asso","user_get_statut",{id_asso : this.id, id_user : id_user});
     }
     
-    static insert(nom,desc,desc_missions,uploadedfile,adresse,email,tel){
-        let params = {nom : nom, desc : desc, desc_missions : desc_missions, uploadedfile : uploadedfile, adresse : adresse, email : email, tel : tel};
-        return this.APICallStatic("asso","insert",params);
+    static insert(nom,desc,desc_missions,file_content,adresse,email,tel){
+        let params = {nom : nom, desc : desc, missionsProposees : desc_missions, adresse : adresse, email : email, tel : tel};
+        let data = new FormData();
+        for(let cle in params){
+            data.append(cle,params[cle]);
+        }
+        data.append("logoAssociation",file_content);
+        data.append("type","asso");
+        data.append("fonction","insert");
+        return $.ajax({
+            url: abs_path("API/index.php"),
+            method: "POST",
+            dataType: "json",
+            data: data,
+            contentType: false,
+            processData: false,
+        });
     }
 
 
+    get_logo(){
+        return this.APICall("asso","get_logo",{id_asso: this.id});
+    }
+
+    user_suppr(id_cible){
+        return this.APICall("asso","user_suppr",{id_asso: this.id, id_user : id_cible});
+    }
 
 
+    user_join(){
+        return this.APICall("asso","user_join",{id_asso: this.id});
+    }
 
-
-
-
+    user_leave(){
+        return this.APICall("asso","user_leave",{id_asso: this.id});
+    }
 
 
 

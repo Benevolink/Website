@@ -10,6 +10,8 @@
 
 <body>
 
+  <img id="logo" src="<?= BF::abs_path($logo_path) ?>" class="img_asso">
+
   <label class="titre_asso" for="logo"><?= $prop_all["asso_info"][AttributsTables::ASSO_NOM] ?></label>
   <br>
   <p><?= $prop_all["asso_info"][AttributsTables::ASSO_DESCRIPTION] ?></p>

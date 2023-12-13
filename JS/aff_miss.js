@@ -20,7 +20,7 @@ function afficher_missions(titre,liste){
             fontWeight: "bold",
             fontSize: "110%"
           }),
-          $("<img>").attr({src: abs_path("media/logo/event/"+e.logo)}).css({
+          $("<img>").attr({src: e.logo}).css({
             width: "80%",
             margin: "auto",
             transition: "0.5s",
@@ -51,13 +51,13 @@ function afficher_missions(titre,liste){
         ])
       ]);
       //
-      wrapper.append(div);
-      wrapper.on("click",function(event){
+      div.click(function(event){
         if(!(event.target.getAttribute("class")=="priority_target")){
-          window.location.href = abs_path("controller/evenement.php?id_event="+$(event.target).attr('id_event'));
+          window.location.href = abs_path("controller/evenement.php?id_event="+$(this).attr('id_event'));
         }
       
       });
+      wrapper.append(div);
       main.append(wrapper);
     });
     

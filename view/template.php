@@ -9,9 +9,11 @@ header('Cache-Control: private',true);
   <link rel ="stylesheet" href="<?= BF::abs_path("CSS/main.css")?>">
   <link rel="icon" type="image/x-icon" sizes="16x16" href="<?= BF::abs_path("media/img/Logo_3.png") ?>"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
-
   <script src="<?= BF::abs_path("JS/jquery.js")?>"></script>
   <script src="<?= BF::abs_path("JS/main.js")?>"></script>
+  <script src="<?= BF::abs_path("JS/templates.js")?>"></script>
+  <link rel="stylesheet" href="<?= BF::abs_path("CSS/template_js.css") ?>">
+
   <?php require_once BF::abs_path("JS/abs_path.php",true); ?>
   
 </head>
@@ -61,10 +63,6 @@ header('Cache-Control: private',true);
   src: url(fonts/Nexa.woff2) format("woff2");
   font-size:16px;
 }
-
-  
-
-
 
 </style>
 <?php
@@ -121,18 +119,21 @@ if(!(isset($iframe) ? 1 : 0)){
 </nav>
 
    <script>
-    import(abs_path("JS/classes/User.js")).then((module)=>{
-      let user = new module.User();
-      user.getLogo().done((data)=>{
-        console.log(data);
-        if(data["statut"]==1)
-          $("#logo_barre").attr({
-            src : data["lien_image"]
-          });
-      }).fail((err)=>{
-        console.log(err);
+    $(document).ready(()=>{
+      import(abs_path("JS/classes/User.js")).then((module)=>{
+        let user = new module.User();
+        user.getLogo().done((data)=>{
+          console.log(data);
+          if(data["statut"]==1)
+            $("#logo_barre").attr({
+              src : data["lien_image"]
+            });
+        }).fail((err)=>{
+          console.log(err);
+        });
       });
     });
+    
    </script>
    <?php }?>
 <body <?php if(isset($iframe) ? 1 : 0){ echo 'style="min-height: 0;"';} ?>>

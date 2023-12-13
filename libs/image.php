@@ -46,7 +46,7 @@ class image {
                 break;
         }
         if(BF::equals($table,A::EVENT))
-            $req_logo = "SELECT logo FROM ".A::PROPEVENT." WHERE ".A::PROPASSO_NOM." like 'logo' AND $id_table = ? ";
+            $req_logo = "SELECT ".A::PROPEVENT_VALEUR." FROM ".A::PROPEVENT." WHERE ".A::PROPASSO_NOM." like 'logo' AND $id_table = ? ";
         else
             $req_logo = "SELECT logo FROM $table WHERE $id_table = ? ";//on vérifie que le nom n'est pas déjà pris
         $req_logo_2 = $db->prepare($req_logo);
@@ -193,7 +193,7 @@ class image {
         $image_name=$image_name_num;
         
         //Mettre l'image dans le fichier logo/user/
-        $destinationPath = $chemin.$image_name.".".$ext;
+        $destinationPath = $chemin.$image_name.".jpg";
         $this->chemin = $chemin;
         array_map('unlink', glob($chemin.$image_name.".*")); //On supprime les fichiers résiduels
         if(move_uploaded_file($this->tmp_name, $destinationPath)) { 
@@ -209,7 +209,7 @@ class image {
         {
             require_once BF::abs_path("libs/Event.php",true);
             $event = new Event($id);
-            $event->insert_prop("logo",$destinationPath);
+            $event->insert_prop("logo",$image_name.".jpg");
         }
             
         else
@@ -226,6 +226,7 @@ class image {
     
     //on vérifie le format de l'image
         if (!in_array($extension, $allowed_extensions)) {
+            var_dump($extension);
         echo "Cette extension n'est pas authorisée. Les authorisations authorisées sont jpg, jpeg et png";
         }
         //Vérifier qu'il n'y a pas de points autres que celui de l'extension dans le nom de l'image pour éviter une double extension
@@ -246,7 +247,7 @@ class image {
     public function modifier_image($lien_image){
         $name=basename($lien_image);
 
-        $ext=pathinfo($name,PATHINFO_EXTENSION);
+        $ext=$this->type;
         if(strcmp($ext,"jpg")==0 ||strcmp($ext,"jpeg")==0){
             $im_php = imagecreatefromjpeg($this->fullpath);
             if($im_php==false){return 0;}
