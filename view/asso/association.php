@@ -10,47 +10,13 @@
 
 <body>
 
-  <img id="logo" src="<?= BF::abs_path($logo_path) ?>" class="img_asso">
-
-  <label class="titre_asso" for="logo"><?= $prop_all["asso_info"][AttributsTables::ASSO_NOM] ?></label>
-  <br>
-  <p><?= $prop_all["asso_info"][AttributsTables::ASSO_DESCRIPTION] ?></p>
-  <br>
-  <div style="background-color: rgba(200, 200, 200, 0.5);">
-    <p><?= $prop_all["lieu"][AttributsTables::LIEU_ADRESSE] ?>, Département <?= $prop_all["lieu"][AttributsTables::LIEU_DEPARTEMENT] ?></p>
-    <h4>Contact</h4>
-    <p><?= $prop_all["asso_info"][AttributsTables::ASSO_TELEPHONE] ?></p>
-    <p><?= $prop_all["asso_info"][AttributsTables::ASSO_EMAIL] ?></p>
-  </div>
-  <div style="background-color : rgba(100, 255, 100, 0.5);">
-    <h3>Description des Missions</h3>
-    <p><?= $prop_all["asso_info"][AttributsTables::ASSO_DESCRIPTION_MISSIONS] ?></p>
-  </div>
-  
   <br>
   <h4 id="follower"> Il y a <?= $nombre ?> membre(s) dans l'association. </h4>
   <br>
   
-  <?php if($est_dans_asso){ ?>
-    <label for="followed">Rejoindre</label>
-    <input id="followed" type="checkbox" disabled="disabled" checked>
-  <?php } else { ?>
-    <label for="followed">Rejoindre</label>
-    <input id="followed" type="checkbox">
-  <?php }?>
-
-  <?php //si le user est admin de l'asso, il peut administrer son asso
-  if($is_admin){ ?>
-    <a href="<?= 'admin/association_admin.php?id_asso='.$id_asso ?>">
-      Accéder à la page d'administration
-    </a>
-  <?php } ?>
+ 
 
   <div class="cote_a_cote">
-
-  <div class="rej_bouton" id="Rejoindre" style="background-color: rgb(124, 243, 152);" onclick="join();">
-    Rejoindre
-  </div>
   </div>
 
   
@@ -87,6 +53,32 @@
 
   <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
 
+  <div class="row">
+  <div class="col-md-3" id="description_asso">
+    <?php if($est_dans_asso){ ?>
+      <label for="followed">Rejoindre</label>
+      <input id="followed" type="checkbox" disabled="disabled" checked>
+    <?php } else { ?>
+      <label for="followed">Rejoindre</label>
+      <input id="followed" type="checkbox">
+    <?php }?>
+
+    <br> 
+
+    <?php //si le user est admin de l'asso, il peut administrer son asso
+    if($is_admin){ ?>
+      <a href="<?= 'admin/association_admin.php?id_asso='.$id_asso ?>">
+        Accéder à la page d'administration
+      </a>
+    <?php } ?>
+
+    <div class="rej_bouton" id="Rejoindre" style="background-color: rgb(124, 243, 152);" onclick="join();">
+      Rejoindre
+    </div>
+
+    </div>
+    </div>
+
 <div id="wrapper_all"></div>
 
 
@@ -96,7 +88,7 @@
   #description_asso{
     font-family: Corps;
     src: url(fonts/Nexa-Heavy.woff2) format("woff2");
-    margin-left: 40px;
+    margin-left: 70px;
     border: 1px solid #000;
     border-radius: 10px;
     box-sizing: border-box; 
@@ -114,7 +106,7 @@
     border-radius: 10px;
     box-sizing: border-box; 
     padding: 8px; /* Espace à l'intérieur des cellules */
-    padding-left: 55px;
+    padding-left: 35px;
     font-size: 17px;
   }
   #logoImg{
