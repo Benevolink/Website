@@ -23,7 +23,7 @@
   
   
 <div class="row">
-  <div class="col-md-3" id="description_asso">
+  <div class="col-md-3" id="image_asso">
     <img src="<?= BF::abs_path($prop_all["asso_info"][AttributsTables::ASSO_LOGO]) ?>"  id="logoImg" class="img-responsive img-thumbnail rounded">
   </div>
   <div class="col-md-7" id="description_asso">
@@ -44,9 +44,11 @@
     <p>  <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>  <?= $prop_all["asso_info"][AttributsTables::ASSO_EMAIL] ?></p>
 
   </div>
-  
+  <br> 
   <div class="col-md-4 col-md-offset-4" id="description_asso">
   <h3 id="titre_asso">Description des Missions</h3>
+
+  
   <p><?= $prop_all["asso_info"][AttributsTables::ASSO_DESCRIPTION] ?></p>
 
   </div>
@@ -79,6 +81,7 @@
     </div>
     </div>
 
+    <br> 
 <div id="wrapper_all"></div>
 
 
@@ -88,12 +91,24 @@
   #description_asso{
     font-family: Corps;
     src: url(fonts/Nexa-Heavy.woff2) format("woff2");
+    margin-left: 85px;
+    border: 1px solid #000;
+    border-radius: 10px;
+    box-sizing: border-box; 
+    padding: 8px; /* Espace à l'intérieur des cellules */
+    padding-left: 35px;
+    font-size: 17px;
+  }
+
+  #image_asso{
+    font-family: Corps;
+    src: url(fonts/Nexa-Heavy.woff2) format("woff2");
     margin-left: 70px;
     border: 1px solid #000;
     border-radius: 10px;
     box-sizing: border-box; 
     padding: 8px; /* Espace à l'intérieur des cellules */
-    padding-left: 55px;
+    padding-left: 30px;
     font-size: 17px;
   }
 
@@ -106,7 +121,7 @@
     border-radius: 10px;
     box-sizing: border-box; 
     padding: 8px; /* Espace à l'intérieur des cellules */
-    padding-left: 35px;
+    padding-left: 30px;
     font-size: 17px;
   }
   #logoImg{
