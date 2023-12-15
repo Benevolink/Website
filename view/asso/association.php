@@ -53,7 +53,7 @@
 
   </div>
 
-  <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+  <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> 
 
   <div class="row">
   <div class="col-md-3" id="description_asso">
@@ -67,16 +67,20 @@
 
     <br> 
 
-    <?php //si le user est admin de l'asso, il peut administrer son asso
-    if($is_admin){ ?>
-      <a href="<?= 'admin/association_admin.php?id_asso='.$id_asso ?>">
+    <?php
+    
+// Si le user est admin de l'asso, il peut administrer son asso
+if ($is_admin) { ?>
+    <a href="<?= 'admin/association_admin.php?id_asso='.$id_asso ?>" class="btn btn-success">
         Accéder à la page d'administration
-      </a>
-    <?php } ?>
+    </a>
+<?php } ?>
 
-    <div class="rej_bouton" id="Rejoindre" style="background-color: rgb(124, 243, 152);" onclick="join();">
-      Rejoindre
-    </div>
+<br> <br> 
+
+<div class="btn btn-success" id="Rejoindre"  onclick="join();">
+    Rejoindre
+</div>
 
     </div>
     </div>
