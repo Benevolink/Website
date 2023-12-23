@@ -114,4 +114,22 @@ function modif_image(logo_chemin){
   $("body").append(background.append(boite.append([valid,retour])));
 });
 }
-  
+
+
+//Affichage des centres d'intérêts
+$(document).ready(()=>{
+  import(abs_path("JS/classes/Domaine.js")).then((module)=>{
+    module.Domaine.get_all().done((data)=>{
+      console.log(data);
+      data.forEach(element => {
+        $("#centresInteret").append(
+          $('<option>').text(element['nom_domaine'])
+          .val(element["id_domaine"])
+        );
+        
+      });
+      
+    });
+  });
+});
+

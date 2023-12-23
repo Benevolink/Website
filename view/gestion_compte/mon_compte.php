@@ -167,11 +167,6 @@
                       <div class="form-group">
                           <label for="centresInteret">Sélectionnez vos centres d'intérêt :</label>
                           <select id="centresInteret" class="form-control">
-                              <option value="education">Éducation</option>
-                              <option value="animation">Animation</option>
-                              <option value="presentation">Présentation</option>
-                              <option value="soutienScolaire">Soutien Scolaire</option>
-                              <option value="accompagnementMalades">Accompagnement de personnes malades</option>
                           </select>
                       </div>
                   </div>
