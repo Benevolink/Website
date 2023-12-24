@@ -217,5 +217,6 @@ switch($fonction){
         $user->quitter_asso($id_asso);
         return_statut(true);
         exit();
+    
 }
 

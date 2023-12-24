@@ -8,8 +8,16 @@ header('Cache-Control: private',true);
   <meta charset="utf-8">
   <link rel ="stylesheet" href="<?= BF::abs_path("CSS/main.css")?>">
   <link rel="icon" type="image/x-icon" sizes="16x16" href="<?= BF::abs_path("media/img/Logo_3.png") ?>"/>
+  
+
+  
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
-  <script src="<?= BF::abs_path("JS/jquery.js")?>"></script>
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+  
   <script src="<?= BF::abs_path("JS/main.js")?>"></script>
   <script src="<?= BF::abs_path("JS/templates.js")?>"></script>
   <link rel="stylesheet" href="<?= BF::abs_path("CSS/template_js.css") ?>">
@@ -137,8 +145,7 @@ if(!(isset($iframe) ? 1 : 0)){
    </script>
    <?php }?>
 <body <?php if(isset($iframe) ? 1 : 0){ echo 'style="min-height: 0;"';} ?>>
-  <!-- Latest compiled and minified JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+ 
     <!-- Le contenu  -->
     <?= $content ?>
     <!-- Fin contenu  -->

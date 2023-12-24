@@ -686,3 +686,7 @@ function affichage_asso(infos_asso) {
   ]);
   return asso;
 }
+
+
+
+//Permet de corriger le bug boostrap clic

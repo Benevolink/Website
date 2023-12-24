@@ -45,9 +45,7 @@ switch($fonction){
         exit();
     case "suppr_compte":
         if(BF::is_connected()){
-            $id = $_SESSION["user_id"];
             $user = new APIUser();
-            $user->id = $id;
             $user->suppr();
             return_statut(true);
             }
@@ -60,7 +58,28 @@ switch($fonction){
         header("Location: ../../../index.php");
         session_destroy();
         exit();
-        
+        case "modif_mdp":
+            BF::sess_start();
+            if(!BF::sess_start()){
+                return_statut(false,"Vous n'êtes pas connecté !");
+                exit();
+            }
+            if(!isset($_POST["ancien_mdp"])){
+                return_statut(false,"Veuillez spécifier votre ancien mot de passe");
+                exit();
+            }
+            if(!isset($_POST["nouveau_mdp"])){
+                return_statut(false,"Veuillez spécifier votre nouveau mot de passe");
+                exit();
+            }
+            $user = new User();
+            require_once BF::abs_path("libs/Auth.php",true);
+            if(!Auth::verif_pw_id($user->id,$_POST["ancien_mdp"])){
+                return_statut(false,"Mot de passe incorrect");
+                exit();
+            }
+            //@todo
+            //logique pour vérifier si le mot de passe respecte des règles en vigueur et si oui, le modifie
     default:
         echo "Veuillez spécifier une fonction";
         exit();
