@@ -58,6 +58,12 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
     $array = BF::request($req,[$this->id],true,false,PDO::FETCH_ASSOC);
     return $array;
   }
+
+  public function get_nombre_membres()
+  {
+    $req = "SELECT COUNT(*) FROM ".A::MEMBRESASSOS." WHERE ".A::MEMBRESASSOS_ID_ASSO." = ?";
+    return BF::request($req,[$this->id],true,true,PDO::FETCH_ASSOC)[0];
+  }
     
   /**
    * Renvoie le nom et l'id des assos dont le nom commence par $searchQuery
