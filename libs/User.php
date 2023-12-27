@@ -504,7 +504,7 @@ class User implements Suppression, GestionLogo{
     for($i=0 ; $i<$taille ; $i++){
       $nom_event[$i]=BF::request("SELECT ".A::EVENT_NOM." FROM ".A::EVENT." WHERE ".A::EVENT_ID." = ?" , [$id_event[$i]], true, true)[0];
     }
-    return $nom_event;
+    return [$nom_event,$id_event];
 
   }
 }
