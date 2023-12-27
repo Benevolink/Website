@@ -490,5 +490,22 @@ class User implements Suppression, GestionLogo{
   public function est_admin_event($id_event){
     return ($this->statut_event($id_event)>2) ? true : false;
   }
+  
+  /**
+   * Donne la liste des missions en attente (statut de la mission = -2) du bénévole
+   *
+   * @return array 
+   */
+  public function mission_en_attente(){
+    
+    $id_event = BF::request("SELECT ".A::MEMBRESEVENTS_ID_EVENT." FROM ".A::MEMBRESEVENTS." WHERE ".A::MEMBRESEVENTS_ID_USER." = ? AND".A::MEMBRESEVENTS_STATUT."= ?" , [$this->id,-2], true, true);
+    $taille = count($id_event);
+    $nom_event = array();
+    for($i=0 ; $i<$taille ; $i++){
+      $nom_event[$i]=BF::request("SELECT ".A::EVENT_NOM." FROM ".A::EVENT." WHERE ".A::EVENT_ID." = ?" , [$id_event[$i]], true, true)[0];
+    }
+    return $nom_event;
+
+  }
 }
 ?>
