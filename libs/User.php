@@ -496,7 +496,7 @@ class User implements Suppression, GestionLogo{
    *
    * @return array 
    */
-  public function mission_en_attente(){
+  public function liste_missions_en_attente(){
     
     $id_event = BF::request("SELECT ".A::MEMBRESEVENTS_ID_EVENT." FROM ".A::MEMBRESEVENTS." WHERE ".A::MEMBRESEVENTS_ID_USER." = ? AND".A::MEMBRESEVENTS_STATUT."= ?" , [$this->id,-2], true, true);
     $taille = count($id_event);
