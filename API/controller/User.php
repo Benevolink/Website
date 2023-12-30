@@ -60,7 +60,24 @@ switch($fonction){
         header("Location: ../../../index.php");
         session_destroy();
         exit();
-        
+    case "liste_invitations_missions":
+        if(!(BF::is_connected())){
+            return_statut(false);
+        }
+        else{
+            $id = $_SESSION["user_id"];
+            $user = new APIUser();
+            $user->id = $id;
+            $mission_en_attentes_draft=$user->liste_missions_en_attente();
+            //remise en forme de la liste
+            $len=count($mission_en_attentes_draft[0]);
+            $mission_en_attente=array();
+            for($i=0;$i<$len;$i++){
+                $mission_en_attente[$i]=[$mission_en_attentes_draft[0][$i],$mission_en_attentes_draft[1][$i]];
+            }
+            return_json($mission_en_attente);
+        }
+
     default:
         echo "Veuillez spécifier une fonction";
         exit();
