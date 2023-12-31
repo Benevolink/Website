@@ -12,6 +12,7 @@ function createAsso(){
     formDataTotal.delete("logoAssociation");
     let array = Object.fromEntries(formDataTotal.entries());
     console.log(array);
+    console.log("Valeurs du FormData avant envoi :", formDataTotal);
     import(abs_path("JS/classes/Asso.js")).then((module)=>{
         
         module.Asso.insert(array["nomAssociation"],array["descriptionAssociation"],array["missionsProposees"],$("#logoAssociation")[0].files[0],array["localisation"],array["emailAssociation"],array["telAssociation"]).
