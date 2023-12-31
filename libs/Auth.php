@@ -23,6 +23,14 @@ class Auth{
     }
     return false;
   }
+  public static function verif_pw_id($id,$pw){
+    $req = "SELECT ".A::USER_MDP." FROM ".A::USER." WHERE ".A::USER_ID." = ?";
+    $mdp = BF::request($req,[$id],true,true);
+    if(isset($mdp[0]) && password_verify($pw,$mdp[0])){
+      return true;
+    }
+    return false;
+  }
 }
 
 ?>

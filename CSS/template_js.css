@@ -1,0 +1,18 @@
+.ItemBox{
+    width: 200px;
+    margin: 10px;
+    text-align: justify;
+    word-wrap: break-word;
+    border: 1px black solid;
+    padding : 10px;
+    cursor : pointer;
+}
+.ItemBox .ItemBoxTitre{
+    font-weight: bold;
+    font-size: 110%;
+}
+
+.ItemBox img{
+    width: 80%;
+    margin: auto;
+}

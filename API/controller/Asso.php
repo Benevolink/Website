@@ -5,7 +5,12 @@ require_once __DIR__."/../model/Asso.php";
 switch($fonction){
     case "":
         break;
-    case "search": APIAsso::api_search($_POST["recherche"]); exit();
+    case "search":
+        if(isset($_POST["recherche"]))
+            APIAsso::api_search($_POST["recherche"]); 
+        else
+            APIAsso::api_search(""); 
+        exit();
     case "get_all" :
         if(!isset($_POST["id_asso"])){
             return_statut(false);
@@ -83,7 +88,28 @@ switch($fonction){
         return_statut(true, "L'association a été insérée avec succès");
         exit();
             
-
+    case "user_suppr":
+        if(!(isset($_POST["id_user"]) && isset($_POST["id_asso"]))){
+            return_statut(false,"Formulaire incomplet");
+            exit();
+        }
+        $id_user_cible = $_POST["id_user"];
+        $id_asso = $_POST["id_asso"];
+        require_once BF::abs_path("libs/User.php",true);
+        $user = new User();
+        if(!$user->est_admin_asso($id_asso))
+        {
+            return_statut(false,"Vous n'avez pas les droits pour effectuer cette action.");
+            exit();
+        }
+        if($user->id == intval($id_user_cible)){
+            return_statut(false,"Vous ne pouvez pas vous supprimer vous-même");
+            exit();
+        }
+        $asso = new Asso($id_asso);
+        $asso->supprimer_membre($id_user_cible);
+        return_statut(true);
+        exit();
     case "user_modif_statut":  
         if(!(isset($_POST["id_user"]) && isset($_POST["id_asso"]) && isset($_POST["nouveau_statut"]) && is_numeric($_POST["nouveau_statut"]))){
             return_statut(false,"Formulaire incomplet");
@@ -126,5 +152,71 @@ switch($fonction){
         $role = $asso->get_role_membre($id_user_cible);
         return_json(array("statut"=>1, "user_statut"=>$role));
         exit();
+    case "get_logo":
+        if(!isset($_POST["id_asso"])){
+            return_statut(false,"Veuillez spécifier un id_asso");
+            exit();
+        }
+        $id_asso = $_POST["id_asso"];
+        $asso = new Asso($id_asso);
+        return_json(array("logo" => $asso->image_get()));
+        exit();
+    case "get_assos_integrees":
+        BF::sess_start();
+        if(!BF::is_connected()){
+            return_statut(false,"Vous n'êtes pas connecté !");
+            exit();
+        }
+        require_once BF::abs_path("libs/User.php",true);
+        $user = new User();
+
+        return_json($user->liste_assos_integrees());
+        exit();
+    case "get_assos_en_attente":
+        BF::sess_start();
+        if(!BF::is_connected()){
+            return_statut(false,"Vous n'êtes pas connecté !");
+            exit();
+        }
+        require_once BF::abs_path("libs/User.php",true);
+        $user = new User();
+
+        return_json($user->liste_assos_en_attente());
+        exit();
+    case "user_join":
+        BF::sess_start();
+        if(!BF::sess_start()){
+            return_statut(false,"Vous n'êtes pas connecté !");
+            exit();
+        }
+        if(!isset($_POST["id_asso"])){
+            return_statut(false,"Veuillez spécifier un id_asso");
+            exit();
+        }
+        $id_asso = $_POST["id_asso"];
+        require_once BF::abs_path("libs/User.php",true);
+        $user = new User();
+
+        $user->rejoindre_asso($id_asso);
+        return_statut(true);
+        exit();
+    case "user_leave":
+        BF::sess_start();
+        if(!BF::sess_start()){
+            return_statut(false,"Vous n'êtes pas connecté !");
+            exit();
+        }
+        if(!isset($_POST["id_asso"])){
+            return_statut(false,"Veuillez spécifier un id_asso");
+            exit();
+        }
+        $id_asso = $_POST["id_asso"];
+        require_once BF::abs_path("libs/User.php",true);
+        $user = new User();
+
+        $user->quitter_asso($id_asso);
+        return_statut(true);
+        exit();
+    
 }
 

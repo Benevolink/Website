@@ -1,7 +1,7 @@
 function set_event_listeners(liste_membres,asso){
     liste_membres.toArray().forEach(element => {
         let id = $(element).attr('id_user');
-        let select = $(element).children("select").get(0);
+        let select = $(element).find("select").get(0);
         $(select).attr({
             id_user : id
         });
@@ -10,6 +10,9 @@ function set_event_listeners(liste_membres,asso){
                 cursor: "not-allowed"
             });
             $(select).prop('disabled','disabled');
+            $(element).find(".glyphicon-trash").css({
+                cursor: "not-allowed"
+            }).off();
         }else{
             $(select).on("change",function(event){
                 asso.user_modif_statut(id,$(select).val()).done((rep)=>{
@@ -39,6 +42,19 @@ function set_event_listeners(liste_membres,asso){
     });
 }
 
+function supp_membre(id_membre){
+    import(abs_path("JS/classes/Asso.js")).then((module)=>{
+        let asso = new module.Asso(id_asso);
+        asso.user_suppr(id_membre).done((data)=>{
+            console.log(data);
+            if(data["statut"]==1){
+                location.reload();
+            }
+        }).fail((error)=>{
+            console.log(error);
+        });
+    });
+}
 
 
 
@@ -49,4 +65,10 @@ $(document).ready(()=>{
         set_event_listeners(liste_membres,asso);
         set_event_listeners($("#liste_attente li"),asso);
     });
+    $(".modal_suppr_conf").each((index,element)=>{
+        $(element).click((event)=>{
+            supp_membre($(element).attr("id_user"));
+        })
+    })
+    
 })

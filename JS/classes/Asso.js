@@ -8,7 +8,6 @@ export class Asso extends APIObjet{
     constructor(id){
         super();
         this.id = id;
-        console.log("OK");
     }
 
     getInfos(){
@@ -26,10 +25,19 @@ export class Asso extends APIObjet{
      */
     static getListeAssos(searchEntry){
         return this
-        .APICall("asso","search",{recherche : searchEntry});
+        .APICallStatic("asso","search",{recherche : searchEntry});
     }
 
-    
+    static getListeAssosIntegrees(searchEntry){
+        return this
+        .APICallStatic("asso","get_assos_integrees",{recherche : searchEntry});
+    }
+
+    static getListeAssosEnAttente(searchEntry){
+        return this
+        .APICallStatic("asso","get_assos_en_attente",{recherche : searchEntry});
+    }
+
     user_modif_statut(id_user,nouveau_statut){
         return this.APICall("asso","user_modif_statut",{id_asso : this.id, id_user : id_user, nouveau_statut : nouveau_statut});
     }
@@ -44,7 +52,6 @@ export class Asso extends APIObjet{
         for(let cle in params){
             data.append(cle,params[cle]);
         }
-        console.log(file_content);
         data.append("logoAssociation",file_content);
         data.append("type","asso");
         data.append("fonction","insert");
@@ -59,12 +66,22 @@ export class Asso extends APIObjet{
     }
 
 
+    get_logo(){
+        return this.APICall("asso","get_logo",{id_asso: this.id});
+    }
+
+    user_suppr(id_cible){
+        return this.APICall("asso","user_suppr",{id_asso: this.id, id_user : id_cible});
+    }
 
 
+    user_join(){
+        return this.APICall("asso","user_join",{id_asso: this.id});
+    }
 
-
-
-
+    user_leave(){
+        return this.APICall("asso","user_leave",{id_asso: this.id});
+    }
 
 
 

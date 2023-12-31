@@ -1,23 +1,15 @@
+
 <link rel="stylesheet" href="<?= BF::abs_path("CSS/categories.css")?>"/>
-  <div id = "wrapper_all" style="display: flex;flex-wrap: wrap; margin-top: 30px;">
+  <div class="col-md-4" id = "wrapper_all" style="display: flex;flex-wrap: wrap; margin-top: 30px; border: 1px solid #000; box-sizing: border-box; ">
   <form id="liste_cate">
     <img src="<?= BF::abs_path("media/img/select.jpg") ?>" onclick="retrecir(this);" style="width: 20px; border-radius: 5px;cursor: pointer;"/>
-    <div style="display: inline; font-size: 16px; font-weight: bold; padding-left: 20px; text-overflow: ellipsis; overflow: hidden;white-space: nowrap;">Catégories de missions</div>
+    <div id="cat_mission" style="display: inline; font-size: 18px; font-weight: bold; padding-left: 20px; text-overflow: ellipsis; overflow: hidden;white-space: nowrap; ">Catégories de missions</div>
+    <br>
     <br>
       <?= afficher_categories()?>
   </form>
 
-  <div id="wrapper_all">
-    <form id="liste_cate">
-        <img src="<?= BF::abs_path("media/img/select.jpg") ?>" onclick="toggleCategories();" style="width: 20px; border-radius: 5px; cursor: pointer;"/>
-        <div class="label_cate" onclick="toggleCategories();">Catégories de missions</div>
-        <div class="container categories-container" id="categories-container">
-            <div class="row">
-                <?= afficher_categories() ?>
-            </div>
-        </div>
-    </form>
-</div>
+  
     
   </div>
 
@@ -47,3 +39,18 @@
         categoriesContainer.style.display = (categoriesContainer.style.display === "none" || categoriesContainer.style.display === "") ? "flex" : "none";
     }
 </script>
+
+<style>
+
+    #cat_mission{
+
+    font-family: Corps;
+      font-weight: bold;
+      src: url(fonts/Nexa-Heavy.woff2) format("woff2");
+    }
+
+    #liste_cate{
+        font-family: Corps;
+      src: url(fonts/Nexa-Heavy.woff2) format("woff2");
+    }
+

@@ -36,15 +36,15 @@
 
     //Permet de rétrécir le menu des catégories
     function retrecir(element){
-      $("#liste_cate").css({width: "100px"});
-      $(".cate_missions_checkbox").css({transform: "translate(-250px)"});
+      $("#liste_cate").css({width: "50px"});
+      $(".cate_missions_checkbox").css({transform: "translate(-400px)"});
       element.setAttribute("onclick","expand(this);");
     }
     
     //Permet d'agrandir le menu des catégories
     function expand(element){
-      $("#liste_cate").css({width: "350px"});
-      $(".cate_missions_checkbox").css({transform: "translate(0px)"});
+      $("#liste_cate").css({width: "800px"});
+      $(".cate_missions_checkbox").css({transform: "translate(-15px)"});
       element.setAttribute("onclick","retrecir(this);");
     }
   </script>

@@ -2,7 +2,7 @@
   margin-left: 5px;
   background-color: var(--couleur-police-clair);
   display: default;
-  width: 350px;
+  width: 450px;
   padding: 20px;
   padding-right: 60px;
   border-radius: 20px;
@@ -24,7 +24,7 @@
 }
 #liste_cate>input{
   position: absolute;
-  left: 380px;
+  left: 200px;
   transition: 0.5s;
 }
 .label_cate{
