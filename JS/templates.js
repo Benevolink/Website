@@ -18,3 +18,6 @@ function ItemBox(type,lien,titre,image,description,nombre_benevoles,nombre_max){
     return elt;
     
 }
+
+
+
