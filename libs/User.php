@@ -296,7 +296,7 @@ class User implements Suppression, GestionLogo{
 
       //Erreur ici
       //Utiliser domaine->detient_domaine($asso)
-      $id_association_domaine = BF::request("SELECT ".A::EVENT_ID_ASSO." FROM ".A::EVENT." WHERE ".A::EVENT_ID_DOMAINE." = ?", [$id_domaine], true, true)[0];
+      $id_association_domaine = BF::request("SELECT ".A::EVENT_ID_ASSO." FROM ".A::EVENT." WHERE ".A::DOMAINE_ID." = ?", [$id_domaine], true, true)[0];
 
       return array(
           'id_asso' => $id_asso,
