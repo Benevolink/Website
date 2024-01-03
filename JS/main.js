@@ -691,52 +691,93 @@ function affichage_asso(infos_asso) {
 //Cloche de notification
 var liste_invitations_missions;
 $(document).ready(()=>{
+
+  //Importation de l'API
   import(abs_path("JS/classes/User.js")).then((UserModule)=>{
     let user = new UserModule.User();
+
+    //On récupère la liste des missions
     user.getListeInvitationsMissions().done((data)=>{
+
+      //On enregistre la liste reçue dans une variable globale
       liste_invitations_missions = data;
+
+      //Affichage du compteur de notifs
       $("#notif_bell_nb").text(liste_invitations_missions.length);
+
+      //Div pouvant afficher la liste de nos invits
       let liste_inv = $("<div>");
+
+      //On agrandie le div avec les missions reçues
       liste_invitations_missions.forEach((elt)=>{
-        let parent = elt;
+
+        //Contenu à ajouter
         let div = $("<div>").append([
-          $('<div>').text(elt),
-          $('<div>').text('Accepter').attr({class: "miss_bout acc"}).click(function(){
+          $('<div>').text(elt[0]), //Nom de la missions
+          
+          //Bouton pour accepter
+          $('<div>').text('Accepter').attr({class: "miss_bout acc"}).click(function(event){
             let user = new UserModule.User();
+            event.preventDefault(); //Empeche le defocus
+
+            //Envoie de la requête
             user.sendReponseInvitMission(elt[1],true).done((data)=>{
+              //Suppression des éléments si succès
               if(data["statut"]==1){
-                div.remove();
+                div.remove(); //On suppprime la rangée
+
               }
             });
           }),
-          $('<div>').text('Refuser').attr({class: "miss_bout ref"}).click(function(){
+
+          //Bouton pour refuser
+          $('<div>').text('Refuser').attr({class: "miss_bout ref"}).click(function(event){
             let user = new UserModule.User();
+            event.preventDefault(); //Empeche le defocus
+
+            //Envoie de la requête
             user.sendReponseInvitMission(elt[1],false).done((data)=>{
+              //Suppression des éléments si succès
               if(data["statut"]==1){
-                div.remove();
+                $("#notif_bell_liste_miss").focus();//Permet de ne pas perdre le focus
+                div.remove(); //On supprime la rangée
+                
+
               }
             });
           })
         ]);
+
+        //On ajoute toute la rangée à la liste
         liste_inv.append(div);
       });
+
+      //Ajout de cette liste à la barre des notifs
       liste_inv.attr({
         id: "notif_bell_liste_miss"
+      }).on("blur",function(){
+        $(this).fadeOut();
+        console.log("fadeout");
       });
       $("#notif_bell_glob").append(liste_inv);
     }).fail((err)=>{
       console.log(err);
         });
   });
-  
+
+  $(document).on("click", function(event) {
+    if (!$(event.target).closest("#notif_bell").length) {
+      $("#notif_bell_liste_miss").fadeOut();
+    }
+  });
+
+  //Gestion des clicks
   $("#notif_bell").click(function(){
 
     //Permet de masquer le menu quand on clique ailleurs
+    
     $("#notif_bell_liste_miss").focus();
-    $("#notif_bell_liste_miss").on("blur",function(){
-      $("#notif_bell_liste_miss").fadeOut();
-      console.log("fadeout");
-    });
+   
 
 
 
@@ -747,7 +788,6 @@ $(document).ready(()=>{
       $("#notif_bell_liste_miss").fadeIn();
     }
     
-
   });
 });
 

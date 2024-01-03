@@ -130,6 +130,14 @@ Cloche de notification des nouvelles invitations
   cursor: pointer;
   float: right;
 }
+#notif_bell_liste_miss .acc{
+  color: green;
+}
+
+#notif_bell_liste_miss .ref{
+  color: red;
+}
+
 .wrapper_enfant:hover {
   transform: scale(1.1);
 }
