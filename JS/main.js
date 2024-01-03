@@ -704,12 +704,6 @@ $(document).ready(()=>{
 
       //Affichage du compteur de notifs
       $("#notif_bell_nb").text(liste_invitations_missions.length);
-      if($("#notif_bell_nb").text()==0)
-      {
-        $("#notif_bell_nb").append(
-          $('<div>').text("Aucune invitation à afficher")
-        );
-      }
       //Div pouvant afficher la liste de nos invits
       let liste_inv = $("<div>");
 
@@ -733,7 +727,7 @@ $(document).ready(()=>{
                 $("#notif_bell_nb").text($("#notif_bell_nb").text()-1);
                 if($("#notif_bell_nb").text()==0)
                 {
-                  $("#notif_bell_nb").append(
+                  $("#notif_bell_liste_miss").append(
                     $('<div>').text("Aucune invitation à afficher")
                   );
                 }
@@ -755,7 +749,7 @@ $(document).ready(()=>{
                 $("#notif_bell_nb").text($("#notif_bell_nb").text()-1);
                 if($("#notif_bell_nb").text()==0)
                 {
-                  $("#notif_bell_nb").append(
+                  $("#notif_bell_liste_miss").append(
                     $('<div>').text("Aucune invitation à afficher")
                   );
                 }
@@ -771,18 +765,21 @@ $(document).ready(()=>{
       //Ajout de cette liste à la barre des notifs
       liste_inv.attr({
         id: "notif_bell_liste_miss"
-      }).on("blur",function(){
-        $(this).fadeOut();
-        console.log("fadeout");
       });
       $("#notif_bell_glob").append(liste_inv);
+      if($("#notif_bell_nb").text()==0)
+      {
+        $("#notif_bell_liste_miss").append(
+          $('<div>').text("Aucune invitation à afficher")
+        );
+      }
     }).fail((err)=>{
       console.log(err);
         });
   });
 
   $(document).on("click", function(event) {
-    if (!$(event.target).closest("#notif_bell").length) {
+    if (!$(event.target).closest("#notif_bell_glob").length) {
       $("#notif_bell_liste_miss").fadeOut();
     }
   });
