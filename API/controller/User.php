@@ -94,7 +94,7 @@ switch($fonction){
         }else{
             require_once BF::abs_path("libs/Event.php",true);
             $event = new Event($_POST["id_event"]);
-            $event->modifier_role_membre($user->id,0);
+            $event->modifier_role_membre($user->id,1); //Mettre à membre
             return_statut(true);
         }
         exit();

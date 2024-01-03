@@ -1,11 +1,14 @@
 .ItemBox{
     width: 200px;
     margin: 10px;
+    height: 300px;
+    overflow: hidden;
     text-align: justify;
     word-wrap: break-word;
     border: 1px black solid;
     padding : 10px;
     cursor : pointer;
+    display: inline-block;
 }
 .ItemBox .ItemBoxTitre{
     font-weight: bold;
