@@ -704,7 +704,12 @@ $(document).ready(()=>{
 
       //Affichage du compteur de notifs
       $("#notif_bell_nb").text(liste_invitations_missions.length);
-
+      if($("#notif_bell_nb").text()==0)
+      {
+        $("#notif_bell_nb").append(
+          $('<div>').text("Aucune invitation à afficher")
+        );
+      }
       //Div pouvant afficher la liste de nos invits
       let liste_inv = $("<div>");
 
@@ -726,7 +731,12 @@ $(document).ready(()=>{
               if(data["statut"]==1){
                 div.remove(); //On suppprime la rangée
                 $("#notif_bell_nb").text($("#notif_bell_nb").text()-1);
-
+                if($("#notif_bell_nb").text()==0)
+                {
+                  $("#notif_bell_nb").append(
+                    $('<div>').text("Aucune invitation à afficher")
+                  );
+                }
               }
             });
           }),
@@ -743,7 +753,12 @@ $(document).ready(()=>{
                 $("#notif_bell_liste_miss").focus();//Permet de ne pas perdre le focus
                 div.remove(); //On supprime la rangée
                 $("#notif_bell_nb").text($("#notif_bell_nb").text()-1);
-
+                if($("#notif_bell_nb").text()==0)
+                {
+                  $("#notif_bell_nb").append(
+                    $('<div>').text("Aucune invitation à afficher")
+                  );
+                }
               }
             });
           })
