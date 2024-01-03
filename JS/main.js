@@ -725,6 +725,7 @@ $(document).ready(()=>{
               //Suppression des éléments si succès
               if(data["statut"]==1){
                 div.remove(); //On suppprime la rangée
+                $("#notif_bell_nb").text($("#notif_bell_nb").text()-1);
 
               }
             });
@@ -741,7 +742,7 @@ $(document).ready(()=>{
               if(data["statut"]==1){
                 $("#notif_bell_liste_miss").focus();//Permet de ne pas perdre le focus
                 div.remove(); //On supprime la rangée
-                
+                $("#notif_bell_nb").text($("#notif_bell_nb").text()-1);
 
               }
             });
