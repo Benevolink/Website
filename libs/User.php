@@ -535,11 +535,15 @@ class User implements Suppression, GestionLogo{
    */
   public function liste_missions_en_attente(){
     
-    $id_event = BF::request("SELECT ".A::MEMBRESEVENTS_ID_EVENT." FROM ".A::MEMBRESEVENTS." WHERE ".A::MEMBRESEVENTS_ID_USER." = ? AND".A::MEMBRESEVENTS_STATUT."= ?" , [$this->id,-2], true, true);
+    $id_event = BF::request("SELECT ".A::MEMBRESEVENTS_ID_EVENT." FROM ".A::MEMBRESEVENTS." WHERE ".A::MEMBRESEVENTS_ID_USER." = ? AND ".A::MEMBRESEVENTS_STATUT."= ?" , [$this->id,-2], true, false,PDO::FETCH_NUM);
+    $id_event = array_filter($id_event);
+    if(count($id_event)==0) return[];
     $taille = count($id_event);
+    
     $nom_event = array();
     for($i=0 ; $i<$taille ; $i++){
-      $nom_event[$i]=BF::request("SELECT ".A::EVENT_NOM." FROM ".A::EVENT." WHERE ".A::EVENT_ID." = ?" , [$id_event[$i]], true, true)[0];
+      $nom_event[$i]=BF::request("SELECT ".A::EVENT_NOM." FROM ".A::EVENT." WHERE ".A::EVENT_ID." = ?" , [$id_event[$i][0]], true, true,PDO::FETCH_NUM)[0];
+      $id_event[$i] = $id_event[$i][0];
     }
     return [$nom_event,$id_event];
 
