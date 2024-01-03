@@ -6,6 +6,7 @@
     border: 1px black solid;
     padding : 10px;
     cursor : pointer;
+    display: inline-block;
 }
 .ItemBox .ItemBoxTitre{
     font-weight: bold;
