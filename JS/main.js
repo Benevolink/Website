@@ -804,3 +804,11 @@ $(document).ready(()=>{
   });
 });
 
+
+//Correction de scroll vertical
+$(document).ready(function(){
+  $(".row").css({
+    marginLeft: "0px",
+    marginRight: "0px"
+  });
+});

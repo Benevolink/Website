@@ -14,18 +14,6 @@
 
   <label class="titre_asso" for="logo"><?= $prop_all["asso_info"][AttributsTables::ASSO_NOM] ?></label>
   <br>
-  <p><?= $prop_all["asso_info"][AttributsTables::ASSO_DESCRIPTION] ?></p>
-  <br>
-  <div style="background-color: rgba(200, 200, 200, 0.5);">
-    <p><?= $prop_all["lieu"][AttributsTables::LIEU_ADRESSE] ?>, Département <?= $prop_all["lieu"][AttributsTables::LIEU_DEPARTEMENT] ?></p>
-    <h4>Contact</h4>
-    <p><?= $prop_all["asso_info"][AttributsTables::ASSO_TELEPHONE] ?></p>
-    <p><?= $prop_all["asso_info"][AttributsTables::ASSO_EMAIL] ?></p>
-  </div>
-  <div style="background-color : rgba(100, 255, 100, 0.5);">
-    <h3>Description des Missions</h3>
-    <p><?= $prop_all["asso_info"][AttributsTables::ASSO_DESCRIPTION_MISSIONS] ?></p>
-  </div>
   
   <br>
   <h4 id="follower"> Il y a <?= $nombre ?> membre(s) dans l'association. </h4>
@@ -48,27 +36,24 @@
 
   <div class="cote_a_cote">
 
-  <div class="rej_bouton" id="Rejoindre" style="background-color: rgb(124, 243, 152);" onclick="join();">
-    Rejoindre
-  </div>
+    <div class="rej_bouton" id="Rejoindre" style="background-color: rgb(124, 243, 152);" onclick="join();">
+      Rejoindre
+    </div>
   </div>
 
   
   
   
 <div class="row">
-  <div class="col-md-3" id="description_asso">
-    <img src="<?= BF::abs_path($prop_all["asso_info"][AttributsTables::ASSO_LOGO]) ?>"  id="logoImg" class="img-responsive img-thumbnail rounded">
-  </div>
   <div class="col-md-7" id="description_asso">
-  <p><?= $prop_all["asso_info"][AttributsTables::ASSO_DESCRIPTION_MISSIONS] ?></p>
+  <p><?= $prop_all["asso_info"][AttributsTables::ASSO_DESCRIPTION] ?></p>
   </div>
 </div>
 
-  <div class="row">
+<div class="row">
   <div class="col-md-3" id="contact_adresse"> 
     <h3 id="titre_asso"> Contact et adresse </h3>
-  
+
   <p> <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> 
   Adresse: <?= $prop_all["lieu"][AttributsTables::LIEU_ADRESSE] ?> 
   <br> 
@@ -78,14 +63,15 @@
     <p>  <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>  <?= $prop_all["asso_info"][AttributsTables::ASSO_EMAIL] ?></p>
 
   </div>
-  
+
   <div class="col-md-4 col-md-offset-4" id="description_asso">
   <h3 id="titre_asso">Description des Missions</h3>
-  <p><?= $prop_all["asso_info"][AttributsTables::ASSO_DESCRIPTION] ?></p>
+  <p><?= $prop_all["asso_info"][AttributsTables::ASSO_DESCRIPTION_MISSIONS] ?></p>
 
   </div>
+</div>
 
-  <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+  <br> <br> <br> <br> <br> <br> <br> 
 
 <div id="wrapper_all"></div>
 
