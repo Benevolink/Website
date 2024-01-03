@@ -70,6 +70,7 @@ header('Cache-Control: private',true);
 #barre_2{
   src: url(fonts/Nexa.woff2) format("woff2");
   font-size:16px;
+  margin-right: 0px;
 }
 
 </style>
