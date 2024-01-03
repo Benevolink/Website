@@ -134,7 +134,7 @@ class User implements Suppression, GestionLogo{
     /*
     On renvoie la liste de toutes les assos de l'utilisateur avec le statut
     */
-    $req = "SELECT a.*, m.".A::MEMBRESASSOS_STATUT." FROM ".A::ASSO." a JOIN ".A::MEMBRESASSOS." m ON (a.".A::ASSO_ID." = m.".A::MEMBRESASSOS_ID_ASSO." AND m.".A::MEMBRESASSOS_ID_USER." = ? AND m.".A::MEMBRESASSOS_STATUT." >= 1) ORDER BY m.".A::MEMBRESASSOS_STATUT." ASC";
+    $req = "SELECT a.*, m.".A::MEMBRESASSOS_STATUT.", COUNT(me.".A::MEMBRESASSOS_ID_USER.") AS nombre_membres FROM ".A::ASSO." a JOIN ".A::MEMBRESASSOS." m ON (a.".A::ASSO_ID." = m.".A::MEMBRESASSOS_ID_ASSO." AND m.".A::MEMBRESASSOS_ID_USER." = ? AND m.".A::MEMBRESASSOS_STATUT." >= 1) JOIN  ".A::MEMBRESASSOS." me ON me.".A::MEMBRESASSOS_ID_ASSO." = a.".A::ASSO_ID." GROUP BY a.".A::ASSO_ID." ORDER BY m.".A::MEMBRESASSOS_STATUT." ASC";
     $table = BF::request($req,[$this->id],true,false,PDO::FETCH_ASSOC);
     return $table;
   
@@ -152,7 +152,7 @@ class User implements Suppression, GestionLogo{
     /*
     On renvoie la liste de toutes les assos de l'utilisateur avec le statut
     */
-    $req = "SELECT a.*, m.".A::MEMBRESASSOS_STATUT." FROM ".A::ASSO." a JOIN ".A::MEMBRESASSOS." m ON (a.".A::ASSO_ID." = m.".A::MEMBRESASSOS_ID_ASSO." AND m.".A::MEMBRESASSOS_ID_USER." = ? AND m.".A::MEMBRESASSOS_STATUT." = 0)";
+    $req = "SELECT a.*, m.".A::MEMBRESASSOS_STATUT.", COUNT(me.".A::MEMBRESASSOS_ID_USER.") AS nombre_membres FROM ".A::ASSO." a JOIN ".A::MEMBRESASSOS." m ON (a.".A::ASSO_ID." = m.".A::MEMBRESASSOS_ID_ASSO." AND m.".A::MEMBRESASSOS_ID_USER." = ? AND m.".A::MEMBRESASSOS_STATUT." = 0) JOIN  ".A::MEMBRESASSOS." me ON me.".A::MEMBRESASSOS_ID_ASSO." = a.".A::ASSO_ID." GROUP BY a.".A::ASSO_ID." ORDER BY m.".A::MEMBRESASSOS_STATUT." ASC";
     $table = BF::request($req,[$this->id],true,false,PDO::FETCH_ASSOC);
     return $table;
   

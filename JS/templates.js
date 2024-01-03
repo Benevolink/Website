@@ -1,4 +1,8 @@
 function ItemBox(type,lien,titre,image,description,nombre_benevoles,nombre_max){
+    let end_cont = nombre_benevoles;
+    if(type == "mission"){
+        end_cont = nombre_benevoles+"/"+nombre_max;
+    }
     let elt = $("<div>").attr({
         class : "ItemBox"
     }).click(()=>{
@@ -12,9 +16,18 @@ function ItemBox(type,lien,titre,image,description,nombre_benevoles,nombre_max){
         }),
         $("<p>").attr({
             class: "ItemBoxDesc"
-        }).text(description),
-        $("<p>").text(nombre_benevoles+"/"+nombre_max)
-    ]);
+        }).text(description).css({
+            maxHeight : "30%",
+            overflow: "hidden",
+            textOverflow: "ellipsis"
+        }),
+        $("<p>").text(end_cont).css({
+            position: "absolute",
+            bottom: "0"
+        })
+    ]).css({
+        position: "relative"
+    });
     return elt;
     
 }

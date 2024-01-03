@@ -16,7 +16,7 @@ function refresh_assos_integrees(){
                             element["nom"],
                             logo["logo"],
                             element["desc"],
-                            0,
+                            "Membres: "+element["nombre_membres"],
                             0
                         ));
                         // Appel récursif pour traiter l'élément suivant
@@ -50,7 +50,7 @@ function refresh_assos_en_attente(){
                             element["nom"],
                             logo["logo"],
                             element["desc"],
-                            0,
+                            "Membres: "+ element["nombre_membres"],
                             0
                         ));
                         // Appel récursif pour traiter l'élément suivant
