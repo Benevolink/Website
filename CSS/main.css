@@ -75,7 +75,61 @@ body{
   clear: both;
   
 }
+/*
+Cloche de notification des nouvelles invitations
+*/
+#notif_bell{
+  height: 60%;
+  min-height: 40px;
+  min-width: 40px;
+  max-height:50px;
+  position: absolute;
+  transform: translate(0,40%);
+  cursor: pointer;
+}
 
+#notif_bell img{
+  position: absolute;
+  width: 80%;
+  transform: translate(0,-20%);
+}
+
+#notif_bell_nb{
+  position: absolute;
+  color: red;
+  font-weight: bolder;
+  transform: translate(0,-70%);
+}
+
+#notif_bell_glob{
+  position: relative;
+  float: right;
+  right: 150px;
+
+}
+
+#notif_bell_liste_miss{
+  position: absolute;
+  top:50px;
+  right: -50px;
+  width: 350px;
+  background-color: #ffffff;
+  border: 1px solid black;
+  display: none;
+}
+#notif_bell_liste_miss > div{
+  padding: 5px;
+  clear: both;
+}
+#notif_bell_liste_miss >div >div{
+  margin: 5px;
+  display: inline-block;
+  width: fit-content;
+}
+#notif_bell_liste_miss .miss_bout{
+  cursor: pointer;
+  float: right;
+}
 .wrapper_enfant:hover {
   transform: scale(1.1);
 }

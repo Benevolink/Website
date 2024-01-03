@@ -66,6 +66,7 @@ switch($fonction){
         $user = new APIUser();
         $mission_en_attentes_draft=$user->liste_missions_en_attente();
         //remise en forme de la liste
+        if(count($mission_en_attentes_draft) == 0){ return_json(array()); exit();}
         $len=count($mission_en_attentes_draft[0]);
         $mission_en_attente=array();
         for($i=0;$i<$len;$i++){
@@ -73,7 +74,31 @@ switch($fonction){
         }
         return_json($mission_en_attente);
         exit();
-
+    case "reponse_invit_mission":
+        if(!(BF::is_connected())){
+            return_statut(false);
+            exit();
+        }
+        if(!isset($_POST["id_event"])){
+            return_statut(false);
+            exit();
+        }
+        if(!isset($_POST["reponse"])){
+            return_statut(false);
+            exit();
+        }
+        $user = new APIUser();
+        if($_POST["reponse"]==false){
+            $user->quitter_event($_POST["id_event"]);
+            return_statut(true);
+        }else{
+            require_once BF::abs_path("libs/Event.php",true);
+            $event = new Event($_POST["id_event"]);
+            $event->modifier_role_membre($user->id,0);
+            return_statut(true);
+        }
+        exit();
+        
     case "modif_mdp":
         BF::sess_start();
         if(!BF::sess_start()){

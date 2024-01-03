@@ -90,8 +90,16 @@ if(!(isset($iframe) ? 1 : 0)){
       <li class="active"><a href="<?= BF::abs_path("controller/asso/associations_user.php")?>"> <span class="text-success">Associations</span></a></li>
       <li><a href="<?= BF::abs_path("controller/missions.php")?>"> <span class="text-success"> Missions </span> </a></li>
     </ul>
+    <div id="notif_bell_glob">
+      <div id="notif_bell">
+        <img src="<?= BF::abs_path("media/img/bell.png")?>" />
+        <div id="notif_bell_nb">
+        </div>
+      </div>
+    </div>
     <form class="navbar-form navbar-left" action="<?= BF::abs_path("controller/search.php")?>" method="get">
-      <div class="form-group">
+  
+    <div class="form-group">
         <input type="text" name="Recherche"  class="form-control input-large" placeholder="Rechercher une mission ou association">
       </div>
       <button type="submit" class="btn btn-default input-large">Rechercher</button>

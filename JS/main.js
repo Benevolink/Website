@@ -688,5 +688,66 @@ function affichage_asso(infos_asso) {
 }
 
 
+//Cloche de notification
+var liste_invitations_missions;
+$(document).ready(()=>{
+  import(abs_path("JS/classes/User.js")).then((UserModule)=>{
+    let user = new UserModule.User();
+    user.getListeInvitationsMissions().done((data)=>{
+      liste_invitations_missions = data;
+      $("#notif_bell_nb").text(liste_invitations_missions.length);
+      let liste_inv = $("<div>");
+      liste_invitations_missions.forEach((elt)=>{
+        let parent = elt;
+        let div = $("<div>").append([
+          $('<div>').text(elt),
+          $('<div>').text('Accepter').attr({class: "miss_bout acc"}).click(function(){
+            let user = new UserModule.User();
+            user.sendReponseInvitMission(elt[1],true).done((data)=>{
+              if(data["statut"]==1){
+                div.remove();
+              }
+            });
+          }),
+          $('<div>').text('Refuser').attr({class: "miss_bout ref"}).click(function(){
+            let user = new UserModule.User();
+            user.sendReponseInvitMission(elt[1],false).done((data)=>{
+              if(data["statut"]==1){
+                div.remove();
+              }
+            });
+          })
+        ]);
+        liste_inv.append(div);
+      });
+      liste_inv.attr({
+        id: "notif_bell_liste_miss"
+      });
+      $("#notif_bell_glob").append(liste_inv);
+    }).fail((err)=>{
+      console.log(err);
+        });
+  });
+  
+  $("#notif_bell").click(function(){
 
-//Permet de corriger le bug boostrap clic
+    //Permet de masquer le menu quand on clique ailleurs
+    $("#notif_bell_liste_miss").focus();
+    $("#notif_bell_liste_miss").on("blur",function(){
+      $("#notif_bell_liste_miss").fadeOut();
+      console.log("fadeout");
+    });
+
+
+
+    if($("#notif_bell_liste_miss").is(":visible"))
+    {
+      $("#notif_bell_liste_miss").fadeOut();
+    }else{
+      $("#notif_bell_liste_miss").fadeIn();
+    }
+    
+
+  });
+});
+
