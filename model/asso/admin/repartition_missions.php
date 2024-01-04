@@ -37,7 +37,7 @@
             $liste_props = $event->get_all();
             $logo = $event->image_get();
             ?>
-            <div class = "liste_membres mission_a_remplir" id_mission="<?= $mission['id'] ?>">
+            <div class = "liste_membres mission_a_remplir" id_mission="<?= $mission['id_event'] ?>">
                 <div class="bloc_titre"> <?= $liste_props["nom_event"] ?> </div>
             </div>
             <?php

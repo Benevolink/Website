@@ -10,7 +10,7 @@ $(".membre_case").click(
             border: "3px solid black"
         });
         membre_selectionne_div = event.target;
-        $(".mission_a_remplir").addClass("mise_en_evidence_missions");
+        $(".liste_membres").addClass("mise_en_evidence_missions");
     }
 );
 
@@ -28,7 +28,27 @@ $("body").click(
             }
             membre_selectionne = -1;
             membre_selectionne_div = null;
-            $(".mission_a_remplir").removeClass("mise_en_evidence_missions");
+            $(".liste_membres").removeClass("mise_en_evidence_missions");
         }
     }
 );
+
+$(".liste_membres").click((event)=>{
+    
+    if($(event.target).hasClass("mise_en_evidence_missions"))
+    { 
+        if($(event.target).hasClass("mission_a_remplir "))
+        {
+            $(membre_selectionne_div).attr({
+                id_mission: $(event.target).attr('id_mission')
+            });
+        }else{
+            $(membre_selectionne_div).attr({
+                id_mission: -1//Aucune mission affectée
+            });
+        }
+        
+        $(event.target).append($(membre_selectionne_div));
+        
+    }
+});
