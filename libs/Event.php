@@ -171,7 +171,53 @@ public static function insert($date_debut, $date_fin, $heure_debut, $heure_fin, 
         // Renvoie la durée totale en heures, arrondie à l'heure la plus proche
         return (int) $interval->format("%h");
     }
+
+/**
+     * Génère un vecteur de créneaux horaires pour l'événement basé sur son ID.
+     * 
+     * @param int $id_event ID de l'événement
+     * 
+     * @return array Vecteur de créneaux horaires de l'événement
+     */
+    public static function genererVecteurCreneaux($id_event) {
+        // Initialiser le vecteur à 0 pour chaque heure de chaque jour de la semaine (168 heures)
+        $vecteur = array_fill(0, 168, 0);
         
+        // Récupérer les détails de l'événement de la base de données
+        $detailsEvent = BF::request("SELECT * FROM ".A::EVENT." INNER JOIN ".A::HORAIRE." ON ".A::EVENT.".".A::EVENT_ID_HORAIRE." = ".A::HORAIRE.".".A::HORAIRE_ID." WHERE ".A::EVENT.".".A::EVENT_ID." = ?", [$id_event], true, true);
+        
+        if (!$detailsEvent) {
+            throw new Exception("Événement non trouvé.");
+        }
+
+        // Convertir les heures de début et de fin en indices de vecteur
+        // Suppose que $detailsEvent contient 'heure_debut', 'heure_fin', et 'jour_semaine'
+        $indexDebut = self::convertirHeureEnIndice($detailsEvent['heure_debut'], $detailsEvent['jour_semaine']);
+        $indexFin = self::convertirHeureEnIndice($detailsEvent['heure_fin'], $detailsEvent['jour_semaine']);
+
+        // Mettre à jour le vecteur pour les créneaux actifs
+        for ($i = $indexDebut; $i <= $indexFin; $i++) {
+            $vecteur[$i] = 1;
+        }
+
+        return $vecteur;
+    }
+
+    /**
+     * Convertit une heure et un jour de semaine en un indice de vecteur.
+     * 
+     * @param string $heure Heure au format HH:MM
+     * @param string $jour Jour de la semaine
+     * 
+     * @return int Indice de vecteur
+     */
+    private static function convertirHeureEnIndice($heure, $jour) {
+        $jours = ['L', 'Ma', 'Me', 'J', 'V', 'S', 'D']; // Lundi à Dimanche
+        $heureSansMinutes = intval(substr($heure, 0, 2)); // Convertir en nombre entier
+        $indexJour = array_search($jour, $jours) * 24; // Trouver l'index de début du jour
+        return $indexJour + $heureSansMinutes; // Index du jour + heure
+    }    
+
     /**
      * Renvoie toutes les infos de l'évènement associé
      *
