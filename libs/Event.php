@@ -12,6 +12,7 @@ class Event implements Suppression, GestionMembres, GestionLogo, GestionPropriet
      * @var int
      */
     public $id;
+    
         
     /**
      * Method __construct
@@ -62,11 +63,13 @@ class Event implements Suppression, GestionMembres, GestionLogo, GestionPropriet
      * @param string $desc $desc
      * @param string $departement $departement
      * @param string $adresse $adresse
+     * @param int $priority [Event priority (1 to 5)]
      *
      * @return Event
      */
-    public static function insert($date_debut, $date_fin, $heure_debut, $heure_fin, $id_asso, $nom_event, $nb_personnes, $visu, $desc, $departement, $adresse) {
+    public static function insert($date_debut, $date_fin, $heure_debut, $heure_fin, $id_asso, $nom_event, $nb_personnes, $visu, $desc, $departement, $adresse, $priority) {
         global $db;
+        $priority = max(1, min(5, $priority));
         /*
         permet de créer un évènement
         */
@@ -81,13 +84,26 @@ class Event implements Suppression, GestionMembres, GestionLogo, GestionPropriet
         $id_horaire = $db->lastInsertId();
   
         // Insérer un nouvel événement
-        $evenementInsertQuery = "INSERT INTO ".A::EVENT." (".A::EVENT_ID_ASSO.", ".A::EVENT_NOM.", ".A::EVENT_ID_HORAIRE.", ".A::EVENT_NB_MAX_PERSONNES.", ".A::EVENT_VISIBILITE.", ".A::EVENT_DESCRIPTION.", ".A::EVENT_ID_LIEU.") VALUES (?, ?, ?, ?, ?, ?, ?)";
-        BF::request($evenementInsertQuery, [$id_asso, $nom_event, $id_horaire, $nb_personnes, $visu, $desc, $id_lieu], false);
-  
+        $evenementInsertQuery = "INSERT INTO ".A::EVENT." (".A::EVENT_ID_ASSO.", ".A::EVENT_NOM.", ".A::EVENT_ID_HORAIRE.", ".A::EVENT_NB_MAX_PERSONNES.", ".A::EVENT_VISIBILITE.", ".A::EVENT_DESCRIPTION.", ".A::EVENT_ID_LIEU.", ".A::EVENT_PRIORITY.") VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        BF::request($evenementInsertQuery, [$id_asso, $nom_event, $id_horaire, $nb_personnes, $visu, $desc, $id_lieu, $priority], false);
+        
         $id_event = $db->lastInsertId();
   
         return new Event($id_event);
     }
+
+
+/**
+     * Renvoie la priorité de l'évènement
+     *
+     * @param int $id_event [Event ID]
+     *
+     * @return int
+     */
+    public static function getEventPriority($id_event) {
+        return BF::request("SELECT ".A::EVENT_PRIORITY." FROM ".A::EVENT." WHERE ".A::EVENT_ID." = ?", [$id_event], true, true)[0];
+    }
+
     
     /**
      * Renvoie la valeur de la propriété associée

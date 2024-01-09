@@ -15,6 +15,7 @@
     const EVENT_NB_MAX_PERSONNES
                                     =   "nb_personnes";
     const EVENT_ID_HORAIRE   =   "id_horaire";
+    const EVENT_PRIORITY = "priority";
     
  }
 
