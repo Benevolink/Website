@@ -67,8 +67,24 @@ class Event implements Suppression, GestionMembres, GestionLogo, GestionPropriet
      *
      * @return Event
      */
-    public static function insert($date_debut, $date_fin, $heure_debut, $heure_fin, $id_asso, $nom_event, $nb_personnes, $visu, $desc, $departement, $adresse, $priority) {
-        global $db;
+
+     /**
+ * Validates time in 24-hour format (HH:MM)
+ *
+ * @param string $time Time to validate
+ *
+ * @return bool True if valid, false otherwise
+ */
+private static function validateTimeFormat($time) {
+    return preg_match("/^(?:[01][0-9]|2[0-3]):[0-5][0-9]$/", $time);
+}
+public static function insert($date_debut, $date_fin, $heure_debut, $heure_fin, $id_asso, $nom_event, $nb_personnes, $visu, $desc, $departement, $adresse, $priority) {
+    
+    // Validate heure_debut and heure_fin
+    if (!self::validateTimeFormat($heure_debut) || !self::validateTimeFormat($heure_fin)) {
+        throw new Exception("Invalid time format. Time must be in HH:MM format.");
+    }
+    global $db;
         $priority = max(1, min(5, $priority));
         /*
         permet de créer un évènement
@@ -104,6 +120,7 @@ class Event implements Suppression, GestionMembres, GestionLogo, GestionPropriet
         return BF::request("SELECT ".A::EVENT_PRIORITY." FROM ".A::EVENT." WHERE ".A::EVENT_ID." = ?", [$id_event], true, true)[0];
     }
 
+
     
     /**
      * Renvoie la valeur de la propriété associée
@@ -116,6 +133,44 @@ class Event implements Suppression, GestionMembres, GestionLogo, GestionPropriet
         return BF::request("SELECT ".A::PROPEVENT_VALEUR." FROM ".A::PROPEVENT." WHERE ".A::PROPEVENT_ID_EVENT." = ? AND ".A::PROPEVENT_NOM." = ?", [$this->id, $propNom], true, true)[0];
     }
 
+    /**
+     * Calcule et récupère la durée de l'événement en heures en se basant sur l'ID de l'événement
+     * 
+     * @param int $id_event ID de l'événement
+     * 
+     * @return int Durée de l'événement en heures
+     * @throws Exception si l'événement n'est pas trouvé ou si le format des heures est invalide
+     */
+    public static function calculerDureeEvenement($id_event) {
+        // Récupérer les heures de début et de fin de l'événement depuis la base de données
+        $eventData = BF::request("SELECT ".A::HORAIRE_HEURE_DEBUT.", ".A::HORAIRE_HEURE_FIN." FROM ".A::HORAIRE." WHERE ".A::HORAIRE_ID." = ?", [$id_event], true, true);
+        
+        if (!$eventData) {
+            throw new Exception("Événement non trouvé.");
+        }
+
+        list($heure_debut, $heure_fin) = $eventData;
+
+        // Validation des formats d'heure
+        if (!self::validateTimeFormat($heure_debut) || !self::validateTimeFormat($heure_fin)) {
+            throw new Exception("Format de l'heure invalide. L'heure doit être au format HH:MM.");
+        }
+
+        // Convertit les heures en objets DateTime pour faciliter le calcul de la durée
+        $debut = DateTime::createFromFormat('H:i', $heure_debut);
+        $fin = DateTime::createFromFormat('H:i', $heure_fin);
+
+        // Vérifie si l'heure de début est postérieure à l'heure de fin
+        if ($debut > $fin) {
+            throw new Exception("L'heure de début est postérieure à l'heure de fin.");
+        }
+
+        // Calcul de la différence entre les deux heures
+        $interval = $debut->diff($fin);
+
+        // Renvoie la durée totale en heures, arrondie à l'heure la plus proche
+        return (int) $interval->format("%h");
+    }
         
     /**
      * Renvoie toutes les infos de l'évènement associé
