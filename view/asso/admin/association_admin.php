@@ -10,7 +10,6 @@
 
   <link rel ="stylesheet" href="<?= BF::abs_path("CSS/main.css")?>">
   <link rel="icon" type="image/x-icon" sizes="16x16" href="<?= BF::abs_path("media/img/Logo_3.png") ?>"/>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 
   <a href="<?= 'creer_evenement.php?id_asso='.$_GET["id_asso"] ?>">
 
@@ -19,6 +18,10 @@
   <br>
   <a href="<?= BF::abs_path('controller/asso/sondage/creer_sondage.php?id_asso='.$_GET["id_asso"]) ?>">
       Créer un sondage
+  </a>
+  <br>
+  <a href="<?= BF::abs_path('controller/asso/admin/repartition_missions.php?id_asso='.$_GET["id_asso"]) ?>">
+      Affecter les bénévoles aux missions
   </a>
 
   
@@ -79,10 +82,6 @@
 </style>
 
 
-<?php //VERSION DU POLE CSS ?>
-  <!DOCTYPE html>
-<html lang="en">
-<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liste des Membres de l'Association</title>
@@ -102,12 +101,7 @@
             text-align: left;
         }
     </style>
-</head>
 
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liste des Membres de l'Association</title>
@@ -119,20 +113,6 @@
 
 
   <body data-spy="scroll" data-target=".navbar" data-offset="50">
-
-
-   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-      <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
-      <!-- Include all compiled plugins (below), or include individual files as needed -->
-      <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous">
-      </script> -->
-
-
-  <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
-
-  <!-- Optional theme -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
 
 
   <script>
@@ -149,11 +129,6 @@
 
       </script>
 
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-VE4wUyZRJqB8M6wOhEMDp2Fzpkw2qUxy6Wt8zQV32l+qHRZeZJ/x5QJ5tgXC9KzS" crossorigin="anonymous">
-</head>
-<body>
 
     <!-- Modale pour la suppression -->
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">

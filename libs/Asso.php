@@ -168,6 +168,7 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
     // On se connecte à la BDD
     if(strlen($nom)>256){
       $nom = substr($nom,0,256-strlen($nom));
+    }
     $db->beginTransaction();
     
     // On insère les données reçues dans la table "assos"
@@ -197,7 +198,7 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
     $user = new User();
     $asso->ajouter_membre($user->id,3);
     
-  }}
+  }
 
   
   /**
