@@ -119,6 +119,16 @@ switch($fonction){
             return_statut(false,"Mot de passe incorrect");
             exit();
         }
+    case "ajoute_dispo":
+        if(!BF::is_connected()){
+            return_statut(false,"Vous n'êtes pas connecté.e.s");
+        }
+        else{
+            $user=new APIUser();
+            $user->id=$_SESSION('user_id');
+            $user->disponibilite();
+        }
+        exit();
         //@todo
         //logique pour vérifier si le mot de passe respecte des règles en vigueur et si oui, le modifie
     default:
