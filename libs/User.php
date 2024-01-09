@@ -548,5 +548,9 @@ class User implements Suppression, GestionLogo{
     return [$nom_event,$id_event];
 
   }
+  public function disponibilite(){
+    $dispo=array() ;
+    
+  }
 }
 ?>
