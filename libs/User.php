@@ -549,8 +549,29 @@ class User implements Suppression, GestionLogo{
 
   }
   public function disponibilite(){
-    $dispo=array() ;
-    
+    //on récupère les données
+    global $db;
+    if(!BF::is_connected()){
+      return false;
+    }
+    else{
+
+      $this->id = $_SESSION["user_id"];
+      $dispo=$_POST['dispo_user']; // On suppose recevoir les données sous la forme [[jour1,h_debut1,h_fin1],[jour2,h_debut2,h_fin2]]
+      //on modifie la base de donnée pour que ça correspondent : on créé des "horaires" et on créé une liste avec les id de tout les horaires
+      $nbdispo=count($dispo);
+      $id_dispo=array();
+      for($i=0; $i++; $i< $nbdispo){
+        //creer un horaire et récupérer son id
+        BF::request("INSERT INTO ".A::HORAIRE." (".A::HORAIRE_DATE_DEBUT.", ".A::HORAIRE_DATE_FIN.",".A::HORAIRE_HEURE_DEBUT.",".A::HORAIRE_HEURE_FIN.") VALUES (?, ?, ?, ?)" , [$dispo[$i][0],$dispo[$i][0],$dispo[$i][1],$dispo[$i][2]]);
+        //voir comment est donné la fréquence
+        $id_dispo[$i] = $db->lastInsertId();
+      }
+      //mettre à jour les dispos : enlever les anciennes dispo et mettre à jours les nouvelles
+      BF::request("UPDATE".A::USER."SET".A::USER_ID_DISPO."=?",[$id_dispo]);
+
+      return true;
+    }
   }
 }
 ?>
