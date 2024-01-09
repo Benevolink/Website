@@ -58,6 +58,13 @@
 </div>
 <br>
 
+<div class="liste_membres" id="liste_membres_default">
+    <div class="bloc_titre">
+        Liste des membres affectés
+    </div>
+</div>
+<br>
+
 <?= afficher_liste_missions() ?>
 
 <script src="<?= BF::abs_path("JS/after/asso/admin/repartition_missions.js") ?>">
