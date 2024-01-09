@@ -52,3 +52,30 @@ $(".liste_membres").click((event)=>{
         
     }
 });
+
+// gestionnaire d'événement pour le bouton d'aide à la décision
+$(".aide_decision_case").click((event) => {
+    console.log("Le bouton d'aide à la décision a été cliqué !");
+
+        // Déplacer tous les membres de la liste des membres non affectés vers la liste des membres affectés
+    var listeMembresAffectes = $("#liste_membres_affectes");
+    var membresNonAffectes = $("#liste_membres_default .membre_case");
+
+    // Afficher le contenu de membresNonAffectes avant le déplacement
+    console.log("Contenu de membresNonAffectes avant le déplacement :", membresNonAffectes.html());
+
+    // Ajouter tous les membres à la liste des membres affectés
+    listeMembresAffectes.append(membresNonAffectes.children());
+
+    // Réinitialiser la sélection et le style des membres
+    membresNonAffectes.css({ border: "0px" });
+    $(".liste_membres").removeClass("mise_en_evidence_missions");
+
+    // Afficher le contenu individuel de chaque membre dans la listeMembresAffectes dans la console
+    console.log("Contenu de listeMembresAffectes après le déplacement :");
+    listeMembresAffectes.children().each(function() {
+        console.log($(this).html());
+    });
+
+});
+

@@ -31,6 +31,18 @@
         font-size: 105%;
     }
 
+    .aide_decision_case {
+    padding: 10px;
+    font-weight: bold;
+    width: 200px;
+    text-overflow: ellipsis;
+    text-align: center;
+    cursor: pointer;
+    background-color: white;
+    height: 40px;
+    /* Ajoutez ici d'autres styles spécifiques à la classe aide_decision_case si nécessaire */
+    }
+
     @keyframes clignoter{
         0% {
             background-color: rgb(240, 240, 240);
@@ -58,9 +70,16 @@
 </div>
 <br>
 
-<div class="liste_membres" id="liste_membres_default">
+<div class="liste_membres" id="liste_membres_affectes">
     <div class="bloc_titre">
         Liste des membres affectés
+    </div>
+</div>
+<br>
+
+<div class="aide_decision_case" id="liste_membres_affectes">
+    <div class="bloc_titre">
+        Aide à la décision
     </div>
 </div>
 <br>
