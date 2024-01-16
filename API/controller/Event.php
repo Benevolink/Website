@@ -73,8 +73,7 @@ switch($fonction){
             exit();
         }  
         else{
-            $event_demande = new Event();
-            $event_demande->__construct($_POST["id_event"]);
+            $event_demande = new Event($_POST["id_event"]);
             return_json($event_demande->description_get());
             exit();
         } 
