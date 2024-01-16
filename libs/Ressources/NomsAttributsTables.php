@@ -142,7 +142,7 @@ interface AttributsUsers{
     const USER_TEL = "tel";
     const USER_VISIBILITE ="visu";
     const USER_ID_LIEU = "id_lieu";
-    const USER_ID_DISPO   =   "id_disponibilite"; //table contenant des id_horaire de la table horaire
+    const USER_ID_DISPO   =   "id_disponibilite"; //table contenant des id_horaires de la table horaire
     const USER_PRENOM = "prenom";
     const USER_ETAT_COMPTE = "account_status";
     const USER_LOGO = "logo";

@@ -67,7 +67,17 @@ switch($fonction){
         
         return_statut(true);
         exit();
-        
+    case "obtenir_description":
+        if(!(isset($_POST["id_event"]) && is_numeric($_POST["id_event"]))){
+            return_statut(false);
+            exit();
+        }  
+        else{
+            $event_demande = new Event();
+            $event_demande->__construct($_POST["id_event"]);
+            return_json($event_demande->description_get());
+            exit();
+        } 
             
         
      

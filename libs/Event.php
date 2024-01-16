@@ -273,6 +273,10 @@ public function image_get(){
     public function asso_get_id(){
         return BF::request("SELECT ".A::EVENT_ID_ASSO." FROM ".A::EVENT." WHERE ".A::EVENT_ID." = ?",[$this->id],true,true)[0];
     }
+
+    public function description_get(){
+        return BF::request("SELECT ".A::EVENT_DESCRIPTION." FROM ".A::EVENT." WHERE ".A::EVENT_ID." = ?",[$this->id],true,true)[0];
+    }
 }
 
 ?>
