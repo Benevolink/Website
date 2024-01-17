@@ -70,10 +70,18 @@
 </div>
 <br>
 
-<div class="liste_membres" id="liste_membres_affectes">
-    <div class="bloc_titre">
-        Liste des membres affectés
-    </div>
+<div class="tableau_repartition">
+    <table>
+        <thead>
+            <tr>
+                <th>Membres</th>
+                <?php afficher_liste_missions_tableau(); ?>
+            </tr>
+        </thead>
+        <tbody>
+            <?php afficher_tableau_repartition(); ?>
+        </tbody>
+    </table>
 </div>
 <br>
 
