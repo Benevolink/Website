@@ -43,4 +43,24 @@
             <?php
         }
     }
+
+    function afficher_liste_membres_vide()
+    {
+        global $id_asso;
+        require_once BF::abs_path("libs/Asso.php", true);
+        $asso = new Asso($id_asso);
+
+        $liste_membres = $asso->get_all_membres(); // Utilisez la même liste que pour la fonction afficher_liste_benevoles
+
+        foreach ($liste_membres as $value) {
+            ?>
+            <div class="aide_decision_case" id_membre="<?= $value['id'] ?>" role="<?= $value['statut'] ?>" id_mission="-1">
+                <?= $value["nom"] . " " . $value["prenom"] ?>
+            </div>
+            <?php
+        }
+    }
+
+
+
 ?>
