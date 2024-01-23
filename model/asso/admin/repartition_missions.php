@@ -7,6 +7,7 @@
      * Affiche la liste des membres de l'asso pour qu'on puisse ensuite les affecter
      * @return void
      */
+
     function afficher_liste_benevoles()
     {
         global $id_asso;
@@ -43,7 +44,7 @@
             <?php
         }
     }
-
+    /*
     function afficher_liste_membres_vide()
     {
         global $id_asso;
@@ -54,12 +55,13 @@
 
         foreach ($liste_membres as $value) {
             ?>
-            <div class="aide_decision_case" id_membre="<?= $value['id'] ?>" role="<?= $value['statut'] ?>" id_mission="-1">
+            <div class="aide_decision_case" id_membre="aide_decision_<?= $value['id'] ?>" role="<?= $value['statut'] ?>" id_mission="-1">
                 <?= $value["nom"] . " " . $value["prenom"] ?>
             </div>
             <?php
         }
     }
+    */
 
     function afficher_liste_missions_tableau()
     {

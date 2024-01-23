@@ -62,13 +62,7 @@
     }
 </style>
 
-<div class="liste_membres" id="liste_membres_default">
-    <div class="bloc_titre">
-        Liste des membres non affectés
-    </div>
-    <?= afficher_liste_benevoles() ?>
-</div>
-<br>
+
 
 <div class="tableau_repartition">
     <table>
@@ -91,8 +85,6 @@
     </div>
 </div>
 <br>
-
-<?= afficher_liste_missions() ?>
 
 <script src="<?= BF::abs_path("JS/after/asso/admin/repartition_missions.js") ?>">
 </script>
