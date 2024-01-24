@@ -119,7 +119,7 @@ switch($fonction){
             return_statut(false,"Mot de passe incorrect");
             exit();
         }
-    case "ajoute_dispo":
+    /*case "ajoute_dispo":
         if(!BF::is_connected()){
             return_statut(false,"Vous n'êtes pas connecté.e.s");
         }
@@ -128,9 +128,21 @@ switch($fonction){
             $user->id=$_SESSION('user_id');
             $user->disponibilite();
         }
-        exit();
+        exit();*/
         //@todo
         //logique pour vérifier si le mot de passe respecte des règles en vigueur et si oui, le modifie
+    case "ajoute_interet":
+        if(!BF::is_connected()){
+            return_statut(false,"Vous n'êtes pas connecté.e.s");
+        }
+        else{
+            $interets=$_POST('domaine');
+            $user=new APIUser();
+            $user->id=$_SESSION('user_id');
+            $user->ajouter_interets($interets);
+            exit();
+            
+        }
     default:
         echo "Veuillez spécifier une fonction";
         exit();

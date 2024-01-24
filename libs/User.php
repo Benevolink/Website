@@ -548,7 +548,7 @@ class User implements Suppression, GestionLogo{
     return [$nom_event,$id_event];
 
   }
-  public function disponibilite(){
+  /*public function disponibilite(){
     //on récupère les données
     global $db;  
     $dispo=$_POST['dispo_user']; // On suppose recevoir les données sous la forme [[jour1,h_debut1,h_fin1],[jour2,h_debut2,h_fin2]]
@@ -563,8 +563,24 @@ class User implements Suppression, GestionLogo{
     }
     //mettre à jour les dispos : enlever les anciennes dispo et mettre à jours les nouvelles
     BF::request("UPDATE".A::USER."SET".A::USER_ID_DISPO."=? WHERE".A::USER_ID."=?",[$id_dispo,$this->id]);
+    exit();
 
      
+  }*/
+  public function ajouter_interets($interets){
+    //on récupère les données
+    //global $db;
+    
+    $len=count($interets);
+    $id_domaine=array();
+    for($i=0;$i<$len;$i++){
+      //on ajoute un domaien jonction correspondant à l'utisateur et au domaine : pour ça il faut d'abord récupérer l'idée du domaine
+      $id_domaine[$i]=BF::request("SELECT ".A::DOMAINE_ID." FROM ".A::DOMAINE." WHERE ".A::DOMAINE_NOM." = ?" , [$interets[$i]], true, true,PDO::FETCH_NUM)[0];
+      //maintenant on créé la jonction, on fixe deux pour déterminer le type user (comme 1 est déjà utilisé pour les assos)
+      BF::request("INSERT INTO ".A::DOMAINEJONCTION." (".A::DOMAINEJONCTION_ID_DOMAINE.",".A::DOMAINEJONCTION_ID_JONCTION.",".A::DOMAINEJONCTION_TYPE.") VALUES (?, ?,?)" , [$id_domaine[$i],$this->id,2]);
+
+    }
+    return true;
   }
 }
 ?>
