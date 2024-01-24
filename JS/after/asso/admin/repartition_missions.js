@@ -12,23 +12,51 @@ function cocherAleatoirement() {
         var idMembre = $(this).attr("id_membre");
         var missionsDisponibles = $(".case_membre_mission[id_membre='" + idMembre + "']").toArray();
 
+        console.log("idMembre:", idMembre);
+        console.log("missionsDisponibles:", missionsDisponibles);
+
         if (missionsDisponibles.length > 0) {
             var missionAleatoire = missionsDisponibles[Math.floor(Math.random() * missionsDisponibles.length)];
+
+            console.log("missionAleatoire:", missionAleatoire);
+
             $(missionAleatoire).prop("checked", true);
 
-            // Mettre à jour le tableau des affectations
-            membresAffectations[idMembre] = $(missionAleatoire).attr("id_mission");
+            // Mettez à jour l'affectation du membre à la mission
+            $(".membre_case[id_membre='" + idMembre + "']").attr("id_mission", $(missionAleatoire).attr("id_mission"));
         }
     });
 }
+
 
 // Gestionnaire d'événement pour le bouton d'aide à la décision
 $(".aide_decision_case").click((event) => {
     console.log("Le bouton d'aide à la décision a été cliqué !");
     reinitialiserCases();
-    cocherAleatoirement();
+
+    // Utilisez la variable listeMembres directement
+    listeMembres.forEach(function(member) {
+        var idMembre = member.id;
+        var missionsDisponibles = $(".case_membre_mission[id_membre='" + idMembre + "']").toArray();
+
+        console.log("idMembre:", idMembre);
+        console.log("missionsDisponibles:", missionsDisponibles);
+
+        if (missionsDisponibles.length > 0) {
+            var missionAleatoire = missionsDisponibles[Math.floor(Math.random() * missionsDisponibles.length)];
+
+            console.log("missionAleatoire:", missionAleatoire);
+
+            $(missionAleatoire).prop("checked", true);
+
+            // Mettez à jour l'affectation du membre à la mission
+            $(".membre_case[id_membre='" + idMembre + "']").attr("id_mission", $(missionAleatoire).attr("id_mission"));
+        }
+    });
+
     console.log("Affectations aléatoires :", membresAffectations);
 });
+
 
 // Gestionnaire d'événement pour le changement de l'état de la case à cocher
 $(".case_membre_mission").change(function () {

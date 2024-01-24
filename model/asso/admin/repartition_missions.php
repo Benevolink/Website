@@ -8,6 +8,7 @@
      * @return void
      */
 
+    
     function afficher_liste_benevoles()
     {
         global $id_asso;
@@ -25,6 +26,29 @@
         }
     }
 
+    function afficher_liste_benevoles_data()
+    {
+        global $id_asso;
+        require_once BF::abs_path("libs/Asso.php", true);
+        $asso = new Asso($id_asso);
+        $liste_membres = $asso->get_all_membres();
+
+        $data = array();
+
+        foreach($liste_membres as $value)
+        {
+            $data[] = array(
+                'id' => $value['id'],
+                'nom' => $value['nom'],
+                'prenom' => $value['prenom'],
+                'statut' => $value['statut']
+            );
+        }
+
+        return $data;
+    }
+    
+    /*
     function afficher_liste_missions()
     {
         global $id_asso;
@@ -44,6 +68,7 @@
             <?php
         }
     }
+    */
     /*
     function afficher_liste_membres_vide()
     {

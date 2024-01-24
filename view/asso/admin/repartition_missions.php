@@ -9,7 +9,9 @@
         min-width: 400px;
         min-height: 100px;
     }
-    .liste_membres > .bloc_titre
+    
+
+    .liste_membres > .aide_decision
     {
         font-weight: bolder;
         font-size: 150%;
@@ -40,7 +42,6 @@
     cursor: pointer;
     background-color: white;
     height: 40px;
-    /* Ajoutez ici d'autres styles spécifiques à la classe aide_decision_case si nécessaire */
     }
 
     @keyframes clignoter{
@@ -62,8 +63,6 @@
     }
 </style>
 
-
-
 <div class="tableau_repartition">
     <table>
         <thead>
@@ -80,11 +79,16 @@
 <br>
 
 <div class="aide_decision_case" id="liste_membres_affectes">
-    <div class="bloc_titre">
+    <div class="aide_decision">
         Aide à la décision
     </div>
 </div>
 <br>
+
+<script>
+    var membresAffectations = {}; // Tableau pour stocker les affectations des membres
+    var listeMembres = <?= json_encode(afficher_liste_benevoles_data()) ?>;
+</script>
 
 <script src="<?= BF::abs_path("JS/after/asso/admin/repartition_missions.js") ?>">
 </script>
