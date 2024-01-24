@@ -582,5 +582,17 @@ class User implements Suppression, GestionLogo{
     }
     return true;
   }
+  public function enlever_interets($interets){
+    $len=count($interets);
+    $id_domaine=array();
+    for($i=0;$i<$len;$i++){
+      //on ajoute un domaien jonction correspondant à l'utisateur et au domaine : pour ça il faut d'abord récupérer l'idée du domaine
+      $id_domaine[$i]=BF::request("SELECT ".A::DOMAINE_ID." FROM ".A::DOMAINE." WHERE ".A::DOMAINE_NOM." = ?" , [$interets[$i]], true, true,PDO::FETCH_NUM)[0];
+      //maintenant on créé la jonction, on fixe deux pour déterminer le type user (comme 1 est déjà utilisé pour les assos)
+      BF::request("DELETE FROM ".A::DOMAINEJONCTION." WHERE ".A::DOMAINEJONCTION_ID_DOMAINE." = ? AND ".A::DOMAINEJONCTION_ID_JONCTION." = ? AND ".A::DOMAINEJONCTION_TYPE." = ?",[$id_domaine[$i],$this->id,2]);
+
+    }
+    return true;
+  }
 }
 ?>

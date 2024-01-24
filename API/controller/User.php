@@ -143,6 +143,17 @@ switch($fonction){
             exit();
             
         }
+    case "enlever_interet":
+        if(!BF::is_connected()){
+            return_statut(false,"Vous n'êtes pas connecté.e.s");
+        }
+        else{
+            $interets=$_POST('domaine');
+            $user=new APIUser();
+            $user->id=$_SESSION('user_id');
+            $user->enlever_interets($interets);
+            exit();
+        }
     default:
         echo "Veuillez spécifier une fonction";
         exit();
