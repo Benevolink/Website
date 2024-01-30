@@ -1,4 +1,5 @@
 import sqlite3 as sql
+from docplex.mp.model import Model
 # script.py
 import sys
 
@@ -17,11 +18,23 @@ con = sql.connect("./../database.sqlite")
 
 cur = con.cursor()
 
-event_main = cur.execute("SELECT id_event, id_lieu, nb_personnes, id_horaire FROM evenements WHERE id_asso = " + param1) #!! penser à mettre la priorité aussi pour la var p
+#Récupération des infos de l'event à partir de son id
+event_main = cur.execute("SELECT id_event, id_lieu, nb_personnes, id_horaire FROM evenements WHERE id_asso = ? ORDER BY id_event", (param1,))
 
-event_horaire = cur.execute("SELECT * FROM horaire where id_horaire = " + event_main.fetchall[3])
 
-users_in_asso = cur.execute("SELECT id_user FROM membres_assos WHERE id_asso = " + param1 + "AND statut = 1")
+event_data = event_main.fetchall()
+if event_data:
+    id_horaire = event_data[0][3]
+    event_horaire = cur.execute("SELECT * FROM horaire WHERE id_horaire = ?", (id_horaire,))
+
+# Utilisez des paramètres de requête pour éviter les attaques par injection SQL
+users_in_asso = cur.execute("SELECT id_user FROM membres_assos WHERE id_asso = ? AND statut = 1", (param1,))
+
+users = users_in_asso.fetchall()
+if users:
+    for i in range(len(users)):
+            id_users = users[i][0]
+            users_info = cur.execute("SELECT * FROM user WHERE id_user = ?", (id_users[i],))
 
 #récupérer les infos des horaires et du lieu du membre.
 
@@ -33,10 +46,10 @@ users_in_asso = cur.execute("SELECT id_user FROM membres_assos WHERE id_asso = "
 model = Model(name='example')
 
 
-# nbMiss = 4
-# nbBene = 4
-# nbAsso = 4
-# nbComp = 7
+nbMiss = len(event_data)
+nbBene = len(users)
+nbAsso = 1
+nbComp = 7
 # p = [4,3,2,1]
 # m = [[0,50,25,10],[0,50,25,10],[0,50,25,10],[0,50,25,10]]
 # D = [[0,1,0,1],[1,1,0,1],[0,1,1,1],[1,1,1,1]]
@@ -51,10 +64,10 @@ model = Model(name='example')
 # T = [[1 for i in range(4)] for i in range(4)]
 
 
-# items = range(0, nbMiss )
-# jtems = range(0, nbBene )
-# ktems = range(0, nbAsso )
-# ltems = range(0, nbComp )
+items = range(0, nbMiss )
+jtems = range(0, nbBene )
+ktems = range(0, nbAsso )
+ltems = range(0, nbComp )
 """"
 p = [model.integer_var(name='p_{0}'.format(i)) for i in items]
 m = [[model.integer_var(name='m_{0}_{1}'.format(j, k)) for k in ktems] for j in jtems]
