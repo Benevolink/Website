@@ -92,6 +92,7 @@ interface AttributsMembresAssos{
  */
 interface AttributsMembresEvents{
     const MEMBRESEVENTS = "membres_evenements";
+
     const MEMBRESEVENTS_ID_EVENT = "id_event";
     const MEMBRESEVENTS_ID_USER  = "id_user";
     const MEMBRESEVENTS_STATUT = "statut";
