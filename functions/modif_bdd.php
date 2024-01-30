@@ -1,44 +1,84 @@
 <?php require_once __DIR__.'/../links.php';
 
+
 //on va commencer par altérer les tables déjà existantes (User et Event) puis on créera JoinHoraire
 
 //Modification User
-global $db;
+$sql_user_1 = "ALTER TABLE users ADD dist_max_accepte INTEGER";
 
-$sql_user = "ALTER TABLE users 
-             ADD dist_max_accepte INT
-             ADD duree_max_accepte INT";
+try {
+    $sql_user_1_prep = $db->prepare($sql_user_1);
+    $sql_user_1_prep->execute();
+    echo "Modification de la table réussie.";
+} catch (PDOException $e) {
+    echo "Erreur : " . $e->getMessage();
+}
 
-$sql_user_prep = $db->prepare($sql_user);
-$sql_user_prep->execute();
+$sql_user_2 = "ALTER TABLE users ADD duree_max_accepte INTEGER";
+
+try {
+    $sql_user_2_prep = $db->prepare($sql_user_2);
+    $sql_user_2_prep->execute();
+    echo "Modification de la table réussie.";
+} catch (PDOException $e) {
+    echo "Erreur : " . $e->getMessage();
+}
+
 
 //Modification table lieu
 
-$sql_lieu = "ALTER TABLE lieu
-            ADD coordonee_x INT
-            ADD coordonee_y INT";
+$sql_lieu_1 = "ALTER TABLE lieu ADD coordonee_x INTEGER";
+$sql_lieu_2 = "ALTER TABLE lieu ADD coordonee_y INTEGER";
+try {
+    $sql_lieu_1_prep = $db->prepare($sql_lieu_1);
+    $sql_lieu_1_prep->execute();
+    echo "Modification de la table réussie.";
+} catch (PDOException $e) {
+    echo "Erreur : " . $e->getMessage();
+}
+try {
+    $sql_lieu_2_prep = $db->prepare($sql_lieu_2);
+    $sql_lieu_2_prep->execute();
+    echo "Modification de la table réussie.";
+} catch (PDOException $e) {
+    echo "Erreur : " . $e->getMessage();
+}
 
-$sql_lieu_prep = $db->prepare($sql_lieu);
-$sql_lieu_prep->execute();
 
 //Modification evenement
 
-$sql_event = "ALTER TABLE evenements
-              ADD duree_mission INT
-              ADD indice_prio_mission INT";
+$sql_event_1 = "ALTER TABLE evenements
+              ADD duree_mission INTEGER";
 
-$sql_event_prep = $db->prepare($sql_event);
-$sql_event_prep->execute();
+try {
+    $sql_event_1_prep = $db->prepare($sql_event_1);
+    $sql_event_1_prep->execute();
+    echo "Modification de la table réussie.";
+} catch (PDOException $e) {
+    echo "Erreur : " . $e->getMessage();
+}
+
+$sql_event_2 = "ALTER TABLE evenements  ADD indice_prio_mission INTEGER";
+try {
+    $sql_event_2_prep = $db->prepare($sql_event_2);
+    $sql_event_2_prep->execute();
+    echo "Modification de la table réussie.";
+} catch (PDOException $e) {
+    echo "Erreur : " . $e->getMessage();
+}
+
 //Création join_horaire
 
-$sql_joinhoraire = "CREATE TABLE join_horaire (
-    id_horaire INT
-    num_type INT
-    id_join INT
-)";
+$sql_joinhoraire = "CREATE TABLE join_horaire (id_horaire INTEGER, num_type INTEGER, id_join INTEGER)";
 
-$sql_joinhoraire_prep = $db->prepare($sql_joinhoraire);
-$sql_joinhoraire_prep->execute();
+try {
+    $sql_joinhoraire_prep = $db->prepare($sql_joinhoraire);
+    $sql_joinhoraire_prep->execute();
+    echo "Modification de la table réussie.";
+} catch (PDOException $e) {
+    echo "Erreur : " . $e->getMessage();
+}
+
 
 
 ?>
