@@ -1,54 +1,69 @@
+var membresAffectations = {}; // Tableau pour stocker les affectations des membres
 
+// Fonction pour réinitialiser l'état des cases
+function reinitialiserCases() {
+    $(".case_membre_mission").prop("checked", false);
+    membresAffectations = {}; // Réinitialiser le tableau des affectations
+}
 
-var membre_selectionne = -1;
-var membre_selectionne_div = null;
-//Traque quand un membre est selectionné
-$(".membre_case").click(
-    (event)=>{
-        membre_selectionne = parseInt($(event.target).attr('id_membre'));
-        $(event.target).css({
-            border: "3px solid black"
-        });
-        membre_selectionne_div = event.target;
-        $(".liste_membres").addClass("mise_en_evidence_missions");
-    }
-);
+// Fonction pour cocher aléatoirement une case par membre
+function cocherAleatoirement() {
+    $(".membre_case").each(function () {
+        var idMembre = $(this).attr("id_membre");
+        var missionsDisponibles = $(".case_membre_mission[id_membre='" + idMembre + "']").toArray();
 
+        console.log("idMembre:", idMembre);
+        console.log("missionsDisponibles:", missionsDisponibles);
 
-//Permet de réinitialiser la sélection
-$("body").click(
-    (event)=>{
-        if(!$(event.target).hasClass("membre_case"))
-        {
-            if(membre_selectionne_div != null)
-            {
-                $(membre_selectionne_div).css({
-                    border: "0px"
-                })
-            }
-            membre_selectionne = -1;
-            membre_selectionne_div = null;
-            $(".liste_membres").removeClass("mise_en_evidence_missions");
+        if (missionsDisponibles.length > 0) {
+            var missionAleatoire = missionsDisponibles[Math.floor(Math.random() * missionsDisponibles.length)];
+
+            console.log("missionAleatoire:", missionAleatoire);
+
+            $(missionAleatoire).prop("checked", true);
+
+            // Mettez à jour l'affectation du membre à la mission
+            $(".membre_case[id_membre='" + idMembre + "']").attr("id_mission", $(missionAleatoire).attr("id_mission"));
         }
-    }
-);
+    });
+}
 
-$(".liste_membres").click((event)=>{
-    
-    if($(event.target).hasClass("mise_en_evidence_missions"))
-    { 
-        if($(event.target).hasClass("mission_a_remplir "))
-        {
-            $(membre_selectionne_div).attr({
-                id_mission: $(event.target).attr('id_mission')
-            });
-        }else{
-            $(membre_selectionne_div).attr({
-                id_mission: -1//Aucune mission affectée
-            });
+
+// Gestionnaire d'événement pour le bouton d'aide à la décision
+$(".aide_decision_case").click((event) => {
+    console.log("Le bouton d'aide à la décision a été cliqué !");
+    reinitialiserCases();
+
+    // Utilisez la variable listeMembres directement
+    listeMembres.forEach(function(member) {
+        var idMembre = member.id;
+        var missionsDisponibles = $(".case_membre_mission[id_membre='" + idMembre + "']").toArray();
+
+        console.log("idMembre:", idMembre);
+        console.log("missionsDisponibles:", missionsDisponibles);
+
+        if (missionsDisponibles.length > 0) {
+            var missionAleatoire = missionsDisponibles[Math.floor(Math.random() * missionsDisponibles.length)];
+
+            console.log("missionAleatoire:", missionAleatoire);
+
+            $(missionAleatoire).prop("checked", true);
+
+            // Mettez à jour l'affectation du membre à la mission
+            $(".membre_case[id_membre='" + idMembre + "']").attr("id_mission", $(missionAleatoire).attr("id_mission"));
         }
-        
-        $(event.target).append($(membre_selectionne_div));
-        
-    }
+    });
+
+    console.log("Affectations aléatoires :", membresAffectations);
+});
+
+
+// Gestionnaire d'événement pour le changement de l'état de la case à cocher
+$(".case_membre_mission").change(function () {
+    var idMembre = $(this).attr("id_membre");
+    var idMission = $(this).attr("id_mission");
+
+    // Mettre à jour le tableau des affectations
+    membresAffectations[idMembre] = $(this).prop("checked") ? idMission : "-1";
+    console.log("Affectations mises à jour :", membresAffectations);
 });

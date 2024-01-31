@@ -120,7 +120,6 @@ function modif_image(logo_chemin){
 $(document).ready(()=>{
   import(abs_path("JS/classes/Domaine.js")).then((module)=>{
     module.Domaine.get_all().done((data)=>{
-      console.log(data);
       data.forEach(element => {
         $("#centresInteret").append(
           $('<option>').text(element['nom_domaine'])
@@ -133,3 +132,60 @@ $(document).ready(()=>{
   });
 });
 
+
+function get_disponibilites()
+{
+  var disponibilites = {}
+  let liste_boutons = $(".checkbox-dispo:checked");
+  $.each(liste_boutons, function (index,record) { 
+     let parent = $(record).parent().parent();
+     let jour = parent.attr("jour");
+     let horaire_debut = parent.find(".heure-debut").first().val();
+     let horaire_fin = parent.find(".heure-fin").first().val();
+      if(!horaire_debut || ! horaire_fin || horaire_debut>=horaire_fin)
+      {
+
+      }else{
+        disponibilites[jour] = {"heure_debut" : horaire_debut, "heure_fin":horaire_fin};
+      }
+  });
+  return disponibilites;
+
+}
+
+function send_disponibilites()
+{
+  console.log("hi");
+  let disponibilites = get_disponibilites();
+  import(abs_path("JS/classes/User.js")).then((UserModule)=>{
+    let user = new UserModule.User;
+    user.sendDisponibilites(disponibilites).done(function(data){
+      if(data["statut"]==1)
+      {
+        console.log("succes");
+      }else{
+        console.log(data);
+      }
+    }).fail(function(error){
+      console.log(error);
+    });
+  });
+}
+
+
+$(document).ready(function(){
+  $("#valider_horaires").on("click",send_disponibilites);
+})
+
+
+
+
+import(abs_path("JS/classes/User.js")).then((module)=>{
+  let user = new module.User();
+  user.getLogo().done((data)=>{
+    logo_chemin_f(data["lien_image"]);
+    modif_image(data["lien_image"]);
+  }).fail((error)=>{
+    console.error("Erreur dans la requête AJAX :",error);
+  });
+});

@@ -9,7 +9,9 @@
         min-width: 400px;
         min-height: 100px;
     }
-    .liste_membres > .bloc_titre
+    
+
+    .liste_membres > .aide_decision
     {
         font-weight: bolder;
         font-size: 150%;
@@ -31,6 +33,17 @@
         font-size: 105%;
     }
 
+    .aide_decision_case {
+    padding: 10px;
+    font-weight: bold;
+    width: 200px;
+    text-overflow: ellipsis;
+    text-align: center;
+    cursor: pointer;
+    background-color: white;
+    height: 40px;
+    }
+
     @keyframes clignoter{
         0% {
             background-color: rgb(240, 240, 240);
@@ -50,22 +63,32 @@
     }
 </style>
 
-<div class="liste_membres" id="liste_membres_default">
-    <div class="bloc_titre">
-        Liste des membres non affectés
-    </div>
-    <?= afficher_liste_benevoles() ?>
+<div class="tableau_repartition">
+    <table>
+        <thead>
+            <tr>
+                <th>Membres</th>
+                <?php afficher_liste_missions_tableau(); ?>
+            </tr>
+        </thead>
+        <tbody>
+            <?php afficher_tableau_repartition(); ?>
+        </tbody>
+    </table>
 </div>
 <br>
 
-<div class="liste_membres" id="liste_membres_default">
-    <div class="bloc_titre">
-        Liste des membres affectés
+<div class="aide_decision_case" id="liste_membres_affectes">
+    <div class="aide_decision">
+        Aide à la décision
     </div>
 </div>
 <br>
 
-<?= afficher_liste_missions() ?>
+<script>
+    var membresAffectations = {}; // Tableau pour stocker les affectations des membres
+    var listeMembres = <?= json_encode(afficher_liste_benevoles_data()) ?>;
+</script>
 
 <script src="<?= BF::abs_path("JS/after/asso/admin/repartition_missions.js") ?>">
 </script>

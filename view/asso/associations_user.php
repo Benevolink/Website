@@ -31,7 +31,6 @@
       text-align: center;
     }
   </style>
-<body style="background-color: white; padding: 30px;">
 
 
 <div class="container">
