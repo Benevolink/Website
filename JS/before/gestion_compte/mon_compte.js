@@ -48,13 +48,5 @@ function logo_chemin_f(string){
     logo_chemin = string;
     
 }
-import(abs_path("JS/classes/User.js")).then((module)=>{
-  let user = new module.User();
-  user.getLogo().done((data)=>{
-    logo_chemin_f(data["lien_image"]);
-    modif_image(data["lien_image"]);
-  }).fail((error)=>{
-    console.error("Erreur dans la requête AJAX :",error);
-  });
-});
+
 
