@@ -94,7 +94,7 @@ try {
 } catch (PDOException $e) {
     echo "Erreur : " . $e->getMessage();
 }*/
-$sql_disponibilites = "CREATE TABLE disponibilites (id_user INTEGER, jour INTEGER, h_deb TIME, h_fin TIME)";
+/*$sql_disponibilites = "CREATE TABLE disponibilites (id_user INTEGER, jour INTEGER, h_deb TIME, h_fin TIME)";
 
 try {
     $sql_disponibilites_prep = $db->prepare($sql_disponibilites);
@@ -122,6 +122,13 @@ try {
     echo "Modification de la table réussie.";
 } catch (PDOException $e) {
     echo "Erreur : " . $e->getMessage();
+}*/
+$sql_anciennete="ALTER TABLE membres_assos ADD anciennete INTEGER";
+try {
+    $sql_anciennete_prep = $db->prepare($sql_anciennete);
+    $sql_anciennete_prep->execute();
+    echo "Modification de la table réussie.";
+} catch (PDOException $e) {
+    echo "Erreur : " . $e->getMessage();
 }
-
 ?>

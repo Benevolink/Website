@@ -156,7 +156,7 @@ interface AttributsDisponibilites{
     const DISPO_JOUR = "jour";
     const DISPO_H_DEB = "h_deb";
     const DISPO_H_FIN = "h_fin";
-    
+
 
 }
 
@@ -183,7 +183,8 @@ interface AttributsDisponibilites{
  AttributsPropAsso,
  AttributsPropEvent,
  AttributsSignalement,
- AttributsUsers
+ AttributsUsers,
+ AttributsDisponibilites
  {
     
 

@@ -548,17 +548,27 @@ class User implements Suppression, GestionLogo{
     return [$nom_event,$id_event];
 
   }
-  /*public function disponibilite(){
-    //on récupère les données
-    global $db;  
-    $dispo=$_POST['dispo_user']; // On suppose recevoir les données sous la forme [[jour1,h_debut1,h_fin1],[jour2,h_debut2,h_fin2]]
+  public function disponibilite($dispo){
+  //On "nettoie" les données précédentes
+  BF::request("DELETE FROM ".A::DISPO."WHERE".A::DISPO_ID_USER."= ?",[$this->id]);
+   
+  // On suppose recevoir les données sous la forme [[jour1,h_debut1,h_fin1],[jour2,h_debut2,h_fin2]]
     //on modifie la base de donnée pour que ça correspondent : on créé des disponibilité
+    $len=count($dispo);
+    print($len);
+    for($i=0; $i<$len; $i=$i+1){
+      BF::request("INSERT INTO disponibilites (id_user, jour, h_deb, h_fin) VALUES (?,?,?,?)", [$this->id,$dispo[$i][0],$dispo[$i][1],$dispo[$i][2]]);
+
+    return 1;
+
+    }
+   
 
     
-    
+  
 
      
-  }*/
+  }
   public function ajouter_interets($interets){
     //on récupère les données
     //global $db;
