@@ -86,8 +86,19 @@ interface AttributsMembresAssos{
     const MEMBRESASSOS_ID_USER = "id_user";
     const MEMBRESASSOS_ID_ASSO = "id_asso";
     const MEMBRESASSOS_STATUT = "statut";
+    const MEMBRESASSOS_ANCIENNETE = "anciennete";
 }
 
+/**
+ * Table des horaires de benevole
+ */
+interface AttributsHoraireBenevole{
+    const HORAIREBENEVOLE = "horaire_benevole";
+    const HORAIREBENEVOLE_ID_USER = "id_user";
+    const HORAIREBENEVOLE_JOUR = "jour";
+    const HORAIREBENEVOLE_HEURE_DEBUT = "heure_debut";
+    const HORAIREBENEVOLE_HEURE_FIN = "heure_fin";
+}
 /**
  * Table des membres des évènements
  */
@@ -96,6 +107,16 @@ interface AttributsMembresEvents{
     const MEMBRESEVENTS_ID_EVENT = "id_event";
     const MEMBRESEVENTS_ID_USER  = "id_user";
     const MEMBRESEVENTS_STATUT = "statut";
+}
+
+/**
+ * Table de competences des missions
+ */
+
+interface AttributsCompetencesMission{
+    const COMPETENCESMISSION = "competences_mission";
+    const COMPETENCESMISSION_ID_EVENT = "id_event";
+    const COMPETENCESMISSION_ID_COMP = "id_comp";
 }
 
 /**
@@ -146,8 +167,10 @@ interface AttributsUsers{
     const USER_PRENOM = "prenom";
     const USER_ETAT_COMPTE = "account_status";
     const USER_LOGO = "logo";
-
     const USER_ACCOUNT_STATUS = "account_status";
+    const USER_COMPETENCES = "competences";
+    const USER_DISTANCE_ACCEPTEE = "distance_acceptee";
+    const USER_TEMPS_TRAVAIL_ACCEPTE = "temps_travail_accepte";
 }
 
 
@@ -175,6 +198,8 @@ interface AttributsUsers{
  AttributsPropEvent,
  AttributsSignalement,
  AttributsUsers
+ AttributsHoraireBenevole
+ AttributsCompetencesMission
  {
     
 
