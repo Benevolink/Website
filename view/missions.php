@@ -17,7 +17,8 @@
     <br>
     <input type="submit" value="Appliquer" id="submit_recherche_mission"/>
 </div>
-
+<div id="wrapper_all" style="display: inline">
+</div>
 <script type="text/javascript" src="<?= BF::abs_path("JS/after/missions.js")?>">
 </script>
 <script>
@@ -54,6 +55,20 @@
         {
             distance = false;
         }
+        let recherche = $("#recherche_mission_type").val();
+        if(!recherche)
+        {
+            recherche = false;
+        }
+        import(abs_path("JS/classes/Event.js")).then((module)=>{
+            $("#wrapper_all").empty();
+            module.Event.search(distance,recherche,liste_domaines).done((data)=>{
+                console.log(data);
+                afficher_missions("Resultats de la recherche :",data);
+            }).fail((error)=>{
+                console.log(error);
+            });
+        });
         console.log(liste_domaines);
     }
 </script>

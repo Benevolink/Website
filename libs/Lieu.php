@@ -66,5 +66,25 @@ public function suppr(){
     return true;
        
   }  
-  
+    
+  /**
+   * Method calc_distance
+   *
+   * @param int $id_lieu_1 $id_lieu_1 [explicite description]
+   * @param int $id_lieu_2 $id_lieu_2 [explicite description]
+   *
+   * @return float la distance
+   */
+  public static function calc_distance($id_lieu_1, $id_lieu_2)
+  {
+    $table1 = BF::request("SELECT coordonee_x, coordonee_y FROM ".A::LIEU." WHERE ".A::LIEU_ID." = ?",[$id_lieu_1],true,true)[0];
+    $x1 = $table1[0];
+    $y1 = $table1[1];
+    $table2 = BF::request("SELECT coordonee_x, coordonee_y FROM ".A::LIEU." WHERE ".A::LIEU_ID." = ?",[$id_lieu_2],true,true)[0];
+    $x2 = $table2[0];
+    $y2 = $table2[1];
+    return sqrt(($x1-$x2)**2 + ($y1-$y2)**2);
+    
+  }
+
 }

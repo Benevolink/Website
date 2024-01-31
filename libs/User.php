@@ -79,6 +79,12 @@ class User implements Suppression, GestionLogo{
     return false;
   }
 
+  public function get_id_lieu()
+  {
+    $req = "SELECT ".A::USER_ID_LIEU." FROM ".A::USER." WHERE ".A::USER_ID." = ?";
+    return BF::request($req,[$this->id],true,true)[0];
+  }
+
     /**
    * Vérifie que l'utilisateur suit l'asso (statut > -1)
    *
