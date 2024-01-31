@@ -150,7 +150,15 @@ interface AttributsUsers{
 
     const USER_ACCOUNT_STATUS = "account_status";
 }
+interface AttributsDisponibilites{
+    const DISPO = "disponibilites";
+    const DISPO_ID_USER = "id_user";
+    const DISPO_JOUR = "jour";
+    const DISPO_H_DEB = "h_deb";
+    const DISPO_H_FIN = "h_fin";
+    
 
+}
 
 /**
  * Table horaires
