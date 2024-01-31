@@ -1,10 +1,13 @@
 <?php require_once __DIR__.'/../links.php';
 
 
+
 //on va commencer par altérer les tables déjà existantes (User et Event) puis on créera JoinHoraire
 
 //Modification User
-$sql_user_1 = "ALTER TABLE users ADD dist_max_accepte INTEGER";
+//Première modification, décommenter si pas déjà réaliser
+
+/*$sql_user_1 = "ALTER TABLE users ADD dist_max_accepte INTEGER";
 
 try {
     $sql_user_1_prep = $db->prepare($sql_user_1);
@@ -78,7 +81,17 @@ try {
 } catch (PDOException $e) {
     echo "Erreur : " . $e->getMessage();
 }
+*/
 
+$sql_joincompetence = "CREATE TABLE join_competence (id_competence INTEGER, num_type INTEGER, id_join INTEGER)";
+
+try {
+    $sql_joincompetence_prep = $db->prepare($sql_joincompetence);
+    $sql_joincompetence_prep->execute();
+    echo "Modification de la table réussie.";
+} catch (PDOException $e) {
+    echo "Erreur : " . $e->getMessage();
+}
 
 
 ?>
