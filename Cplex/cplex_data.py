@@ -19,7 +19,7 @@ con = sql.connect("./../database.sqlite")
 cur = con.cursor()
 
 #Récupération des infos de l'event à partir de son id
-event_main = cur.execute("SELECT id_event, id_lieu, nb_personnes, id_horaire FROM evenements WHERE id_asso = ? ORDER BY id_event", (param1,))
+event_main = cur.execute("SELECT id_event, id_lieu, nb_personnes, id_horaire, duree_mission, indice_prio_mission FROM evenements WHERE id_asso = ? ORDER BY id_event", (param1,))
 
 
 event_data = event_main.fetchall()
