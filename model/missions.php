@@ -1,8 +1,9 @@
 <?php
 function creer_select_categorie($key,$value){
   ?>
-  <input type="checkbox" name="<?= "sel_cate_{$key}"?>" id="<?= "sel_cate_{$key}" ?>" class="cate_missions_checkbox"/>
-  <div class="label_cate"> <?= $value['nom_domaine'] ?> </div>
+  <input type="checkbox" name="<?= "sel_cate_{$key}"?>" id="<?= "sel_cate_{$key}" ?>" class="cate_missions_checkbox" checked="checked" numero="<?= $key ?>"/>
+  <div class="label_cate" style="display : inline"> <?= $value['nom_domaine'] ?> </div>
+  <br>
   <?php
 }
 
