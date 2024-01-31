@@ -556,18 +556,15 @@ class User implements Suppression, GestionLogo{
     //on modifie la base de donnée pour que ça correspondent : on créé des disponibilité
     $len=count($dispo);
     
-    for($i=0; $i<$len; $i=$i+1){
+    for($i=0; $i<$len; $i++){
+      
+      
       BF::request("INSERT INTO ".A::DISPO."(".A::DISPO_ID_USER.",".A::DISPO_JOUR.",".A::DISPO_H_DEB.",".A::DISPO_H_FIN.") VALUES (?,?,?,?)", [$this->id,$dispo[$i][0],$dispo[$i][1],$dispo[$i][2]]);
 
-    return 1;
-
-    }
    
 
-    
-  
-
-     
+    }
+    return 1;   
   }
   public function ajouter_interets($interets){
     //on récupère les données
