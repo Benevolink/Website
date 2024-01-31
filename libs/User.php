@@ -569,32 +569,14 @@ class User implements Suppression, GestionLogo{
     }
     return 1;   
   }
-  public function ajouter_interets($interets){
-    //on récupère les données
-    //global $db;
-    
-    $len=count($interets);
-    $id_domaine=array();
+  public function changer_interets($liste_id){
+    BF::request("DELETE FROM ".A::DOMAINEJONCTION." WHERE ".A::DOMAINEJONCTION_TYPE."= ? AND ".A::DOMAINEJONCTION_ID_JONCTION."= ?",[0,$this->id]);
+    $len=count($liste_id);
     for($i=0;$i<$len;$i++){
-      //on ajoute un domaien jonction correspondant à l'utisateur et au domaine : pour ça il faut d'abord récupérer l'idée du domaine
-      $id_domaine[$i]=BF::request("SELECT ".A::DOMAINE_ID." FROM ".A::DOMAINE." WHERE ".A::DOMAINE_NOM." = ?" , [$interets[$i]], true, true,PDO::FETCH_NUM)[0];
-      //maintenant on créé la jonction, on fixe deux pour déterminer le type user (comme 1 est déjà utilisé pour les assos)
-      BF::request("INSERT INTO ".A::DOMAINEJONCTION." (".A::DOMAINEJONCTION_ID_DOMAINE.",".A::DOMAINEJONCTION_ID_JONCTION.",".A::DOMAINEJONCTION_TYPE.") VALUES (?, ?,?)" , [$id_domaine[$i],$this->id,2]);
-
+      printf($i);
+      BF::request("INSERT INTO ".A::DOMAINEJONCTION." (".A::DOMAINEJONCTION_ID_DOMAINE.",".A::DOMAINEJONCTION_TYPE.",".A::DOMAINEJONCTION_ID_JONCTION.") VALUES (?,?,?)", [$liste_id[$i],0,$this->id]);
     }
-    return true;
-  }
-  public function enlever_interets($interets){
-    $len=count($interets);
-    $id_domaine=array();
-    for($i=0;$i<$len;$i++){
-      //on ajoute un domaien jonction correspondant à l'utisateur et au domaine : pour ça il faut d'abord récupérer l'idée du domaine
-      $id_domaine[$i]=BF::request("SELECT ".A::DOMAINE_ID." FROM ".A::DOMAINE." WHERE ".A::DOMAINE_NOM." = ?" , [$interets[$i]], true, true,PDO::FETCH_NUM)[0];
-      //maintenant on créé la jonction, on fixe deux pour déterminer le type user (comme 1 est déjà utilisé pour les assos)
-      BF::request("DELETE FROM ".A::DOMAINEJONCTION." WHERE ".A::DOMAINEJONCTION_ID_DOMAINE." = ? AND ".A::DOMAINEJONCTION_ID_JONCTION." = ? AND ".A::DOMAINEJONCTION_TYPE." = ?",[$id_domaine[$i],$this->id,2]);
-
-    }
-    return true;
+    return 1;
   }
 }
 ?>

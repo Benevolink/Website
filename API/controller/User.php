@@ -134,31 +134,26 @@ switch($fonction){
             $user->disponibilite($dispo);
         }
         exit();
+
+    case "modif_interets":
+        if(!BF::is_connected()){
+            return_statut(false,"Vous n'êtes pas connecté.e.s");
+        }
+        elseif(!BF::is_posted("domaines")){
+            return_statut(false,"Vous n'avezpas mosté vos disponibilités");
+
+        }
+        else{
+            $user=new APIUser();
+            $user->id=$_SESSION('user_id');
+            $domaines=$_POST("domaines");
+            $user->changer_interets($domaines);
+
+        }
+
         //@todo
         //logique pour vérifier si le mot de passe respecte des règles en vigueur et si oui, le modifie
-    case "ajoute_interet":
-        if(!BF::is_connected()){
-            return_statut(false,"Vous n'êtes pas connecté.e.s");
-        }
-        else{
-            $interets=$_POST('domaine');
-            $user=new APIUser();
-            $user->id=$_SESSION('user_id');
-            $user->ajouter_interets($interets);
-            exit();
-            
-        }
-    case "enlever_interet":
-        if(!BF::is_connected()){
-            return_statut(false,"Vous n'êtes pas connecté.e.s");
-        }
-        else{
-            $interets=$_POST('domaine');
-            $user=new APIUser();
-            $user->id=$_SESSION('user_id');
-            $user->enlever_interets($interets);
-            exit();
-        }
+    
     default:
         echo "Veuillez spécifier une fonction";
         exit();
