@@ -550,14 +550,14 @@ class User implements Suppression, GestionLogo{
   }
   public function disponibilite($dispo){
   //On "nettoie" les données précédentes
-  BF::request("DELETE FROM ".A::DISPO."WHERE".A::DISPO_ID_USER."= ?",[$this->id]);
+  BF::request("DELETE FROM ".A::DISPO." WHERE ".A::DISPO_ID_USER."= ?",[$this->id]);
    
   // On suppose recevoir les données sous la forme [[jour1,h_debut1,h_fin1],[jour2,h_debut2,h_fin2]]
     //on modifie la base de donnée pour que ça correspondent : on créé des disponibilité
     $len=count($dispo);
-    print($len);
+    
     for($i=0; $i<$len; $i=$i+1){
-      BF::request("INSERT INTO".A::DISPO."(".A::DISPO_ID_USER.",".A::DISPO_JOUR.",".A::DISPO_H_DEB.",".A::DISPO_H_FIN.") VALUES (?,?,?,?)", [$this->id,$dispo[$i][0],$dispo[$i][1],$dispo[$i][2]]);
+      BF::request("INSERT INTO ".A::DISPO."(".A::DISPO_ID_USER.",".A::DISPO_JOUR.",".A::DISPO_H_DEB.",".A::DISPO_H_FIN.") VALUES (?,?,?,?)", [$this->id,$dispo[$i][0],$dispo[$i][1],$dispo[$i][2]]);
 
     return 1;
 
