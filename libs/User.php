@@ -557,7 +557,7 @@ class User implements Suppression, GestionLogo{
     $len=count($dispo);
     print($len);
     for($i=0; $i<$len; $i=$i+1){
-      BF::request("INSERT INTO disponibilites (id_user, jour, h_deb, h_fin) VALUES (?,?,?,?)", [$this->id,$dispo[$i][0],$dispo[$i][1],$dispo[$i][2]]);
+      BF::request("INSERT INTO".A::DISPO."(".A::DISPO_ID_USER.",".A::DISPO_JOUR.",".A::DISPO_H_DEB.",".A::DISPO_H_FIN.") VALUES (?,?,?,?)", [$this->id,$dispo[$i][0],$dispo[$i][1],$dispo[$i][2]]);
 
     return 1;
 

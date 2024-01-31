@@ -119,16 +119,21 @@ switch($fonction){
             return_statut(false,"Mot de passe incorrect");
             exit();
         }
-    /*case "ajoute_dispo":
+    case "set_disponibilite":
         if(!BF::is_connected()){
             return_statut(false,"Vous n'êtes pas connecté.e.s");
+        }
+        elseif(!BF::is_posted("disponibites")){
+            return_statut(false,"Vous n'avezpas mosté vos disponibilités");
+
         }
         else{
             $user=new APIUser();
             $user->id=$_SESSION('user_id');
-            $user->disponibilite();
+            $dispo=$_POST("disponibilite");
+            $user->disponibilite($dispo);
         }
-        exit();*/
+        exit();
         //@todo
         //logique pour vérifier si le mot de passe respecte des règles en vigueur et si oui, le modifie
     case "ajoute_interet":
