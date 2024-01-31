@@ -1,0 +1,58 @@
+<?php
+require_once 'db.php';
+try {
+    // Connect to the SQLite database
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // Modifications de la table 'users' pour inclure les compétences et les préférences des bénévoles
+    $alterUsersTableQuery = "
+        ALTER TABLE users
+        ADD COLUMN competences TEXT,
+        ADD COLUMN distance_acceptee INTEGER,
+        ADD COLUMN temps_travail_accepte INTEGER;
+    ";
+    $db->exec($alterUsersTableQuery);
+
+    // Ajout de la colonne 'priorite' à la table 'evenements'
+    $alterEvenementsTableQuery = "
+        ALTER TABLE evenements
+        ADD COLUMN priorite INTEGER CHECK(priorite >= 1 AND priorite <= 5);
+    ";
+    $db->exec($alterEvenementsTableQuery);
+
+    // Ajout de la colonne 'anciennete' à la table 'membres_assos'
+    $alterMembresAssosTableQuery = "
+        ALTER TABLE membres_assos
+        ADD COLUMN anciennete INTEGER;
+    ";
+    $db->exec($alterMembresAssosTableQuery);
+
+    // Création de la table 'horaire_benevole' pour la disponibilité des bénévoles
+    $createHoraireBenevoleTableQuery = "
+        CREATE TABLE IF NOT EXISTS horaire_benevole (
+            id_user INTEGER NOT NULL,
+            jour VARCHAR(10) NOT NULL,
+            heure_debut INTEGER NOT NULL,
+            heure_fin INTEGER NOT NULL,
+            PRIMARY KEY (id_user, jour, heure_debut)
+        );
+    ";
+    $db->exec($createHoraireBenevoleTableQuery);
+
+    // Création de la table de jointure pour les compétences requises par les missions
+    $createCompetencesMissionTableQuery = "
+        CREATE TABLE IF NOT EXISTS competences_mission (
+            id_event INTEGER NOT NULL,
+            id_comp TEXT NOT NULL,
+            PRIMARY KEY (id_event, id_comp),
+            FOREIGN KEY (id_event) REFERENCES evenements(id_event),
+            FOREIGN KEY (id_comp) REFERENCES competences(id_comp)
+        );
+    ";
+    $db->exec($createCompetencesMissionTableQuery);
+
+    echo "La base de données et les tables ont été mises à jour avec succès!";
+} catch(PDOException $e) {
+    echo "Erreur : " . $e->getMessage();
+}
+?>
