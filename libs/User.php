@@ -557,11 +557,14 @@ class User implements Suppression, GestionLogo{
     $len=count($dispo);
     
     for($i=0; $i<$len; $i++){
-      
-      
-      BF::request("INSERT INTO ".A::DISPO."(".A::DISPO_ID_USER.",".A::DISPO_JOUR.",".A::DISPO_H_DEB.",".A::DISPO_H_FIN.") VALUES (?,?,?,?)", [$this->id,$dispo[$i][0],$dispo[$i][1],$dispo[$i][2]]);
+      if((intval(substr($dispo[$i][1],0,2))>intval(substr($dispo[$i][2],0,2))) || (intval(substr($dispo[$i][1],0,2))==intval(substr($dispo[$i][2],0,2)) && intval(substr($dispo[$i][1],-2))>intval(substr($dispo[$i][2],-2)))){
+        echo("Sérieusement ?");      
+      }
 
-   
+      else{
+        BF::request("INSERT INTO ".A::DISPO."(".A::DISPO_ID_USER.",".A::DISPO_JOUR.",".A::DISPO_H_DEB.",".A::DISPO_H_FIN.") VALUES (?,?,?,?)", [$this->id,$dispo[$i][0],$dispo[$i][1],$dispo[$i][2]]);
+       
+      }   
 
     }
     return 1;   
