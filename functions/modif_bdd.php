@@ -82,7 +82,9 @@ try {
     echo "Erreur : " . $e->getMessage();
 }
 */
+//Modif 2 rajouter si pas déjà fait
 
+/*
 $sql_joincompetence = "CREATE TABLE join_competence (id_competence INTEGER, num_type INTEGER, id_join INTEGER)";
 
 try {
@@ -91,7 +93,35 @@ try {
     echo "Modification de la table réussie.";
 } catch (PDOException $e) {
     echo "Erreur : " . $e->getMessage();
+}*/
+$sql_disponibilites = "CREATE TABLE disponibilites (id_user INTEGER, jour INTEGER, h_deb TIME, h_fin TIME)";
+
+try {
+    $sql_disponibilites_prep = $db->prepare($sql_disponibilites);
+    $sql_disponibilites_prep->execute();
+    echo "Modification de la table réussie.";
+} catch (PDOException $e) {
+    echo "Erreur : " . $e->getMessage();
 }
 
+$sql_horaire="ALTER TABLE horaire ADD id_event  INTEGER";
+
+try {
+    $sql_horaire_prep = $db->prepare($sql_horaire);
+    $sql_horaire_prep->execute();
+    echo "Modification de la table réussie.";
+} catch (PDOException $e) {
+    echo "Erreur : " . $e->getMessage();
+}
+
+$sql_suppress="DROP TABLE join_horaire";
+
+try {
+    $sql_suppress = $db->prepare($sql_suppress);
+    $sql_suppress->execute();
+    echo "Modification de la table réussie.";
+} catch (PDOException $e) {
+    echo "Erreur : " . $e->getMessage();
+}
 
 ?>
