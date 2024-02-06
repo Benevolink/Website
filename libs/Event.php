@@ -297,7 +297,7 @@ public function image_get(){
         
         //On vérifie que les évènements ont bien les domaines sélectionnés
         foreach($resultat as $key => $value){
-            $value["domaine_correspond"] = false;
+            $resultat[$key]["domaine_correspond"] = false;
         }
         foreach($resultat as $key => $value)
         {
@@ -306,13 +306,14 @@ public function image_get(){
                 $req = "SELECT COUNT(*) FROM ".A::DOMAINEJONCTION." WHERE ".A::DOMAINEJONCTION_TYPE." = 1 AND ".A::DOMAINEJONCTION_ID_JONCTION." = ? AND ".A::DOMAINEJONCTION_ID_DOMAINE." = ?";
                 $result = BF::request($req,[$value[A::EVENT_ID],$key2],true,true);
                 if($result[0] == 1){
-                    $value["domaine_correspond"] = true;
+                    $resultat[$key]["domaine_correspond"] = true;
+                    $resultat[$key]["match"] = $key2;
                 }
 
             }
         }
         foreach($resultat as $key => $value){
-            if($value["domaine_correspond"] = false)
+            if($value["domaine_correspond"] == false)
             {
                 unset($resultat[$key]);
             }
