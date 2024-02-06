@@ -68,7 +68,11 @@ switch($fonction){
         return_statut(true);
         exit();
         
-            
+    case "search_event":
+        require_once BF::abs_path("libs/Event.php",true);
+
+        return_json(Event::search($_POST["distance"],$_POST["recherche"],$_POST["liste_domaines"]));
+        exit();
         
      
     
