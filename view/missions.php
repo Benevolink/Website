@@ -71,6 +71,7 @@
         });
         console.log(liste_domaines);
     }
+    $(document).ready(send_recherche);
 </script>
 
 <style>
