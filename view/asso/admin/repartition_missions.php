@@ -8,6 +8,7 @@
         padding: 20px;
         min-width: 400px;
         min-height: 100px;
+       
     }
     
 
@@ -61,13 +62,40 @@
         cursor: pointer;
         animation: clignoter 1s  infinite ease-in-out;
     }
+
+    .tableau_repartition{
+        font-family: Corps;
+        src: url(fonts/Nexa-Heavy.woff2) format("woff2");
+        font-size: 20px;
+    }
+
+    .aide_decision{
+        font-family: Corps;
+        src: url(fonts/Nexa-Heavy.woff2) format("woff2");
+        font-size: 15px;
+    }
+
+    .tableau_repartition table {
+    border-collapse: collapse; /* Fusionne les bordures des cellules */
+    width: 100%; /* Utilise toute la largeur disponible */
+}
+
+.tableau_repartition th, .tableau_repartition td {
+    border: 1px solid black; /* Bordure de chaque cellule */
+    padding: 8px; /* Ajoute un espacement autour du contenu */
+    text-align: center; /* Centre le contenu dans chaque cellule */
+}
+
+.tableau_repartition th {
+    background-color: #f2f2f2; /* Couleur de fond pour les cellules d'en-tête */
+}
 </style>
 
 <div class="tableau_repartition">
     <table>
         <thead>
             <tr>
-                <th>Membres</th>
+                <th> <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Membres</th>
                 <?php afficher_liste_missions_tableau(); ?>
             </tr>
         </thead>
@@ -80,9 +108,11 @@
 
 <div class="aide_decision_case" id="liste_membres_affectes">
     <div class="aide_decision">
-        Aide à la décision
+       <button> Appliquer l'algorithme d'aide à la décision <button>
     </div>
 </div>
+
+<br>
 <br>
 
 <script>
