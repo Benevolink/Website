@@ -9,11 +9,9 @@
     //Affichage du logo
         
         if($logo){
-            foreach (glob($path."media/logo/event/".$id_event.".*") as $filename){
-                ?>
-                <img style ="width: 200px; float: left; height: 200px;" src="<?= BF::abs_path("media/logo/event/".basename($filename))?>">
-                <?php
-            }
+            ?>
+            <img style ="width: 200px; float: left; height: 200px;" src="<?= $logo ?>">
+            <?php
             
         ?>
             
@@ -29,7 +27,8 @@
                     afficher_visu();
                     ?>
                     <img src="<?= BF::abs_path("media/img/eye.png") ?>" style="width: 13px; display: inline-block;">
-                    
+                <br>
+                Nombre d'inscrits : <strong><?= $infos["nb_personnes"] ?></strong>
             </div>
             
         </div>

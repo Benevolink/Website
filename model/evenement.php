@@ -13,9 +13,9 @@ function afficher_dates(){
     <div class="titre_rubrique_event">
         Date
     </div>
-    De : <div style="float: right;"><img src="<?= BF::abs_path("media/img/calendar.png") ?>" style="width: 10px; display: inline-block;"> <?= date("Y/m/d  ",$infos["date_event_debut"]) ?><img src="<?= BF::abs_path("media/img/clock.png") ?>" style="height: 12px; display: inline-block;"><?= date(" H:i",$infos["date_event_debut"]) ?></div>
+    De : <div style="float: right;"><img src="<?= BF::abs_path("media/img/calendar.png") ?>" style="width: 10px; display: inline-block;"> <?= date("Y/m/d  ",$infos["date_debut"]) ?><img src="<?= BF::abs_path("media/img/clock.png") ?>" style="height: 12px; display: inline-block;"><?= date(" H:i",$infos["date_debut"]) ?></div>
     <div style="clear:both;"></div>
-    A : <div style="float: right;"><img src="<?= BF::abs_path("media/img/calendar.png") ?>" style="width: 10px; display: inline-block;"> <?= date("Y/m/d  ",$infos["date_event_fin"]) ?><img src="<?= BF::abs_path("media/img/clock.png") ?>" style="height: 12px; display: inline-block;"><?= date(" H:i",$infos["date_event_fin"]) ?></div>
+    A : <div style="float: right;"><img src="<?= BF::abs_path("media/img/calendar.png") ?>" style="width: 10px; display: inline-block;"> <?= date("Y/m/d  ",$infos["date_fin"]) ?><img src="<?= BF::abs_path("media/img/clock.png") ?>" style="height: 12px; display: inline-block;"><?= date(" H:i",$infos["date_fin"]) ?></div>
     <div style="clear: both"></div>
     <?php
 }
