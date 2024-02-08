@@ -12,7 +12,7 @@
     <!-- Section: Trouvez la mission qui vous correspond -->
     <div class="index_wrapper">
     <div>
-            <img src="<?= BF::abs_path("media/img/mission.jpeg") ?>" class="mission_image" alt="Mission Image">
+            <img src="<?= BF::abs_path("media/img/missions.jpg") ?>" class="mission_image" alt="Mission Image">
             <div class="mission_text">
                 Trouvez la mission qui vous correspond
         </div>
@@ -21,7 +21,7 @@
     <!-- Section: Gérez votre planning -->
     <div>
         
-            <img src="<?= BF::abs_path("media/img/planning.jpg") ?>" class="mission_image" alt="Mission Image">
+            <img src="<?= BF::abs_path("media/img/plannings.jpg") ?>" class="mission_image" alt="Mission Image">
             <div class="mission_text">
               Gérez votre planning
             
@@ -31,7 +31,7 @@
     <!-- Section: Découvrez de nouvelles associations -->
     <div>
       
-          <img src="<?= BF::abs_path("media/img/association.png") ?>" class="mission_image" alt="Mission Image">
+          <img src="<?= BF::abs_path("media/img/associations.png") ?>" class="mission_image" alt="Mission Image">
             <div class="mission_text">
               Découvrez de nouvelles associations
             
@@ -41,7 +41,7 @@
     <!-- Section: Rencontrez d'autres bénévoles -->
     <div>
         
-        <img src="<?= BF::abs_path("media/img/benevole.jpeg") ?>" class="mission_image" alt="Mission Image">
+        <img src="<?= BF::abs_path("media/img/benevole.jpg") ?>" class="mission_image" alt="Mission Image">
             <div class="mission_text">
                Rencontrez d'autres bénévoles
            
@@ -101,7 +101,7 @@
     
 
     .mission_image {
-        max-width: 60%; /* Assurez-vous que l'image ne dépasse pas la largeur du conteneur */
+        max-width: 75%; /* Assurez-vous que l'image ne dépasse pas la largeur du conteneur */
         height: auto; /* Maintenez le ratio hauteur/largeur pour éviter la distorsion */
         margin-bottom: 10px; /* Ajoutez une marge en bas pour l'espace entre l'image et le texte */
     }
