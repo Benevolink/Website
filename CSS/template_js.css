@@ -1,7 +1,7 @@
 .ItemBox{
-    width: 200px;
-    margin: 10px;
-    height: 300px;
+    width: 160px;
+    margin: 5px;
+    height: 260px;
     overflow: hidden;
     text-align: justify;
     word-wrap: break-word;
@@ -10,6 +10,9 @@
     cursor : pointer;
     display: inline-block;
 }
+.ItemBox p{
+    margin: 0px;
+}
 .ItemBox .ItemBoxTitre{
     font-weight: bold;
     font-size: 110%;
@@ -17,5 +20,5 @@
 
 .ItemBox img{
     width: 80%;
-    margin: auto;
+    margin-left: 10%;
 }
