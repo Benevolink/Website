@@ -9,7 +9,7 @@
  */
 function afficher_dates(){
     global $infos;
-    if(!is_string($infos["date_debut"]))
+    if(ctype_digit($infos["date_debut"]))
     {
         $date_debut_h = date(" H:i",$infos["date_debut"]);
         $date_fin_h = date(" H:i",$infos["date_fin"]);
