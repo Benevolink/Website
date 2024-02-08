@@ -103,7 +103,7 @@ function afficher_event(e, id){
   let Y = e.pageY;
   c.style.top = Y+"px";
   c.style.left = X+"px";
-  c.appendChild(iframe);
+  //c.appendChild(iframe);
   document.body.appendChild(c);
   
   iframe.contentWindow.location.reload();
