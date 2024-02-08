@@ -76,7 +76,27 @@ switch($fonction){
             $event_demande = new Event($_POST["id_event"]);
             return_json($event_demande->description_get());
             exit();
-        } 
+        }
+    case "ajouter_membres":
+        if(!(isset($_POST["id_event"])&&isset($_POST["id_membres"]))){
+            return_statut(false);
+            exit();
+        }  
+        else{
+            $mission=new Event($_POST["id_event"]);
+            $liste_membres=$_POST["id_membres"];
+            $len=count($liste_membres);
+            for($i=0 ; $i<$len ; $i++){
+                $mission->ajouter_membre($liste_membres[$i]);
+            }
+
+        }
+        exit();
+    default:
+        echo "Veuillez spécifier une fonction";
+        exit();
+    
+
             
         
      
