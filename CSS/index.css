@@ -95,7 +95,6 @@
   width: max-content;
   color: var(--couleur-police-clair);
   font-weight: bold;
-  font-size: 150%;
   margin-bottom: 20px;
   cursor: pointer;
 }
@@ -103,6 +102,5 @@
 #index_compteur{
   margin: auto;
   text-align: center;
-  font-size: 250%;
   font-weight: bold;
 }
