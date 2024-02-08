@@ -1,13 +1,11 @@
   <link rel="stylesheet" href="<?= BF::abs_path("CSS/association.css")?>">
-
-  <img id="logo" src="<?= BF::abs_path($logo_path) ?>" class="img_asso">
+<div style="margin-left: 40px;">
+  <img id="logo" src="<?= $logo_path ?>" class="img_asso">
 
   <label class="titre_asso" for="logo"><?= $prop_all["asso_info"][AttributsTables::ASSO_NOM] ?></label>
   <br>
   
-  <br>
-  <h4 id="follower"> Il y a <?= $nombre ?> membre(s) dans l'association. </h4>
-  <br>
+  
   
   <?php if($est_dans_asso){ ?>
     <label for="followed">Rejoindre</label>
@@ -31,18 +29,18 @@
     </div>
   </div>
 
+  </div>
   
-  
-  
-<div class="row">
-  <div class="col-md-7" id="description_asso">
+<div class="row infos_asso">
+  <div class="col-md-7 description_asso contact_adresse desc_asso_remplir_flex">
+  <h4>Description de l'association :</h4>
   <p><?= $prop_all["asso_info"][AttributsTables::ASSO_DESCRIPTION] ?></p>
   </div>
 </div>
 
-<div class="row">
-  <div class="col-md-3" id="contact_adresse"> 
-    <h3 id="titre_asso"> Contact et adresse </h3>
+<div class="row infos_asso">
+  <div class="col-md-3 contact_adresse"> 
+    <h4> Contact et adresse </h4>
 
   <p> <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> 
   Adresse: <?= $prop_all["lieu"][AttributsTables::LIEU_ADRESSE] ?> 
@@ -54,21 +52,39 @@
 
   </div>
 
-  <div class="col-md-4 col-md-offset-4" id="description_asso">
-  <h3 id="titre_asso">Description des Missions</h3>
+  <div class="col-md-4 col-md-offset-4 contact_adresse desc_asso_remplir_flex" id= "desc_missions">
+  <h4>Description des Missions</h4>
   <p><?= $prop_all["asso_info"][AttributsTables::ASSO_DESCRIPTION_MISSIONS] ?></p>
-
   </div>
-</div>
-
-  <br> <br> <br> <br> <br> <br> <br> 
-
+  </div>
+  <br>
+  <h4 id="follower"> Il y a <?= $nombre ?> membre(s) dans l'association. </h4>
+  <br>
+  <br> <br> <br>
 <div id="wrapper_all"></div>
 
 
   
 <style>
 
+  .row{
+    margin: auto;
+    width : 90%;
+   
+  }
+  .infos_asso{
+    display: flex;
+  }
+  h4{
+    font-size: 110%;
+    font-weight: bold;
+  }
+  .desc_asso_remplir{
+    width: 100%;
+  }
+  .desc_asso_remplir_flex{
+    flex-grow: 1;
+  }
   #description_asso{
     font-family: Corps;
     src: url(fonts/Nexa-Heavy.woff2) format("woff2");
@@ -79,12 +95,14 @@
     padding: 8px; /* Espace à l'intérieur des cellules */
     padding-left: 55px;
     font-size: 17px;
+    margin-top: 20px;
+    width : 100%;
   }
 
-  #contact_adresse{
+  .contact_adresse{
     font-family: Corps;
     src: url(fonts/Nexa-Heavy.woff2) format("woff2");
-    margin-left: 70px;
+    margin-left: 40px;
     margin-top: 20px;
     border: 1px solid #000;
     border-radius: 10px;
@@ -100,11 +118,12 @@
     margin: auto; /* Ajoutez cette ligne pour centrer horizontalement */
 
   }
-  #titre_asso{
+  .titre_asso{
+    margin-left: 40px;
     font-weight: bold;
+    font-size: 160%;
     font-family: Corps;
     src: url(fonts/Nexa.woff2) format("woff2");
-    font-size: 30px;
     text-align: center;
   }
 
@@ -115,12 +134,12 @@
   }
  
   #wrapper_all{
-    font-weight: bold;
     font-family: Corps;
     src: url(fonts/Nexa.woff2) format("woff2");
-    font-size: 30px;
     text-align: center;
   }
-
+  #desc_missions{
+    margin-left: 20px;
+  }
 
 </style>
