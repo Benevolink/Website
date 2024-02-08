@@ -11,6 +11,7 @@
 
     <!-- Section: Trouvez la mission qui vous correspond -->
     <div class="index_wrapper">
+    <div>
             <img src="<?= BF::abs_path("media/img/mission.jpeg") ?>" class="mission_image" alt="Mission Image">
             <div class="mission_text">
                 Trouvez la mission qui vous correspond
@@ -18,7 +19,7 @@
     </div>
 
     <!-- Section: Gérez votre planning -->
-    <div class="index_wrapper">
+    <div>
         
             <img src="<?= BF::abs_path("media/img/planning.jpg") ?>" class="mission_image" alt="Mission Image">
             <div class="mission_text">
@@ -28,7 +29,7 @@
     </div>
 
     <!-- Section: Découvrez de nouvelles associations -->
-    <div class="index_wrapper">
+    <div>
       
           <img src="<?= BF::abs_path("media/img/association.png") ?>" class="mission_image" alt="Mission Image">
             <div class="mission_text">
@@ -38,7 +39,7 @@
     </div>
 
     <!-- Section: Rencontrez d'autres bénévoles -->
-    <div class="index_wrapper">
+    <div>
         
         <img src="<?= BF::abs_path("media/img/benevole.jpeg") ?>" class="mission_image" alt="Mission Image">
             <div class="mission_text">
@@ -48,7 +49,7 @@
     </div>
 
     <!-- Section: Cherchez les missions par zone géographique -->
-    <div class="index_wrapper">
+    <div>
         
         <img src="<?= BF::abs_path("media/img/carte.webp") ?>" class="mission_image" alt="Mission Image">
             <div class="mission_text">
@@ -58,12 +59,13 @@
     </div>
 
     <!-- Section: Ne manquez aucun évènement de vos associations préférées -->
-    <div class="index_wrapper">
+    <div>
         
         <img src="<?= BF::abs_path("media/img/coeur.jpg") ?>" class="mission_image" alt="Mission Image">
             <div class="mission_text">
              Ne manquez aucun évènement de vos associations préférées
            
+    </div>
     </div>
 </div>
 
