@@ -81,11 +81,11 @@
   font-weight: bold;
   margin: 1%;
   background-color: var(--couleur-gris-clair);
-  padding: 30px;
+  padding: 10px;
   width: 20%;
-  height: 300px;
+  height: 100%;
   border-radius: 20px;
-  font-size: 150%;
+  font-size: 100%;
   text-align: center;
 }
 .index_rejoindre{
