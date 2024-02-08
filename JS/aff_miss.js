@@ -104,7 +104,7 @@ function afficher_event(e, id){
   c.style.top = Y+"px";
   c.style.left = X+"px";
   //c.appendChild(iframe);
-  document.body.appendChild(c);
+  //document.body.appendChild(c);
   
   iframe.contentWindow.location.reload();
   

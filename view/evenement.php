@@ -43,7 +43,7 @@
             <div class="titre_rubrique_event">
                         Description
             </div>
-            <?= $desc ?>
+            <?= $infos["desc"] ?>
         </div>
     </div>
     <div id="bouton_rejoindre">
