@@ -115,49 +115,50 @@
                     <th>Heure de début</th>
                     <th>Heure de fin</th>
                 </tr>
-                <tr>
+                <tr jour="0">
                     <td>Lundi</td>
                     <td><input type="checkbox" class="checkbox-dispo" onchange="toggleHeureInputs(this)"></td>
                     <td><input type="time" class="heure-debut" style="display: none;"></td>
                     <td><input type="time" class="heure-fin" style="display: none;"></td>
                 </tr>
-                <tr>
+                <tr jour="1">
                     <td>Mardi</td>
                     <td><input type="checkbox" class="checkbox-dispo" onchange="toggleHeureInputs(this)"></td>
                     <td><input type="time" class="heure-debut" style="display: none;"></td>
                     <td><input type="time" class="heure-fin" style="display: none;"></td>
                 </tr>
-                <tr>
+                <tr jour="2">
                     <td>Mercredi</td>
                     <td><input type="checkbox" class="checkbox-dispo" onchange="toggleHeureInputs(this)"></td>
                     <td><input type="time" class="heure-debut" style="display: none;"></td>
                     <td><input type="time" class="heure-fin" style="display: none;"></td>
                 </tr>
-                <tr>
+                <tr jour="3">
                     <td>Jeudi</td>
                     <td><input type="checkbox" class="checkbox-dispo" onchange="toggleHeureInputs(this)"></td>
                     <td><input type="time" class="heure-debut" style="display: none;"></td>
                     <td><input type="time" class="heure-fin" style="display: none;"></td>
                 </tr>
-                <tr>
+                <tr jour="4">
                     <td>Vendredi</td>
                     <td><input type="checkbox" class="checkbox-dispo" onchange="toggleHeureInputs(this)"></td>
                     <td><input type="time" class="heure-debut" style="display: none;"></td>
                     <td><input type="time" class="heure-fin" style="display: none;"></td>
                 </tr>
-                <tr>
+                <tr jour="5">
                     <td>Samedi</td>
                     <td><input type="checkbox" class="checkbox-dispo" onchange="toggleHeureInputs(this)"></td>
                     <td><input type="time" class="heure-debut" style="display: none;"></td>
                     <td><input type="time" class="heure-fin" style="display: none;"></td>
                 </tr>
-                <tr>
+                <tr jour="6">
                     <td>Dimanche</td>
                     <td><input type="checkbox" class="checkbox-dispo" onchange="toggleHeureInputs(this)"></td>
                     <td><input type="time" class="heure-debut" style="display: none;"></td>
                     <td><input type="time" class="heure-fin" style="display: none;"></td>
                 </tr>
             </table>
+            <input type="submit" value="Valider" id="valider_horaires"/>
           </div>
           <div class="col-md-5 col-md-offset-1">
               <div class="thumbnail" id="centre_interet">

@@ -81,7 +81,7 @@
     <?php
   }else{
     ?>
-    <div class="index_rejoindre" onclick="window.location.href='missions.php';">
+    <div class="index_rejoindre" onclick="window.location.href=abs_path('controller/missions.php');">
       Accéder aux missions
     </div>
   <?php

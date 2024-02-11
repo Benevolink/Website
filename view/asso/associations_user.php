@@ -30,8 +30,10 @@
     #bouton_creation_asso{
       text-align: center;
     }
+    .container{
+      width: 100svw;
+    }
   </style>
-<body style="background-color: white; padding: 30px;">
 
 
 <div class="container">

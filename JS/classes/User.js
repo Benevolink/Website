@@ -24,6 +24,22 @@ export class User extends APIObjet{
         APICall("user","get_pp",{});
     }
 
+    getListeInvitationsMissions(){
+        return this.
+        APICall("user","liste_invitations_missions",{});
+    }
+
+    sendReponseInvitMission(id_event, reponse){
+        return this.
+        APICall("user","reponse_invit_mission",{id_event: id_event, reponse: reponse});
+    }
+
+    sendDisponibilites(disponibilites)
+    {
+        return this.
+        APICall("user","set_disponibilites",{"disponibilites" :  disponibilites});
+    }
+
     static setLogo(file_content){
         let data = new FormData();
         data.append("photo_profil",file_content);
@@ -39,5 +55,8 @@ export class User extends APIObjet{
         });
         
     }
+
+
+
 
 }

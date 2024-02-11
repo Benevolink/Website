@@ -1,56 +1,97 @@
+<script type="text/javascript" src="<?= BF::abs_path("JS/before/missions.js")?>">
+</script>
+<script type="text/javascript" src="<?= BF::abs_path("JS/aff_miss.js")?>">
+</script>
 
-<link rel="stylesheet" href="<?= BF::abs_path("CSS/categories.css")?>"/>
-  <div class="col-md-4" id = "wrapper_all" style="display: flex;flex-wrap: wrap; margin-top: 30px; border: 1px solid #000; box-sizing: border-box; ">
-  <form id="liste_cate">
-    <img src="<?= BF::abs_path("media/img/select.jpg") ?>" onclick="retrecir(this);" style="width: 20px; border-radius: 5px;cursor: pointer;"/>
-    <div id="cat_mission" style="display: inline; font-size: 18px; font-weight: bold; padding-left: 20px; text-overflow: ellipsis; overflow: hidden;white-space: nowrap; ">Catégories de missions</div>
+<div id="bandeau_recherche">
+    <div class="titre_bandeau">
+        Domaines des missions :
+    </div>
+    <div id="liste_domaines">
+        <?= afficher_categories() ?>
+    </div>
+
+    <label for="progressBar">Distance maximale : <div style="display:inline" id="distance_input"> Aucune </div></label>
+    <input type="range" id="progressBar" min="0" max="100" value="100" step="1">
+    <input type="text" name="recherche" id="recherche_mission_type" placeholder="Rechercher une mission..."/>
     <br>
-    <br>
-      <?= afficher_categories()?>
-  </form>
-
-  
-    
-  </div>
-
-  <script>
-    function creer_select_categorie(key, value) {
-        return `
-            <div class="col-md-3">
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input cate_missions_checkbox" id="sel_cate_${key}" name="sel_cate_${key}">
-                    <label class="custom-control-label label_cate" for="sel_cate_${key}">${value['nom_domaine']}</label>
-                </div>
-            </div>
-        `;
-    }
-
-    function afficher_categories() {
-        global $categories;
-        $output = "";
-        foreach ($categories as $key => $value) {
-            $output .= creer_select_categorie($key, $value);
+    <input type="submit" value="Appliquer" id="submit_recherche_mission"/>
+</div>
+<div id="wrapper_all" style="display: inline">
+</div>
+<script type="text/javascript" src="<?= BF::abs_path("JS/after/missions.js")?>">
+</script>
+<script>
+    $("#progressBar").on("input",function(event){
+        let distance = $(progressBar).val();
+        if(distance == 100){
+            distance = "Aucune"
+        }else{
+            distance += " km"
         }
-        return $output;
-    }
+        $("#distance_input").text(distance);
+    });
 
-    function toggleCategories() {
-        var categoriesContainer = document.getElementById("categories-container");
-        categoriesContainer.style.display = (categoriesContainer.style.display === "none" || categoriesContainer.style.display === "") ? "flex" : "none";
+    $("#submit_recherche_mission").on("click",send_recherche);
+
+    $("#recherche_mission_type").on('keydown', function(event) {
+    // Vérifier si la touche appuyée est la touche "Entrée" (code 13)
+    if (event.key === 'Enter' || event.keyCode === 13) {
+      // Effectuer l'action souhaitée lors de l'appui sur Entrée
+        $("#submit_recherche_mission").trigger("click");
     }
+  });
+    function send_recherche()
+    {
+        let form = $("#bandeau_recherche");
+        $("#liste_domaines");
+        let sel_cate = form.find(".cate_missions_checkbox:checked");
+        let liste_domaines = {};
+        $.each(sel_cate,function(index,value){
+            liste_domaines[$(value).attr("numero")] = true;
+        });
+        let distance = $("#progressBar").val();
+        if(distance == 100)
+        {
+            distance = false;
+        }
+        let recherche = $("#recherche_mission_type").val();
+        if(!recherche)
+        {
+            recherche = false;
+        }
+        import(abs_path("JS/classes/Event.js")).then((module)=>{
+            $("#wrapper_all").empty();
+            module.Event.search(distance,recherche,liste_domaines).done((data)=>{
+                console.log(data);
+                afficher_missions("Resultats de la recherche :",data);
+            }).fail((error)=>{
+                console.log(error);
+            });
+        });
+        console.log(liste_domaines);
+    }
+    $(document).ready(send_recherche);
 </script>
 
 <style>
-
-    #cat_mission{
-
-    font-family: Corps;
-      font-weight: bold;
-      src: url(fonts/Nexa-Heavy.woff2) format("woff2");
+    #bandeau_recherche{
+        background-color: rgb(245,245,245);
+        padding: 10px;
+        width: fit-content;
+        border-radius: 10px;
+        margin: 10px;
     }
-
-    #liste_cate{
-        font-family: Corps;
-      src: url(fonts/Nexa-Heavy.woff2) format("woff2");
+    #liste_domaines{
+        width:fit-content;
+        padding: 10px;
+        border-radius: 10px;
     }
-
+    .titre_bandeau{
+        font-size: 130%;
+        font-weight: bold;
+    }
+    #progressBar{
+        width: 200px;
+    }
+</style>

@@ -6,7 +6,7 @@ function afficher_missions(titre,liste){
     main.append(
       $('<div>').attr({class: "case_titre"}).css({
         fontWeight: "bold",
-        fontSize: "150%"
+        fontSize: "120%"
       }).append(titre)
     );
     let wrapper = $('<div>').attr({class: "wrapper"}).css({
@@ -103,8 +103,8 @@ function afficher_event(e, id){
   let Y = e.pageY;
   c.style.top = Y+"px";
   c.style.left = X+"px";
-  c.appendChild(iframe);
-  document.body.appendChild(c);
+  //c.appendChild(iframe);
+  //document.body.appendChild(c);
   
   iframe.contentWindow.location.reload();
   

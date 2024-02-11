@@ -79,6 +79,12 @@ class User implements Suppression, GestionLogo{
     return false;
   }
 
+  public function get_id_lieu()
+  {
+    $req = "SELECT ".A::USER_ID_LIEU." FROM ".A::USER." WHERE ".A::USER_ID." = ?";
+    return BF::request($req,[$this->id],true,true)[0];
+  }
+
     /**
    * Vérifie que l'utilisateur suit l'asso (statut > -1)
    *
@@ -134,7 +140,7 @@ class User implements Suppression, GestionLogo{
     /*
     On renvoie la liste de toutes les assos de l'utilisateur avec le statut
     */
-    $req = "SELECT a.*, m.".A::MEMBRESASSOS_STATUT." FROM ".A::ASSO." a JOIN ".A::MEMBRESASSOS." m ON (a.".A::ASSO_ID." = m.".A::MEMBRESASSOS_ID_ASSO." AND m.".A::MEMBRESASSOS_ID_USER." = ? AND m.".A::MEMBRESASSOS_STATUT." >= 1) ORDER BY m.".A::MEMBRESASSOS_STATUT." ASC";
+    $req = "SELECT a.*, m.".A::MEMBRESASSOS_STATUT.", COUNT(me.".A::MEMBRESASSOS_ID_USER.") AS nombre_membres FROM ".A::ASSO." a JOIN ".A::MEMBRESASSOS." m ON (a.".A::ASSO_ID." = m.".A::MEMBRESASSOS_ID_ASSO." AND m.".A::MEMBRESASSOS_ID_USER." = ? AND m.".A::MEMBRESASSOS_STATUT." >= 1) JOIN  ".A::MEMBRESASSOS." me ON me.".A::MEMBRESASSOS_ID_ASSO." = a.".A::ASSO_ID." GROUP BY a.".A::ASSO_ID." ORDER BY m.".A::MEMBRESASSOS_STATUT." ASC";
     $table = BF::request($req,[$this->id],true,false,PDO::FETCH_ASSOC);
     return $table;
   
@@ -152,7 +158,7 @@ class User implements Suppression, GestionLogo{
     /*
     On renvoie la liste de toutes les assos de l'utilisateur avec le statut
     */
-    $req = "SELECT a.*, m.".A::MEMBRESASSOS_STATUT." FROM ".A::ASSO." a JOIN ".A::MEMBRESASSOS." m ON (a.".A::ASSO_ID." = m.".A::MEMBRESASSOS_ID_ASSO." AND m.".A::MEMBRESASSOS_ID_USER." = ? AND m.".A::MEMBRESASSOS_STATUT." = 0)";
+    $req = "SELECT a.*, m.".A::MEMBRESASSOS_STATUT.", COUNT(me.".A::MEMBRESASSOS_ID_USER.") AS nombre_membres FROM ".A::ASSO." a JOIN ".A::MEMBRESASSOS." m ON (a.".A::ASSO_ID." = m.".A::MEMBRESASSOS_ID_ASSO." AND m.".A::MEMBRESASSOS_ID_USER." = ? AND m.".A::MEMBRESASSOS_STATUT." = 0) JOIN  ".A::MEMBRESASSOS." me ON me.".A::MEMBRESASSOS_ID_ASSO." = a.".A::ASSO_ID." GROUP BY a.".A::ASSO_ID." ORDER BY m.".A::MEMBRESASSOS_STATUT." ASC";
     $table = BF::request($req,[$this->id],true,false,PDO::FETCH_ASSOC);
     return $table;
   
@@ -296,7 +302,7 @@ class User implements Suppression, GestionLogo{
 
       //Erreur ici
       //Utiliser domaine->detient_domaine($asso)
-      $id_association_domaine = BF::request("SELECT ".A::EVENT_ID_ASSO." FROM ".A::EVENT." WHERE ".A::EVENT_ID_DOMAINE." = ?", [$id_domaine], true, true)[0];
+      $id_association_domaine = BF::request("SELECT ".A::EVENT_ID_ASSO." FROM ".A::EVENT." WHERE ".A::DOMAINE_ID." = ?", [$id_domaine], true, true)[0];
 
       return array(
           'id_asso' => $id_asso,
@@ -526,6 +532,27 @@ class User implements Suppression, GestionLogo{
    */
   public function est_admin_event($id_event){
     return ($this->statut_event($id_event)>2) ? true : false;
+  }
+  
+  /**
+   * Donne la liste des missions en attente (statut de la mission = -2) du bénévole
+   *
+   * @return array 
+   */
+  public function liste_missions_en_attente(){
+    
+    $id_event = BF::request("SELECT ".A::MEMBRESEVENTS_ID_EVENT." FROM ".A::MEMBRESEVENTS." WHERE ".A::MEMBRESEVENTS_ID_USER." = ? AND ".A::MEMBRESEVENTS_STATUT."= ?" , [$this->id,-2], true, false,PDO::FETCH_NUM);
+    $id_event = array_filter($id_event);
+    if(count($id_event)==0) return[];
+    $taille = count($id_event);
+    
+    $nom_event = array();
+    for($i=0 ; $i<$taille ; $i++){
+      $nom_event[$i]=BF::request("SELECT ".A::EVENT_NOM." FROM ".A::EVENT." WHERE ".A::EVENT_ID." = ?" , [$id_event[$i][0]], true, true,PDO::FETCH_NUM)[0];
+      $id_event[$i] = $id_event[$i][0];
+    }
+    return [$nom_event,$id_event];
+
   }
 }
 ?>

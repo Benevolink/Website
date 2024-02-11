@@ -1,4 +1,11 @@
   <link rel="stylesheet" href="<?= BF::abs_path("CSS/association.css")?>">
+<div style="margin-left: 40px;">
+  <img id="logo" src="<?= $logo_path ?>" class="img_asso">
+
+  <label class="titre_asso" for="logo"><?= $prop_all["asso_info"][AttributsTables::ASSO_NOM] ?></label>
+  <br>
+  
+
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 
@@ -8,7 +15,6 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
 
-<body>
 
   <br>
   <h4 id="follower"> Il y a <?= $nombre ?> membre(s) dans l'association. </h4>
@@ -17,6 +23,12 @@
  
 
   <div class="cote_a_cote">
+
+    <div class="rej_bouton" id="Rejoindre" style="background-color: rgb(124, 243, 152);" onclick="join();">
+      Rejoindre
+    </div>
+  </div>
+
   </div>
 
   
@@ -25,16 +37,20 @@
 <div class="row">
   <div class="col-md-3" id="image_asso">
     <img src="<?= BF::abs_path($prop_all["asso_info"][AttributsTables::ASSO_LOGO]) ?>"  id="logoImg" class="img-responsive img-thumbnail rounded">
+
   </div>
-  <div class="col-md-7" id="description_asso">
-  <p><?= $prop_all["asso_info"][AttributsTables::ASSO_DESCRIPTION_MISSIONS] ?></p>
+  
+<div class="row infos_asso">
+  <div class="col-md-7 description_asso contact_adresse desc_asso_remplir_flex">
+  <h4>Description de l'association :</h4>
+  <p><?= $prop_all["asso_info"][AttributsTables::ASSO_DESCRIPTION] ?></p>
   </div>
 </div>
 
-  <div class="row">
-  <div class="col-md-3" id="contact_adresse"> 
-    <h3 id="titre_asso"> Contact et adresse </h3>
-  
+<div class="row infos_asso">
+  <div class="col-md-3 contact_adresse"> 
+    <h4> Contact et adresse </h4>
+
   <p> <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> 
   Adresse: <?= $prop_all["lieu"][AttributsTables::LIEU_ADRESSE] ?> 
   <br> 
@@ -51,7 +67,15 @@
   
   <p><?= $prop_all["asso_info"][AttributsTables::ASSO_DESCRIPTION] ?></p>
 
+  <div class="col-md-4 col-md-offset-4 contact_adresse desc_asso_remplir_flex" id= "desc_missions">
+  <h4>Description des Missions</h4>
+  <p><?= $prop_all["asso_info"][AttributsTables::ASSO_DESCRIPTION_MISSIONS] ?></p>
   </div>
+  </div>
+  <br>
+  <h4 id="follower"> Il y a <?= $nombre ?> membre(s) dans l'association. </h4>
+  <br>
+  <br> <br> <br>
 
   <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> 
 
@@ -92,6 +116,24 @@ if ($is_admin) { ?>
   
 <style>
 
+  .row{
+    margin: auto;
+    width : 90%;
+   
+  }
+  .infos_asso{
+    display: flex;
+  }
+  h4{
+    font-size: 110%;
+    font-weight: bold;
+  }
+  .desc_asso_remplir{
+    width: 100%;
+  }
+  .desc_asso_remplir_flex{
+    flex-grow: 1;
+  }
   #description_asso{
     font-family: Corps;
     src: url(fonts/Nexa-Heavy.woff2) format("woff2");
@@ -114,12 +156,14 @@ if ($is_admin) { ?>
     padding: 8px; /* Espace à l'intérieur des cellules */
     padding-left: 30px;
     font-size: 17px;
+    margin-top: 20px;
+    width : 100%;
   }
 
-  #contact_adresse{
+  .contact_adresse{
     font-family: Corps;
     src: url(fonts/Nexa-Heavy.woff2) format("woff2");
-    margin-left: 70px;
+    margin-left: 40px;
     margin-top: 20px;
     border: 1px solid #000;
     border-radius: 10px;
@@ -135,11 +179,12 @@ if ($is_admin) { ?>
     margin: auto; /* Ajoutez cette ligne pour centrer horizontalement */
 
   }
-  #titre_asso{
+  .titre_asso{
+    margin-left: 40px;
     font-weight: bold;
+    font-size: 160%;
     font-family: Corps;
     src: url(fonts/Nexa.woff2) format("woff2");
-    font-size: 30px;
     text-align: center;
   }
 
@@ -150,12 +195,12 @@ if ($is_admin) { ?>
   }
  
   #wrapper_all{
-    font-weight: bold;
     font-family: Corps;
     src: url(fonts/Nexa.woff2) format("woff2");
-    font-size: 30px;
     text-align: center;
   }
-
+  #desc_missions{
+    margin-left: 20px;
+  }
 
 </style>

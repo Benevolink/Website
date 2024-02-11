@@ -58,6 +58,12 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
     $array = BF::request($req,[$this->id],true,false,PDO::FETCH_ASSOC);
     return $array;
   }
+
+  public function get_nombre_membres()
+  {
+    $req = "SELECT COUNT(*) FROM ".A::MEMBRESASSOS." WHERE ".A::MEMBRESASSOS_ID_ASSO." = ?";
+    return BF::request($req,[$this->id],true,true,PDO::FETCH_ASSOC)[0];
+  }
     
   /**
    * Renvoie le nom et l'id des assos dont le nom commence par $searchQuery
@@ -102,7 +108,6 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
     $locationAsso = BF::request("SELECT * FROM ".A::LIEU." WHERE ".A::LIEU_ID." = ?", [$assoInfo[AttributsTables::ASSO_ID_LIEU]], true, true, PDO::FETCH_ASSOC);
 
     $array =  array(
-
         'prop_asso' => $propAssos,
         'asso_info' => $assoInfo,
         'membres_count' => $membresCount,
@@ -160,6 +165,9 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
      * @todo
      */
     // On se connecte à la BDD
+    if(strlen($nom)>256){
+      $nom = substr($nom,0,256-strlen($nom));
+    }
     $db->beginTransaction();
     
     // On insère les données reçues dans la table "assos"
@@ -194,7 +202,7 @@ class Asso implements Suppression, GestionMembres, GestionLogo{
   
   /**
    * A faire
-   * @todo permet de supprimer toutes les données relatives à l'association
+   * Permet de supprimer toutes les données relatives à l'association
    */
   public function suppr(){
     $id_asso = $this->id;
