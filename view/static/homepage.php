@@ -7,28 +7,69 @@
       </div>
     </div>
     <div class="index_desc">
-      Benevolink est une plateforme de mise en relation de bénévoles et d'associations. <br>Avec Benevolink :
-    </div>
+    Benevolink est une plateforme de mise en relation de bénévoles et d'associations. <br>Avec Benevolink :
+
+    <!-- Section: Trouvez la mission qui vous correspond -->
     <div class="index_wrapper">
-      <div>
-        Trouvez la mission qui vous correspond
-      </div>
-      <div>
-        Gérez votre planning
-      </div>
-      <div>
-        Découvrez de nouvelles associations
-      </div>
-      <div>
-        Rencontrez d'autres bénévoles
-      </div>
-      <div>
-        Cherchez les missions par zone géographique
-      </div>
-      <div>
-        Ne manquez aucun évènement de vos associations préférées
-      </div>
+    <div>
+            <img src="<?= BF::abs_path("media/img/missions.jpg") ?>" class="mission_image" alt="Mission Image">
+            <div class="mission_text">
+                Trouvez la mission qui vous correspond
+        </div>
     </div>
+
+    <!-- Section: Gérez votre planning -->
+    <div>
+        
+            <img src="<?= BF::abs_path("media/img/plannings.jpg") ?>" class="mission_image" alt="Mission Image">
+            <div class="mission_text">
+              Gérez votre planning
+            
+        </div>
+    </div>
+
+    <!-- Section: Découvrez de nouvelles associations -->
+    <div>
+      
+          <img src="<?= BF::abs_path("media/img/associations.png") ?>" class="mission_image" alt="Mission Image">
+            <div class="mission_text">
+              Découvrez de nouvelles associations
+            
+        </div>
+    </div>
+
+    <!-- Section: Rencontrez d'autres bénévoles -->
+    <div>
+        
+        <img src="<?= BF::abs_path("media/img/benevole.jpg") ?>" class="mission_image" alt="Mission Image">
+            <div class="mission_text">
+               Rencontrez d'autres bénévoles
+           
+        </div>
+    </div>
+
+    <!-- Section: Cherchez les missions par zone géographique -->
+    <div>
+        
+        <img src="<?= BF::abs_path("media/img/carte.webp") ?>" class="mission_image" alt="Mission Image">
+            <div class="mission_text">
+                Cherchez les missions par zone géographique
+            
+        </div>
+    </div>
+
+    <!-- Section: Ne manquez aucun évènement de vos associations préférées -->
+    <div>
+        
+        <img src="<?= BF::abs_path("media/img/coeur.jpg") ?>" class="mission_image" alt="Mission Image">
+            <div class="mission_text">
+             Ne manquez aucun évènement de vos associations préférées
+           
+    </div>
+    </div>
+</div>
+
+
     <?php
     //Si l'utilisateur est connecté on lui propose de trouver des assos
   //Sinon on lui propose de se connecter
@@ -50,7 +91,24 @@
   
   <div id="index_compteur">
     <span class="glyphicon glyphicon-heart-empty"> </span>
-    <?= nb_utilisateurs() ?>utilisateurs nous ont déjà rejoint
+    <?= nb_utilisateurs() ?> utilisateurs nous ont déjà rejoint
   </div>
 </div>
+
+
+
+<style>
+    
+
+    .mission_image {
+        max-width: 75%; /* Assurez-vous que l'image ne dépasse pas la largeur du conteneur */
+        height: auto; /* Maintenez le ratio hauteur/largeur pour éviter la distorsion */
+        margin-bottom: 10px; /* Ajoutez une marge en bas pour l'espace entre l'image et le texte */
+    }
+
+    .mission_text {
+        font-size: 18px; /* Ajustez la taille du texte selon vos préférences */
+    } 
+</style>
+
 
