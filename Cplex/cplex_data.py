@@ -18,23 +18,49 @@ con = sql.connect("./../database.sqlite")
 
 cur = con.cursor()
 
-#Récupération des infos de l'event à partir de son id
-event_main = cur.execute("SELECT id_event, id_lieu, nb_personnes, id_horaire, duree_mission, indice_prio_mission FROM evenements WHERE id_asso = ? ORDER BY id_event", (param1,))
+
+#Fonction de base pour aller chercher des éléments dans la BDD
+#table -> liste des tables (si len(table)>1 alors il faut join les tables avec les arguments dans join)
+#param sont les paramèetres de where, par défaut 1 = 1 toujours vrai
+#columns les colonnes à choisir dans la bdd
+#order_by si besoin d'ordonner les data
+#join lié à table
+def getFromDB(table, param = ["1", "1"], columns = '*', order_by = None, join = None):
+    end_of_request = ""
+    if order_by != None:
+        end_of_request = " ORDER BY " + order_by
+    
+    if len(table) == 2 and len(join) == 2:
+        request = "SELECT ? FROM ? JOIN ? ON ? = ? WHERE ? = ?" + end_of_request
+        execute_request = cur.execute(request, (columns, table[0], table[1], join[0], join[1], param[0], param[1],))
+
+    elif len(table) == 1:
+        request = "SELECT ? FROM ? WHERE ? = ?" + end_of_request
+        execute_request = cur.execute(request, (columns, table[0], param[0], param[1],))
+    
+    else:
+        return "error"
+    
+    result = execute_request.fetchall()
+    
+    return result
 
 
-event_data = event_main.fetchall()
-if event_data:
-    id_horaire = event_data[0][3]
-    event_horaire = cur.execute("SELECT * FROM horaire WHERE id_horaire = ?", (id_horaire,))
+def getDispo(user):
+    tab_dispo = [0 for i in range(24*7)]
+    for i in range(7):
+        dispo_jour = getFromDB(["users"], ["jour = " + i + " AND id_user", user], "h_deb, h_fin")
 
-# Utilisez des paramètres de requête pour éviter les attaques par injection SQL
-users_in_asso = cur.execute("SELECT id_user FROM membres_assos WHERE id_asso = ? AND statut = 1", (param1,))
 
-users = users_in_asso.fetchall()
-if users:
-    for i in range(len(users)):
-            id_users = users[i][0]
-            users_info = cur.execute("SELECT * FROM user WHERE id_user = ?", (id_users[i],))
+
+event_data = getFromDB(["evenements"], ["id_asso", param1], "id_event, id_lieu, nb_personnes, id_horaire, duree_mission, indice_prio_mission", "id_event")
+
+
+users = getFromDB(["membres_assos"], ["id_asso", param1], "id_user", "id_user")
+
+for user in users:
+    competences = getFromDB(["join_competence"], ["id_join", user[0] + " AND num_type = 0"], "id_competence", "id_competence")
+    user.append(competences)
 
 #récupérer les infos des horaires et du lieu du membre.
 
@@ -50,18 +76,42 @@ nbMiss = len(event_data)
 nbBene = len(users)
 nbAsso = 1
 nbComp = 7
-# p = [4,3,2,1]
-# m = [[0,50,25,10],[0,50,25,10],[0,50,25,10],[0,50,25,10]]
+
+#Variable p pour la priorité
+p = []
+for i in range(len(event_data)):
+    p.append(int(event_data[i][5]))
+ 
+#Variable com pour les compétences des benevoles 
+com = []
+for user in users:
+    lst_comp = [0 for i in range(nbComp-1)]
+    for competence in user[1]:
+        lst_comp[int(competence)] = 1
+    lst_comp.append(1)
+    com.append(lst_comp)
+
+
+for user in users:
+    dispo_user = 
+
+dispo_bene = [[0 for j in range(len(users[0][1]))] for i in range(len(users))]
+
 # D = [[0,1,0,1],[1,1,0,1],[0,1,1,1],[1,1,1,1]]
-# r1 = 1
-# r2 = 1
-# r3 = 1
-# r4 = 1
-# com = [[1 for i in range(7)] for i in range(4)]
+    
+# Variables de poids mises par défaut
+r1 = 5 #Nombre de missions remplies
+r2 = 2 #priorité
+r3 = 3 #distance
+r4 = 1 #ancienneté
+
+
 # C = [[1 for i in range(7)] for i in range(4)]
 # Di = [10 for i in range(4)]
 # L = [[1 for i in range(4)] for i in range(4)]
 # T = [[1 for i in range(4)] for i in range(4)]
+
+# m[jtems][ktems] -> historique des missions
 
 
 items = range(0, nbMiss )
