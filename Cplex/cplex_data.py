@@ -47,6 +47,41 @@ def getFromDB(table, param = ["1", "1"], columns = '*', order_by = None, join = 
     return result
 
 
+event_data = getFromDB(["evenements"], ["id_asso", param1], "id_event, id_lieu, nb_personnes, id_horaire, duree_mission, indice_prio_mission", "id_event")
+
+users = getFromDB(["membres_assos"], ["id_asso", param1], "id_user", "id_user")
+
+for i in range(len(users)):
+    user = users[i]
+    competences = getFromDB(["join_competence"], ["id_join", f"{user[0]} AND num_type = 0"], "id_competence", "id_competence")
+    user += (competences,)
+    users[i] = user
+
+
+#récupérer les infos des horaires et du lieu du membre.
+
+#récupérer l'ancienneté etc...
+
+
+
+## Création du modèle
+model = Model(name='example')
+
+
+nbMiss = len(event_data)
+nbBene = len(users)
+nbAsso = 1
+nbComp = 7
+
+#Variable p pour la priorité
+def getPriority(event_data):
+    p = []
+    for i in range(len(event_data)):
+        p.append(event_data[i][5])
+    return p
+
+p = getPriority(event_data)
+
 def getDispo(id_user):
     tab_dispo = [0 for i in range(24*7)]
 
@@ -101,63 +136,6 @@ def getD(events, users):
             D[i][j] = correspondance
     return D
 
-
-
-# Récupérer les compétences utilisateurs ou asso
-# def getComp(id_user_asso, type):
-#     lst_comp = [0 for i in range(7)]
-#     db_id_comp = getFromDB(["join_competence"], [f"num_type = {type} AND id_join", id_user_asso], "id_competence")
-#     for competence in db_id_comp:
-#         lst_comp[competence[0]] = 1
-
-
-event_data = getFromDB(["evenements"], ["id_asso", param1], "id_event, id_lieu, nb_personnes, id_horaire, duree_mission, indice_prio_mission", "id_event")
-
-users = getFromDB(["membres_assos"], ["id_asso", param1], "id_user", "id_user")
-
-for i in range(len(users)):
-    user = users[i]
-    competences = getFromDB(["join_competence"], ["id_join", f"{user[0]} AND num_type = 0"], "id_competence", "id_competence")
-    user += (competences,)
-    users[i] = user
-
-
-#récupérer les infos des horaires et du lieu du membre.
-
-#récupérer l'ancienneté etc...
-
-
-
-## Création du modèle
-model = Model(name='example')
-
-
-nbMiss = len(event_data)
-nbBene = len(users)
-nbAsso = 1
-nbComp = 7
-
-#Variable p pour la priorité
-def getPriority(event_data):
-    p = []
-    for i in range(len(event_data)):
-        p.append(event_data[i][5])
-    return p
-
-p = getPriority(event_data)
- 
-#Variable com pour les compétences des benevoles 
-# com = []
-# for user in users:
-#     lst_comp = [0 for i in range(nbComp-1)]
-#     for competence in user[1]:
-#         lst_comp[int(competence)] = 1
-#     lst_comp.append(1)
-#     com.append(lst_comp)
-
-# Variables pour les nombres de bénévoles par compétence 
-# C = [[1 for i in range(7)] for i in range(4)]
-
 D = getD(event_data, users)
     
 # Variables de poids mises par défaut
@@ -167,9 +145,34 @@ r3 = 3      #distance
 r4 = 1      #ancienneté
 
 
+# Récupérer les compétences utilisateurs ou asso
+def getComp_all(id_user_asso, type, nbComp):
+    lst_comp = [0 for i in range(nbComp)]
+    db_id_comp = getFromDB(["join_competence"], [f"num_type = {type} AND id_join", id_user_asso], "id_competence, nb_necessaire")
+    for competence in db_id_comp:
+        if type:
+            lst_comp[competence[0]] = competence[1]
+        else:
+            lst_comp[competence[0]] = 1
+    return lst_comp
 
+#Variable com pour les compétences des benevoles 
+def getC(event_data, nbComp):
+    C = []
+    for event in event_data:
+        C.append(getComp_all(event[0], 1, nbComp))
+    return C
 
+C = getC(event_data, nbComp)
 
+# Variables pour les nombres de bénévoles par compétence 
+def getCom(users, nbComp):
+    com = []
+    for user in users:
+        com.append(getComp_all(user[0], 0, nbComp))
+    return com
+
+com = getCom(user, nbComp)
 
 #Distance acceptee par le benevole
 def getDistMax(users):
