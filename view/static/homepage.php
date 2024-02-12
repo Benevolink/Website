@@ -7,7 +7,7 @@
       </div>
     </div>
     <div class="index_desc">
-    Benevolink est une plateforme de mise en relation de bénévoles et d'associations. <br>Avec Benevolink :
+    Explorez des missions de bénévolat qui vous correspondent vraiment. <br>Avec Benevolink :
 
     <!-- Section: Trouvez la mission qui vous correspond -->
     <div class="index_wrapper">
@@ -91,15 +91,30 @@
   
   <div id="index_compteur">
     <span class="glyphicon glyphicon-heart-empty"> </span>
-    <?= nb_utilisateurs() ?> utilisateurs nous ont déjà rejoint
+    <?= nb_utilisateurs() ?> utilisateurs nous ont déjà rejoint !
   </div>
 </div>
 
 
 
 <style>
-    
 
+    .index_desc{
+      font-size: 30px;
+      font-family: Corps;
+      src: url(fonts/Nexa-Heavy.woff2) format("woff2");
+    }
+    .index_rejoindre{
+      font-size: 25px;
+      font-family: Corps;
+      src: url(fonts/Nexa-Heavy.woff2) format("woff2");
+    }
+
+    #index_compteur{
+      font-size: 30px;
+      font-family: Corps;
+      src: url(fonts/Nexa-Heavy.woff2) format("woff2");
+    }
     .mission_image {
         max-width: 75%; /* Assurez-vous que l'image ne dépasse pas la largeur du conteneur */
         height: auto; /* Maintenez le ratio hauteur/largeur pour éviter la distorsion */
@@ -108,6 +123,8 @@
 
     .mission_text {
         font-size: 18px; /* Ajustez la taille du texte selon vos préférences */
+        font-family: Corps;
+      src: url(fonts/Nexa-Heavy.woff2) format("woff2");
     } 
 </style>
 
