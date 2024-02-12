@@ -121,6 +121,43 @@ switch($fonction){
         }
         //@todo
         //logique pour vérifier si le mot de passe respecte des règles en vigueur et si oui, le modifie
+    
+    case "ajouter_competences":
+        BF::sess_start();
+        if(!BF::sess_start()){
+            return_statut(false,"Vous n'êtes pas connecté !");
+            exit();
+        }
+        try{
+            $user = new User();
+            $liste_competences = $_POST["liste_competences_ajout"];
+            $liste_competences_retrait =  $_POST["liste_competences_retrait"];
+            foreach($liste_competences as $key => $value)
+            {
+                $user->ajouter_competence($value);
+            }
+            foreach($liste_competences_retrait as $key => $value)
+            {
+                $user->retirer_competence($value);
+            }
+            return_statut(true);
+        }
+        catch (Exception $e){
+            return_statut(false,$e->getMessage());
+        }
+        break;
+    case "get_all_comp":
+        BF::sess_start();
+        if(!BF::sess_start()){
+            return_statut(false,"Vous n'êtes pas connecté !");
+            exit();
+        }
+        $user = new User();
+        try{
+            return_json($user->get_all_competences());
+        }catch(Exception $e){
+            return_statut(false,$e->getMessage());
+        }
     default:
         echo "Veuillez spécifier une fonction";
         exit();
