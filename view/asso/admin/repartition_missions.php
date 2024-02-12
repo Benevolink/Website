@@ -78,12 +78,26 @@
 </div>
 <br>
 
+<div id="solutions"></div>
+
 <div class="aide_decision_case" id="liste_membres_affectes">
     <div class="aide_decision">
         Aide à la décision
     </div>
 </div>
 <br>
+
+<button id="valider">Valider</button> 
+<br>
+
+<div class="liste_membres">
+    <?php
+    $liste_membres = afficher_liste_benevoles_data();
+    foreach ($liste_membres as $membre) {
+        echo '<div class="membre_case" id_membre="' . $membre['id'] . '" role="' . $membre['statut'] . '" id_mission="-1">' . $membre['nom'] . ' ' . $membre['prenom'] . '</div>';
+    }
+    ?>
+</div>
 
 <script>
     var membresAffectations = {}; // Tableau pour stocker les affectations des membres
