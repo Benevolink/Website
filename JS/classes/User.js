@@ -34,6 +34,13 @@ export class User extends APIObjet{
         APICall("user","reponse_invit_mission",{id_event: id_event, reponse: reponse});
     }
 
+    get_disponibilites()
+    {
+        return this.
+        APICall("user","get_all_horaires",{});
+        
+    }
+
     sendDisponibilites(disponibilites)
     {
         return this.
