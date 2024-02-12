@@ -40,6 +40,24 @@ export class User extends APIObjet{
         APICall("user","set_disponibilites",{"disponibilites" :  disponibilites});
     }
 
+    get_all_competences()
+    {
+        return this.
+        APICall("user","get_all_comp",{});
+    }
+
+    get_all_liste_competences()
+    {
+        return this.
+        APICall("user","get_all_liste_comp",{});
+    }
+
+    send_comp(liste_id_comp_ajout)
+    {
+        return this.
+        APICall("user","ajouter_competences",{liste_competences_ajout: liste_id_comp_ajout});
+    }
+
     static setLogo(file_content){
         let data = new FormData();
         data.append("photo_profil",file_content);
