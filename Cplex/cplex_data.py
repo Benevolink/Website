@@ -2,6 +2,7 @@ import sqlite3 as sql
 from docplex.mp.model import Model
 # script.py
 import sys
+import numpy as np
 
 # # Récupérer les paramètres passés en ligne de commande
 # param1 = sys.argv[1] if len(sys.argv) > 1 else None
@@ -184,23 +185,53 @@ def getDistMax(users):
 
 Di = getDistMax(users)
 
+def getCoordinates(id_lieu):
+    coordinates = getFromDB(["lieu"], ["id_lieu", id_lieu], "coordonee_x, coordonee_y")
+    x, y = coordinates[0][0], coordinates[0][1]
+    return x, y
 
-# L = [[1 for i in range(4)] for i in range(4)]
+def getDistEventUser(event, user):
+    id_lieu_user = getFromDB(["users"], ["id", user], "id_lieu")
+    id_lieu_event = getFromDB(["evenements"], ["id_event", event], "id_lieu")
+    x_user, y_user = getCoordinates(id_lieu_user[0][0])
+    x_event, y_event = getCoordinates(id_lieu_event[0][0])
+    return np.sqrt((x_user - x_event)**2 + (y_user - y_event)**2)
+
+def getL(users, event_data):
+    L = [[0 for j in range(len(users))] for i in range(len(event_data))]
+    for i in range(len(event_data)):
+        for j in range(len(users)):
+            id_event = event_data[i][0]
+            id_user = users[j][0]
+            L[i][j] = getDistEventUser(id_event, id_user)
+    return L
+
+L = getL(users, event_data)
+
+def getTimeEvents(events):
+    tab_hours = []
+    for event in events:
+        hours = getHour(event[0])
+        tab_hours.append(sum(hours))
+    return tab_hours
+
+
 def getT(event_data, users):
     T = [[0] for j in range(len(users)) for i in range(len(event_data))]
-    max_time_lst = [0 for i in range(len(users))]
-    event_time_lst = [0 for i in range(len(event_data))]
-
-    for i in range(len(users)):
-        id_user = users[i][0]
-        duree_max = getFromDB(["users"], ["id", id_user], "duree_max_accepte")
-        max_time_lst[i] = duree_max[0][0]
     
-    for j in range(len(event_data)):
-        event_time_lst[j] = getHour(event_data[j][3]).sum()
+    max_time_lst = []
+    for user in users:
+        user_max_time = getFromDB(["users"], ["id", user[0]], "duree_max_accepte")
+        max_time_lst.append(user_max_time[0][0])
+    
+    event_time_lst = getTimeEvents(event_data)
 
+    for i in range(len(event_data)):
+        for j in range(len(users)):
+            T[i][j] = 1*(max_time_lst[j] <= event_time_lst[i])
+    return T
 
-# T = [[1 for i in range(4)] for i in range(4)]
+T = getT(event_data, users)
 
 
 def getHistorique(users):
