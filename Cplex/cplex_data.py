@@ -2,7 +2,7 @@ import sqlite3 as sql
 from docplex.mp.model import Model
 # script.py
 import sys
-import numpy as np
+from datetime import datetime
 
 # # Récupérer les paramètres passés en ligne de commande
 # param1 = sys.argv[1] if len(sys.argv) > 1 else None
@@ -13,10 +13,10 @@ import numpy as np
 
 # # Afficher le résultat (sera récupéré par PHP)
 # print(result)
-param1 = 6
+param1 = 32
 
 
-con = sql.connect("./database.sqlite")
+con = sql.connect("database.sqlite")
 
 cur = con.cursor()
 
@@ -85,44 +85,42 @@ p = getPriority(event_data)
 
 def getDispo(id_user):
     tab_dispo = [0 for i in range(24*7)]
-
     for i in range(7):
+        
+        dispo_jour = getFromDB(["disponibilites"], [f"jour = {i+1} AND id_user", id_user], "h_deb, h_fin")
 
-        dispo_jour = getFromDB(["disponibilites"], [f"jour = {i} AND id_user", id_user], "h_deb, h_fin")
 
-        if len(dispo_jour) == 0:
-            break
-        h_deb_hour = int(dispo_jour[0][0].strftime("%H"))
-        h_fin_hour = int(dispo_jour[0][1].strftime("%H"))
+        if len(dispo_jour) != 0:
+            h_deb = int(dispo_jour[0][0][0])*10 + int(dispo_jour[0][0][1])
+            h_fin = int(dispo_jour[0][1][0])*10 + int(dispo_jour[0][1][1])
 
-        for j in range(int(h_deb_hour + i*24), int(h_fin_hour + i*24)):
-            tab_dispo[j] = 1
+            for j in range(h_deb, h_fin+1):
+                tab_dispo[j + i*24] = 1
     return tab_dispo
 
 def getHour(id_horaire):
     tab_hours = [0 for i in range(24*7)]
-    print(id_horaire)
     
     dispo_jour = getFromDB(["horaire"], ["id_horaire", id_horaire], "date_debut, date_fin, heure_debut, heure_fin")
-    print(dispo_jour)
-    j_deb = int(dispo_jour[0][0].strftime("%w"))
-    j_fin = int(dispo_jour[0][1].strftime("%w"))
-    h_deb = int(dispo_jour[0][2].strftime("%H"))
-    h_fin = int(dispo_jour[0][3].strftime("%H"))
+    if len(dispo_jour)>0:
+        j_deb = int(datetime.strptime(dispo_jour[0][0], '%Y-%m-%d').strftime("%w"))-1
+        j_fin = int(datetime.strptime(dispo_jour[0][1], '%Y-%m-%d').strftime("%w"))-1
+        h_deb = int(dispo_jour[0][2][0])*10 + int(dispo_jour[0][2][1])
+        h_fin = int(dispo_jour[0][3][0])*10 + int(dispo_jour[0][3][1])
 
-    for i in range(24*j_deb + h_deb, 24*j_fin + h_fin):
-        tab_hours[i] = 1
+        for i in range(24*j_deb + h_deb, 24*j_fin + h_fin):
+            tab_hours[i] = 1
     return tab_hours
 
 def getD(events, users):
     dispo_users = []
     creneaux_events = []
+    
 
     for user in users:
         dispo_users.append(getDispo(user[0]))
     
     for event in events:
-        print(events)
         creneaux_events.append(getHour(event[3]))
     
     D = [[0 for j in range(len(users))] for i in range(len(events))]
@@ -149,12 +147,12 @@ r4 = 1      #ancienneté
 # Récupérer les compétences utilisateurs ou asso
 def getComp_all(id_user_asso, type, nbComp):
     lst_comp = [0 for i in range(nbComp)]
-    db_id_comp = getFromDB(["join_competence"], [f"num_type = {type} AND id_join", id_user_asso], "id_competence, nb_necessaire")
+    db_id_comp = getFromDB(["join_competence"], [f"num_type = {type} AND id_join", id_user_asso], "id_competence, capacite")
     for competence in db_id_comp:
         if type:
-            lst_comp[competence[0]] = competence[1]
+            lst_comp[competence[0]-1] = competence[1]
         else:
-            lst_comp[competence[0]] = 1
+            lst_comp[competence[0]-1] = 1
     return lst_comp
 
 #Variable com pour les compétences des benevoles 
@@ -173,7 +171,7 @@ def getCom(users, nbComp):
         com.append(getComp_all(user[0], 0, nbComp))
     return com
 
-com = getCom(user, nbComp)
+com = getCom(users, nbComp)
 
 #Distance acceptee par le benevole
 def getDistMax(users):
@@ -197,53 +195,55 @@ def getDistEventUser(event, user):
     x_event, y_event = getCoordinates(id_lieu_event[0][0])
     return np.sqrt((x_user - x_event)**2 + (y_user - y_event)**2)
 
-def getL(users, event_data):
-    L = [[0 for j in range(len(users))] for i in range(len(event_data))]
-    for i in range(len(event_data)):
-        for j in range(len(users)):
-            id_event = event_data[i][0]
-            id_user = users[j][0]
-            L[i][j] = getDistEventUser(id_event, id_user)
-    return L
+# def getL(users, event_data):
+#     L = [[0 for j in range(len(users))] for i in range(len(event_data))]
+#     for i in range(len(event_data)):
+#         for j in range(len(users)):
+#             id_event = event_data[i][0]
+#             id_user = users[j][0]
+#             L[i][j] = getDistEventUser(id_event, id_user)
+#     return L
 
-L = getL(users, event_data)
+# L = getL(users, event_data)
+
+L = [[2, 2, 2, 1], [1, 2, 2, 3], [1, 2, 3, 1], [1, 3, 4, 10]]
 
 def getTimeEvents(events):
     tab_hours = []
     for event in events:
-        hours = getHour(event[0])
+        hours = getHour(event[3])
         tab_hours.append(sum(hours))
     return tab_hours
 
 
 def getT(event_data, users):
-    T = [[0] for j in range(len(users)) for i in range(len(event_data))]
+    T = [[0 for j in range(len(users))] for i in range(len(event_data))]
     
     max_time_lst = []
     for user in users:
         user_max_time = getFromDB(["users"], ["id", user[0]], "duree_max_accepte")
         max_time_lst.append(user_max_time[0][0])
-    
+
     event_time_lst = getTimeEvents(event_data)
 
     for i in range(len(event_data)):
         for j in range(len(users)):
-            T[i][j] = 1*(max_time_lst[j] <= event_time_lst[i])
+            T[i][j] = 1*(max_time_lst[j] >= event_time_lst[i])
     return T
 
 T = getT(event_data, users)
 
 
-def getHistorique(users):
+def getHistorique(users, asso):
     nbBene = len(users)
     m = [[0] for j in range(nbBene)]
     for j in range(nbBene):
         user = users[j]
-        anciennete = getFromDB(["membres_assos"], ["id_user", user[0]], "anciennete")
+        anciennete = getFromDB(["membres_assos"], [f"id_asso = {asso} AND id_user", user[0]], "anciennete")
         m[j][0] = anciennete[0][0]
     return m
 
-m = getHistorique(users)
+m = getHistorique(users, param1)
 
 
 items = range(0, nbMiss )
@@ -304,7 +304,7 @@ model.maximize(r1 * model.sum(Y[i] for i in items) +
 # Résolution du modèle
 solution = model.solve()
 if solution is not None:
-    print(solution.export_as_sol(path="./",basename="test.sol"))
+    print(solution.export_as_sol(path="./Cplex/",basename=f"{param1}.sol"))
 else:
     print('Le modèle n\'a pas été résolu avec succès.')
 
