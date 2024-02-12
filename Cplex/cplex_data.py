@@ -6,7 +6,7 @@ from datetime import datetime
 import csv
 
 # # Récupérer les paramètres passés en ligne de commande
-param1 = sys.argv[1] if len(sys.argv) > 1 else exit
+param1 = sys.argv[1] if len(sys.argv) > 1 else 32
 # param2 = sys.argv[2] if len(sys.argv) > 2 else None
 
 # # Faire quelque chose avec les paramètres
