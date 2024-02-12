@@ -167,26 +167,53 @@ class User implements Suppression, GestionLogo{
   public function ajouter_competence($id_competence)
   {
     $req = "INSERT INTO join_competence (id_competence, num_type, id_join) VALUES (?,?,?)";
-    BF::request($req,[$id_competence,1,$this->id]);
+    BF::request($req,[$id_competence,0,$this->id]);
     return true;
   }
   
   public function retirer_competence($id_competence)
   {
-    $req = "DELETE FROM join_competence WHERE id_competence = ? AND num_type = 1 AND id_join = ?";
+    $req = "DELETE FROM join_competence WHERE id_competence = ? AND num_type = 0 AND id_join = ?";
     BF::request($req,[$id_competence,$this->id]);
     return true;
   }
 
   public function clear_comp()
   {
-    $req = "DELETE FROM join_competence WHERE num_type = 1 AND id_join = ?";
+    $req = "DELETE FROM join_competence WHERE num_type = 0 AND id_join = ?";
     BF::request($req,[$this->id]);
     return true;
   }
   public function get_all_competences()
   {
-    $req = "SELECT j.id_competence, c.nom_comp FROM join_competence j JOIN competences c ON j.id_competence = c.id_comp WHERE j.num_type = 1 AND j.id_join = ?";
+    $req = "SELECT j.id_competence, c.nom_comp FROM join_competence j JOIN competences c ON j.id_competence = c.id_comp WHERE j.num_type = 0 AND j.id_join = ?";
+    return BF::request($req,[$this->id],true,false,PDO::FETCH_ASSOC);
+  }
+
+  
+  public function ajouter_interet($id_interet)
+  {
+    $req = "INSERT INTO ".A::DOMAINEJONCTION." (".A::DOMAINEJONCTION_ID_DOMAINE.", ".A::DOMAINEJONCTION_TYPE.", ".A::DOMAINEJONCTION_ID_JONCTION.") VALUES (?,?,?)";
+    BF::request($req,[$id_interet,0,$this->id]);
+    return true;
+  }
+  
+  public function retirer_interet($id_interet)
+  {
+    $req = "DELETE FROM ".A::DOMAINEJONCTION." WHERE ".A::DOMAINEJONCTION_ID_DOMAINE." = ? AND ".A::DOMAINEJONCTION_TYPE." = 0 AND ".A::DOMAINEJONCTION_ID_JONCTION." = ?";
+    BF::request($req,[$id_interet,$this->id]);
+    return true;
+  }
+
+  public function clear_interets()
+  {
+    $req = "DELETE FROM ".A::DOMAINEJONCTION." WHERE ".A::DOMAINEJONCTION_TYPE." = 0 AND ".A::DOMAINEJONCTION_ID_JONCTION." = ?";
+    BF::request($req,[$this->id]);
+    return true;
+  }
+  public function get_all_interets()
+  {
+    $req = "SELECT j.".A::DOMAINEJONCTION_ID_DOMAINE.", c.".A::DOMAINE_NOM." FROM ".A::DOMAINEJONCTION." j JOIN ".A::DOMAINE." c ON j.".A::DOMAINEJONCTION_ID_DOMAINE." = c.".A::DOMAINE_ID." WHERE j.".A::DOMAINEJONCTION_TYPE." = 0 AND j.".A::DOMAINEJONCTION_ID_JONCTION." = ?";
     return BF::request($req,[$this->id],true,false,PDO::FETCH_ASSOC);
   }
 

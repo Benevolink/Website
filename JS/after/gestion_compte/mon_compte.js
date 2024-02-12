@@ -118,21 +118,68 @@ function modif_image(logo_chemin){
 
 //Affichage des centres d'intérêts
 $(document).ready(()=>{
-  import(abs_path("JS/classes/Domaine.js")).then((module)=>{
-    module.Domaine.get_all().done((data)=>{
-      data.forEach(element => {
-        $("#centresInteret").append(
-          $('<option>').text(element['nom_domaine'])
-          .val(element["id_domaine"])
-        );
-        
+import(abs_path("JS/classes/Domaine.js")).then((module)=>{
+  import(abs_path("JS/classes/User.js")).then((UserClass)=>{
+      let user = new UserClass.User;
+      user.get_all_interets().done((data_user)=>{
+        console.log(data_user);
+        module.Domaine.get_all().done((data)=>{
+        data.forEach(element => {
+          let est_select = false;
+          data_user.forEach((value)=>{
+            if(element['id_domaine']==value["id_domaine"])
+            {
+              est_select = true;
+            }
+          });
+          if(!est_select)
+          {
+            $("#centresInteret").append(
+              $('<option>').text(element['nom_domaine'])
+              .val(element["id_domaine"])
+            );
+          }else{
+            $("#centresInteretSuppr").append(
+              $('<option>').text(element['nom_domaine'])
+              .val(element["id_domaine"])
+            );
+          }
+          
+        });  
       });
-      
+    });
+
+  }); 
+  
+});
+});
+
+  $(document).on('change','#centresInteret',"change",function(){
+    $("#centresInteret").find(":selected").appendTo("#centresInteretSuppr");
+    $("#centresInteret").prop("selectedIndex",0);
+    $("#centresInteretSuppr").prop("selectedIndex",0);
+  });
+  $(document).on('change','#centresInteretSuppr',"change",function(){
+    $("#centresInteretSuppr").find(":selected").appendTo("#centresInteret");
+    $("#centresInteret").prop("selectedIndex",0);
+    $("#centresInteretSuppr").prop("selectedIndex",0);
+  });
+
+$("#interets_sub").on("click",()=>{
+  let liste_indexs = [];
+  $("#centresInteretSuppr").children("option").each(function(){
+    if($(this).val()){
+      liste_indexs.push($(this).val());
+      console.log($(this).val());
+    }
+  });
+  import(abs_path("JS/classes/User.js")).then((module)=>{
+    let user = new module.User;
+    user.send_interets(liste_indexs).done((data)=>{
+      console.log(data);
     });
   });
 });
-
-
 function get_disponibilites()
 {
   var disponibilites = {}
@@ -155,7 +202,6 @@ function get_disponibilites()
 
 function send_disponibilites()
 {
-  console.log("hi");
   let disponibilites = get_disponibilites();
   import(abs_path("JS/classes/User.js")).then((UserModule)=>{
     let user = new UserModule.User;
