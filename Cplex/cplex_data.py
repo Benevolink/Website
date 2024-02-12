@@ -3,6 +3,7 @@ from docplex.mp.model import Model
 # script.py
 import sys
 from datetime import datetime
+import csv
 
 # # Récupérer les paramètres passés en ligne de commande
 # param1 = sys.argv[1] if len(sys.argv) > 1 else None
@@ -269,7 +270,7 @@ u = [[model.integer_var(name='u_{0}_{1}'.format(i,j)) for j in jtems] for i in i
 
 # Contraintes
 for j in jtems:
-    model.add_constraint(model.sum([X[i][j] for i in items]) <= 1)
+    model.add_constraint(model.sum([X[i][j] for i in items]) == 1)
 
 for j in jtems:
     for i in items:
@@ -303,10 +304,30 @@ model.maximize(r1 * model.sum(Y[i] for i in items) +
 
 # Résolution du modèle
 solution = model.solve()
-if solution is not None:
-    print(solution.export_as_sol(path="./Cplex/",basename=f"{param1}.sol"))
-else:
-    print('Le modèle n\'a pas été résolu avec succès.')
+
+def getX_solution(solution):
+    X_values = [[int(solution.get_value(X[i][j])) for j in range(nbBene)] for i in range(nbMiss)]
+    data = []
+    for i in range(nbMiss):
+        for j in range(nbBene):
+            if X_values[i][j] :
+                data.append((event_data[i][0], users[j][0]))
+    return data
+
+data = getX_solution(solution)
+
+solution_save = f"./Cplex/cplex_{param1}.csv"
+with open(solution_save, mode='w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerow(['Mission', 'Benevole'])
+    for row in data:
+        writer.writerow(row)
+
+
+# if solution is not None:
+#     print(solution.export_as_sol(path="./Cplex/",basename=f"{param1}.sol"))
+# else:
+#     print('Le modèle n\'a pas été résolu avec succès.')
 
 
 
