@@ -172,13 +172,107 @@
                       </div>
                   </div>
               </div>
+              <input type="submit" id="competences" value="Gérer les competences"/>
           </div>
-        
+          
       </div>
+      
 
 </div>
 
 
-
+<script>
+$("#competences").on("click",function(){
+    import(abs_path("JS/classes/User.js")).then((UserClass)=>{
+        let user = new UserClass.User;
+        user.get_all_competences().done((liste_comp_user)=>{
+            user.get_all_liste_competences().done((data)=>{
+                let bg = $("<div>").attr({
+                    id: "bg_comp",
+                    class: "background_sombre"
+                });
+                let fenetre = $("<div>").attr({
+                    id : "fenetre_comp"
+                }).css({
+                    position: "fixed",
+                    zIndex: "9990",
+                    width: "300px",
+                    height: "fit-content",
+                    top: "20%",
+                    left: "calc(50% - 150px)",
+                    backgroundColor: "white",
+                    borderRadius: "20px",
+                    cursor: "default"
+                });
+                let liste_comp = $("<div>").attr({
+                    id : "liste_comp"
+                }).css({
+                    marginLeft: "20px"
+                });
+                data.forEach((value)=>{
+                    liste_comp.append([
+                        $("<div>").attr({
+                            class: "item_comp",
+                            id_comp: value["id_comp"]
+                        }).text(value["nom_comp"]).css({
+                            
+                            display: "inline-block"
+                        })
+                    ]);
+                    let input = $("<input>").attr({
+                            id_comp: value["id_comp"],
+                            type: "checkbox",
+                            class: "comp_case"
+                        }).css({
+                            float: "right",
+                            marginRight: "50px"
+                        });
+                    liste_comp_user.forEach((value_2)=>{
+                        if(value_2["id_competence"]==value["id_comp"])
+                        {
+                            input.attr({
+                                checked: "checked"
+                            });
+                        }
+                    });
+                    liste_comp.append([input,$("<br>")]);
+                });
+                let croix = $("<img>").attr({
+                    src: abs_path("media/img/croix.jpg")
+                }).css({
+                    width: "20px",
+                    borderRadius: "50%",
+                    cursor: "pointer",
+                    margin: "20px"
+                }).on("click",function(){
+                    $("#bg_comp").remove();
+                });
+                let submit = $("<input>").attr({
+                    type: "submit",
+                    id: "submit_comp"
+                }).css({
+                    margin: "30px"
+                }).on("click",function(){
+                    let liste = $(".comp_case");
+                    let liste_id= [];
+                    $.each(liste, function (indexInArray, valueOfElement) { 
+                        if($(valueOfElement).is(":checked")){
+                            liste_id.push($(valueOfElement).attr("id_comp"));
+                        }
+                    });
+                    let user = new UserClass.User;
+                    user.send_comp(liste_id).done((data)=>{
+                        console.log(data);
+                    });
+                    $("#bg_comp").remove();
+                });
+                fenetre.append([croix,liste_comp,submit]);
+                $("body").append(bg.append(fenetre));
+            });
+        });
+        
+    });
+});
+</script>
 <script type="text/javascript" src="<?= BF::abs_path("JS/after/gestion_compte/mon_compte.js")?>">
 </script>

@@ -18,6 +18,12 @@ export class Event extends APIObjet{
         .APICallStatic("event","user_get_all",{});
     }
 
+    static search(distance,recherche,liste_domaines)
+    {
+        return this
+        .APICallStatic("event","search_event",{distance: distance,recherche: recherche,liste_domaines:liste_domaines});
+    }
+
     static insert(array,file_content){
         let data = new FormData();
         console.log(array);

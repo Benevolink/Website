@@ -146,6 +146,125 @@
     z-index:9999;
 }
 
+    /* Ajoutez ces styles CSS */
+    .modifier_button {
+        margin-top: 20px;
+    }
+
+    .modifier_button button {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .modifier_button button:hover {
+        background-color: #45a049;
+    }
+
+    /* Ajoutez ces styles CSS */
+    .curseur_mission.non_modifiable {
+        opacity: 0.5;
+        /* Réduire l'opacité pour indiquer qu'il a été validé */
+        cursor: not-allowed;
+        /* Changer le curseur pour indiquer qu'il est non modifiable */
+    }
+
+    /* Ajoutez ces styles CSS */
+    .modifier_anciennete_button {
+        margin-top: 20px;
+    }
+
+    .modifier_anciennete_button button {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .modifier_anciennete_button button:hover {
+        background-color: #45a049;
+    }
+
+    /* Ajoutez ces styles CSS */
+    .curseur_anciennete.non_modifiable {
+        opacity: 0.5;
+        /* Réduire l'opacité pour indiquer qu'il a été validé */
+        cursor: not-allowed;
+        /* Changer le curseur pour indiquer qu'il est non modifiable */
+    }
+
+    /* Ajoutez ces styles CSS */
+    .modifier_distance_button {
+        margin-top: 20px;
+    }
+
+    .modifier_distance_button button {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .modifier_distance_button button:hover {
+        background-color: #45a049;
+    }
+
+    /* Ajoutez ces styles CSS */
+    .curseur_distance.non_modifiable {
+        opacity: 0.5;
+        /* Réduire l'opacité pour indiquer qu'il a été validé */
+        cursor: not-allowed;
+        /* Changer le curseur pour indiquer qu'il est non modifiable */
+    }
+
+    /* Ajoutez ces styles CSS */
+    .modifier_maximisation_button {
+        margin-top: 20px;
+    }
+
+    .modifier_maximisation_button button {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .modifier_maximisation_button button:hover {
+        background-color: #45a049;
+    }
+
+    /* Ajoutez ces styles CSS */
+    .curseur_maximisation.non_modifiable {
+        opacity: 0.5;
+        /* Réduire l'opacité pour indiquer qu'il a été validé */
+        cursor: not-allowed;
+        /* Changer le curseur pour indiquer qu'il est non modifiable */
+    }
 
 </style>
 <div id="intro_aide">
@@ -174,6 +293,8 @@
 <br>
 
 <!-- Bouton d'application de l'algorithme d'aide à la décision -->
+<div id="solutions"></div>
+
 <div class="aide_decision_case" id="liste_membres_affectes">
     <div class="aide_decision">
        <button id="openLoadingModal" data-toggle="modal" data-target="#loadingModal">
@@ -213,7 +334,76 @@
 <!-- Overlay pour assombrir le reste de la page -->
 <div id="overlay"></div>
 
+<button id="valider">Valider</button> 
+<br>
 
+<div class="maximisation_cursers">
+    <?php afficher_maximisation(); ?>
+</div>
+
+<div class="modifier_button">
+    <button id="modifierMaximisation" style="display:none;">Modifier le critère de maximisation</button>
+</div>
+<div class="confirmation_message_maximisation" style="display:none;">
+    <p>Voulez-vous valider le critère de maximisation ? Vous aurez la possibilité de remodifier ensuite.</p>
+    <button id="accepterConfirmationMaximisation">Accepter</button>
+    <button id="annulerConfirmationMaximisation">Annuler</button>
+</div>
+
+<br>
+
+<div class="missions_cursers">
+    <?php afficher_liste_missions(); ?>
+</div>
+
+<div class="modifier_button">
+    <button id="modifierPriorites" style="display:none;">Modifier</button>
+</div>
+
+<div class="confirmation_message" style="display:none;">
+    <p>Voulez-vous valider les priorités des missions ? Vous aurez la possibilité de remodifier ensuite.</p>
+    <button id="accepterConfirmation">Accepter</button>
+    <button id="annulerConfirmation">Annuler</button>
+</div>
+
+<div class="anciennete_cursers">
+    <?php afficher_anciennete(); ?>
+</div>
+
+<div class="modifier_button">
+    <button id="modifierAnciennete" style="display:none;">Modifier l'ancienneté</button>
+</div>
+<div class="confirmation_message_anciennete" style="display:none;">
+    <p>Voulez-vous valider le critère d'ancienneté ? Vous aurez la possibilité de remodifier ensuite.</p>
+    <button id="accepterConfirmationAnciennete">Accepter</button>
+    <button id="annulerConfirmationAnciennete">Annuler</button>
+</div>
+
+<br>
+
+<div class="distance_cursers">
+    <?php afficher_distance(); ?>
+</div>
+
+<div class="modifier_button">
+    <button id="modifierDistance" style="display:none;">Modifier la distance</button>
+</div>
+<div class="confirmation_message_distance" style="display:none;">
+    <p>Voulez-vous valider le critère de distance ? Vous aurez la possibilité de remodifier ensuite.</p>
+    <button id="accepterConfirmationDistance">Accepter</button>
+    <button id="annulerConfirmationDistance">Annuler</button>
+</div>
+
+<br>
+
+<div class="liste_membres">
+    <?php
+    $liste_membres = afficher_liste_benevoles_data();
+    foreach ($liste_membres as $membre) {
+        echo '<div class="membre_case" id_membre="' . $membre['id'] . '" role="' . $membre['statut'] . '" id_mission="-1">' . $membre['nom'] . ' ' . $membre['prenom'] . '</div>';
+    }
+    ?>
+</div>
 
 <script>
     var membresAffectations = {}; // Tableau pour stocker les affectations des membres

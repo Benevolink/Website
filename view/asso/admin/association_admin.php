@@ -11,18 +11,28 @@
   <link rel ="stylesheet" href="<?= BF::abs_path("CSS/main.css")?>">
   <link rel="icon" type="image/x-icon" sizes="16x16" href="<?= BF::abs_path("media/img/Logo_3.png") ?>"/>
 
-  <a href="<?= 'creer_evenement.php?id_asso='.$_GET["id_asso"] ?>">
 
-      Créer un évènement
-  </a>
   <br>
-  <a href="<?= BF::abs_path('controller/asso/sondage/creer_sondage.php?id_asso='.$_GET["id_asso"]) ?>">
+
+  <div class="container">
+    <a href="<?= BF::abs_path('controller/asso/sondage/creer_sondage.php?id_asso='.$_GET["id_asso"]) ?>" class="btn btn-success">
       Créer un sondage
   </a>
   <br>
   <a href="<?= BF::abs_path('controller/asso/admin/repartition_missions.php?id_asso='.$_GET["id_asso"]) ?>">
       Affecter les bénévoles aux missions
   </a>
+
+    </a>
+  </div>
+
+  <br>
+  
+    <div class="container">
+    <a href="<?= 'creer_evenement.php?id_asso='.$_GET["id_asso"] ?>" class="btn btn-success">
+      Créer un évènement
+    </a>
+  </div>
 
   
   <div class="row">

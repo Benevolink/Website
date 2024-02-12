@@ -23,8 +23,7 @@ require_once BF::abs_path("model/".$file_name,true);
 
 $infos = $event->get_all();
 $desc = $event->get_prop_value("desc");
-//$logo = $event->get_logo();
-$logo = false;
+$logo = $event->image_get();
 
 ob_start();
 require BF::abs_path("view/".$file_name,true);

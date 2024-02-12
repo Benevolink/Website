@@ -9,13 +9,25 @@
  */
 function afficher_dates(){
     global $infos;
+    if(ctype_digit($infos["date_debut"]))
+    {
+        $date_debut_h = date(" H:i",$infos["date_debut"]);
+        $date_fin_h = date(" H:i",$infos["date_fin"]);
+        $date_debut = date("Y/m/d  ",$infos["date_debut"]);
+        $date_fin = date("Y/m/d  ",$infos["date_fin"]);
+    }else{
+        $date_debut = $infos["date_debut"];
+        $date_fin = $infos["date_fin"];
+        $date_debut_h = $infos["heure_debut"];
+        $date_fin_h = $infos["heure_fin"];
+    }
     ?>
     <div class="titre_rubrique_event">
         Date
     </div>
-    De : <div style="float: right;"><img src="<?= BF::abs_path("media/img/calendar.png") ?>" style="width: 10px; display: inline-block;"> <?= date("Y/m/d  ",$infos["date_event_debut"]) ?><img src="<?= BF::abs_path("media/img/clock.png") ?>" style="height: 12px; display: inline-block;"><?= date(" H:i",$infos["date_event_debut"]) ?></div>
+    De : <div style="float: right;"><img src="<?= BF::abs_path("media/img/calendar.png") ?>" style="width: 10px; display: inline-block;"> <?= $date_debut ?><img src="<?= BF::abs_path("media/img/clock.png") ?>" style="height: 12px; display: inline-block; margin-left: 10px;"><?= $date_debut_h ?></div>
     <div style="clear:both;"></div>
-    A : <div style="float: right;"><img src="<?= BF::abs_path("media/img/calendar.png") ?>" style="width: 10px; display: inline-block;"> <?= date("Y/m/d  ",$infos["date_event_fin"]) ?><img src="<?= BF::abs_path("media/img/clock.png") ?>" style="height: 12px; display: inline-block;"><?= date(" H:i",$infos["date_event_fin"]) ?></div>
+    A : <div style="float: right;"><img src="<?= BF::abs_path("media/img/calendar.png") ?>" style="width: 10px; display: inline-block;"> <?= $date_fin ?><img src="<?= BF::abs_path("media/img/clock.png") ?>" style="height: 12px; display: inline-block; margin-left: 10px;"><?= $date_fin_h ?></div>
     <div style="clear: both"></div>
     <?php
 }

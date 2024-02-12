@@ -112,7 +112,11 @@ class Event implements Suppression, GestionMembres, GestionLogo, GestionPropriet
      * @return array
      */
     public function get_all(){
-        return BF::request("SELECT * FROM ".A::EVENT." WHERE ".A::EVENT_ID." = ?",[$this->id],true,true,PDO::FETCH_ASSOC);
+        $table = BF::request("SELECT * FROM ".A::EVENT." WHERE ".A::EVENT_ID." = ?",[$this->id],true,true,PDO::FETCH_ASSOC);
+        //Récupération des horaires
+        $req = "SELECT * FROM ".A::HORAIRE." WHERE ".A::HORAIRE_ID." = ?";
+        $horaire = BF::request($req,[$table[A::HORAIRE_ID]],true,true,PDO::FETCH_ASSOC);
+        return array_merge($table,$horaire);
     }
     /**
      * Renvoie la liste de tous les membres (id, nom et role)
@@ -270,8 +274,76 @@ public function image_get(){
         
     }
 
+    public function get_id_lieu()
+    {
+        $req = "SELECT ".A::EVENT_ID_LIEU." FROM ".A::EVENT." WHERE ".A::EVENT_ID_LIEU." = ?";
+        return BF::request($req,[$this->id],true,true)[0];
+    }
+
     public function asso_get_id(){
         return BF::request("SELECT ".A::EVENT_ID_ASSO." FROM ".A::EVENT." WHERE ".A::EVENT_ID." = ?",[$this->id],true,true)[0];
+    }
+
+
+    public static function search($distance,$recherche,$liste_domaines)
+    {
+        require_once BF::abs_path("libs/User.php",true);
+        $user = new User();
+        if(!$recherche || $recherche == 'false' || $recherche  == false)
+        {
+            $req = "SELECT e.* FROM ".A::EVENT." e WHERE (e.".A::EVENT_VISIBILITE." = 'publique' OR e.".A::EVENT_ID." IN (SELECT m.".A::MEMBRESEVENTS_ID_EVENT." FROM ".A::MEMBRESEVENTS." m WHERE m.".A::MEMBRESEVENTS_ID_USER." = ?))";
+            $resultat = BF::request($req,[$user->id],true,false,PDO::FETCH_ASSOC);
+        }else{
+            $req = "SELECT e.* FROM ".A::EVENT." e WHERE e.".A::EVENT_NOM." LIKE ? AND (e.".A::EVENT_VISIBILITE." = 'publique' OR e.".A::EVENT_ID." IN (SELECT m.".A::MEMBRESEVENTS_ID_EVENT." FROM ".A::MEMBRESEVENTS." m WHERE m.".A::MEMBRESEVENTS_ID_USER." = ?))";
+            $resultat = BF::request($req,['%'.$recherche.'%',$user->id],true,false,PDO::FETCH_ASSOC);
+        }
+       
+        
+        //On vérifie que les évènements ont bien les domaines sélectionnés
+        foreach($resultat as $key => $value){
+            $resultat[$key]["domaine_correspond"] = false;
+        }
+        foreach($resultat as $key => $value)
+        {
+            foreach($liste_domaines as $key2 => $value2)
+            {
+                $req = "SELECT COUNT(*) FROM ".A::DOMAINEJONCTION." WHERE ".A::DOMAINEJONCTION_TYPE." = 1 AND ".A::DOMAINEJONCTION_ID_JONCTION." = ? AND ".A::DOMAINEJONCTION_ID_DOMAINE." = ?";
+                $result = BF::request($req,[$value[A::EVENT_ID],$key2],true,true);
+                if($result[0] == 1){
+                    $resultat[$key]["domaine_correspond"] = true;
+                    $resultat[$key]["match"] = $key2;
+                }
+
+            }
+        }
+        foreach($resultat as $key => $value){
+            if($value["domaine_correspond"] == false)
+            {
+                unset($resultat[$key]);
+            }
+        }
+        if($distance)
+        {
+            require_once BF::abs_path("libs/Lieu.php",true);
+            //On récupère l'id de lieu du bénévole
+            $id_lieu = $user->get_id_lieu();
+            foreach($resultat as $key => $value){
+                //On récupère l'id de lieu de la mission
+                $mission = new Event($value[A::EVENT_ID]);
+                $id_lieu_mission = $mission->get_id_lieu();
+                $distance_temp = Lieu::calc_distance($id_lieu,$id_lieu_mission);
+                if($distance_temp > $distance)
+                {
+                    unset($resultat[$key]);
+                }
+            }
+        }
+        foreach($resultat as $key => $value){
+            $event = new Event($value[A::EVENT_ID]);
+            $resultat[$key]["logo"] = $event->image_get();
+        }
+        return $resultat;
+
     }
 }
 

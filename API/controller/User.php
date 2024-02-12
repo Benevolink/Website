@@ -121,6 +121,53 @@ switch($fonction){
         }
         //@todo
         //logique pour vérifier si le mot de passe respecte des règles en vigueur et si oui, le modifie
+    
+    case "ajouter_competences":
+        BF::sess_start();
+        if(!BF::sess_start()){
+            return_statut(false,"Vous n'êtes pas connecté !");
+            exit();
+        }
+        try{
+            $user = new User();
+            $liste_competences = $_POST["liste_competences_ajout"];
+            $user->clear_comp();
+            foreach($liste_competences as $key => $value)
+            {
+                $user->ajouter_competence($value);
+            }
+            return_statut(true);
+        }
+        catch (Exception $e){
+            return_statut(false,$e->getMessage());
+        }
+        break;
+    case "get_all_comp":
+        BF::sess_start();
+        if(!BF::sess_start()){
+            return_statut(false,"Vous n'êtes pas connecté !");
+            exit();
+        }
+        $user = new User();
+        try{
+            return_json($user->get_all_competences());
+        }catch(Exception $e){
+            return_statut(false,$e->getMessage());
+        }
+        break;
+    case "get_all_liste_comp":
+        BF::sess_start();
+        if(!BF::sess_start()){
+            return_statut(false,"Vous n'êtes pas connecté !");
+            exit();
+        }
+        require_once BF::abs_path("libs/Competence.php",true);
+        try{
+            return_json(Competence::get_all());
+        }catch(Exception $e){
+            return_statut(false,$e->getMessage());
+        }
+        break;
     default:
         echo "Veuillez spécifier une fonction";
         exit();
