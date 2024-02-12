@@ -131,14 +131,10 @@ switch($fonction){
         try{
             $user = new User();
             $liste_competences = $_POST["liste_competences_ajout"];
-            $liste_competences_retrait =  $_POST["liste_competences_retrait"];
+            $user->clear_comp();
             foreach($liste_competences as $key => $value)
             {
                 $user->ajouter_competence($value);
-            }
-            foreach($liste_competences_retrait as $key => $value)
-            {
-                $user->retirer_competence($value);
             }
             return_statut(true);
         }
@@ -158,6 +154,20 @@ switch($fonction){
         }catch(Exception $e){
             return_statut(false,$e->getMessage());
         }
+        break;
+    case "get_all_liste_comp":
+        BF::sess_start();
+        if(!BF::sess_start()){
+            return_statut(false,"Vous n'êtes pas connecté !");
+            exit();
+        }
+        require_once BF::abs_path("libs/Competence.php",true);
+        try{
+            return_json(Competence::get_all());
+        }catch(Exception $e){
+            return_statut(false,$e->getMessage());
+        }
+        break;
     default:
         echo "Veuillez spécifier une fonction";
         exit();

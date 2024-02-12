@@ -166,21 +166,27 @@ class User implements Suppression, GestionLogo{
   
   public function ajouter_competence($id_competence)
   {
-    $req = "INSERT INTO join_competences (id_competence, nom_type, id_join) VALUES (?,?,?)";
+    $req = "INSERT INTO join_competence (id_competence, num_type, id_join) VALUES (?,?,?)";
     BF::request($req,[$id_competence,1,$this->id]);
     return true;
   }
   
   public function retirer_competence($id_competence)
   {
-    $req = "DELETE FROM join_competences WHERE id_competence = ? AND num_type = 1 AND id_join = ?";
+    $req = "DELETE FROM join_competence WHERE id_competence = ? AND num_type = 1 AND id_join = ?";
     BF::request($req,[$id_competence,$this->id]);
     return true;
   }
 
+  public function clear_comp()
+  {
+    $req = "DELETE FROM join_competence WHERE num_type = 1 AND id_join = ?";
+    BF::request($req,[$this->id]);
+    return true;
+  }
   public function get_all_competences()
   {
-    $req = "SELECT j.id_competence, c.nom_comp FROM join_competences j JOIN competences c ON j.id_competence = c.id_comp WHERE j.num_type = 1 AND j.id_join = ?";
+    $req = "SELECT j.id_competence, c.nom_comp FROM join_competence j JOIN competences c ON j.id_competence = c.id_comp WHERE j.num_type = 1 AND j.id_join = ?";
     return BF::request($req,[$this->id],true,false,PDO::FETCH_ASSOC);
   }
 
