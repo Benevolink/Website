@@ -107,7 +107,7 @@
 
       <div class="row">
           <div class="col-md-5 col-md-offset-1">
-            <table class="bordered-table">
+            <table class="bordered-table" id="table_dispos">
               <h3> Mes Disponibilités </h3>
                 <tr id="dispo_text">
                     <th>Jour de la semaine</th>

@@ -235,3 +235,24 @@ import(abs_path("JS/classes/User.js")).then((module)=>{
     console.error("Erreur dans la requête AJAX :",error);
   });
 });
+
+
+//Partie pour les horaires à l'actualisation
+
+$(document).ready(function(){
+import(abs_path("JS/classes/User.js")).then((moduleUser)=>{
+  let user = new moduleUser.User;
+  user.get_disponibilites().done((data)=>{
+    console.log(data);
+    data.forEach((element)=>{
+      let elt = $("#table_dispos").find("tr").filter(function(){
+        return $(this).attr("jour")==parseInt(element["jour"])-1;
+      }).first();
+      console.log(elt);
+      elt.children().eq(1).children().eq(0).attr("checked","checked");
+      elt.children().eq(2).children().eq(0).attr("value",element["h_deb"]).show();
+      elt.children().eq(3).children().eq(0).attr("value",element["h_fin"]).show();
+    });
+  });
+});
+});

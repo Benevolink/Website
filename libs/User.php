@@ -607,5 +607,21 @@ class User implements Suppression, GestionLogo{
     return [$nom_event,$id_event];
 
   }
+
+  public function ajout_horaire($jour,$h_deb,$h_fin)
+  {
+    $req = "INSERT INTO disponibilites (id_user, jour, h_deb, h_fin) VALUES (?,?,?,?)";
+    BF::request($req,[$this->id,$jour,$h_deb,$h_fin]);
+  }
+
+  public function clear_horaires()
+  {
+    BF::request("DELETE FROM disponibilites WHERE id_user = ?",[$this->id]);
+  }
+
+  public function get_all_horaires()
+  {
+    return BF::request("SELECT * FROM disponibilites WHERE id_user = ?",[$this->id],true,false,PDO::FETCH_ASSOC);
+  }
 }
 ?>
