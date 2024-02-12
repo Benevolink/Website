@@ -122,6 +122,7 @@ function cacher_iframe(elt){
   
 }
 function ajouter_events_missions(){
+  /*
   $("body").append(
       $('<div>').attr({class: "Iframe_container"}).append(
           $('<iframe>').attr({
@@ -141,6 +142,6 @@ function ajouter_events_missions(){
       $(e).on("mouseleave",(evenement)=>{
           cacher_iframe(evenement);
       });
-  });
+  });*/
 }
 
