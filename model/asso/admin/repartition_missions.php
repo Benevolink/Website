@@ -141,6 +141,27 @@
         }
     }   
 
+    function afficher_maximisation()
+    {
+        ?>
+        <div class="maximisation_cursers">
+            <br>
+            <p>Maximisation du nombre de missions remplies :</p>
+            <br>
+            <input type="range" min="1" max="5" value="1" class="curseur_maximisation" id="curseurMaximisation">
+            <span class="valeur_curseur_maximisation">1</span>
+        </div>
+
+        <div class="valider_button_maximisation">
+            <button id="validerMaximisation">Valider le critère de la maximisation</button>
+        </div>
+
+        <div class="modifier_button">
+            <button id="modifierMaximisation" style="display:none;">Modifier le critère de la maximisation</button>
+        </div>
+        <?php
+    }
+
     function afficher_liste_missions()
 {
     global $id_asso;
@@ -205,6 +226,27 @@
 
         <div class="modifier_button">
             <button id="modifierAnciennete" style="display:none;">Modifier le critère d'ancienneté</button>
+        </div>
+        <?php
+    }
+
+    function afficher_distance()
+    {
+        ?>
+        <div class="distance_cursers">
+            <br>
+            <p>Distance :</p>
+            <br>
+            <input type="range" min="1" max="5" value="1" class="curseur_distance" id="curseurDistance">
+            <span class="valeur_curseur_distance">1</span>
+        </div>
+
+        <div class="valider_button_distance">
+            <button id="validerDistance">Valider le critère de la distance</button>
+        </div>
+
+        <div class="modifier_button">
+            <button id="modifierDistance" style="display:none;">Modifier le critère de la distance</button>
         </div>
         <?php
     }

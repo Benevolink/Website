@@ -123,6 +123,66 @@
         /* Changer le curseur pour indiquer qu'il est non modifiable */
     }
 
+    /* Ajoutez ces styles CSS */
+    .modifier_distance_button {
+        margin-top: 20px;
+    }
+
+    .modifier_distance_button button {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .modifier_distance_button button:hover {
+        background-color: #45a049;
+    }
+
+    /* Ajoutez ces styles CSS */
+    .curseur_distance.non_modifiable {
+        opacity: 0.5;
+        /* Réduire l'opacité pour indiquer qu'il a été validé */
+        cursor: not-allowed;
+        /* Changer le curseur pour indiquer qu'il est non modifiable */
+    }
+
+    /* Ajoutez ces styles CSS */
+    .modifier_maximisation_button {
+        margin-top: 20px;
+    }
+
+    .modifier_maximisation_button button {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .modifier_maximisation_button button:hover {
+        background-color: #45a049;
+    }
+
+    /* Ajoutez ces styles CSS */
+    .curseur_maximisation.non_modifiable {
+        opacity: 0.5;
+        /* Réduire l'opacité pour indiquer qu'il a été validé */
+        cursor: not-allowed;
+        /* Changer le curseur pour indiquer qu'il est non modifiable */
+    }
+
 </style>
 
 <div class="tableau_repartition">
@@ -152,6 +212,21 @@
 <button id="valider">Valider</button> 
 <br>
 
+<div class="maximisation_cursers">
+    <?php afficher_maximisation(); ?>
+</div>
+
+<div class="modifier_button">
+    <button id="modifierMaximisation" style="display:none;">Modifier le critère de maximisation</button>
+</div>
+<div class="confirmation_message_maximisation" style="display:none;">
+    <p>Voulez-vous valider le critère de maximisation ? Vous aurez la possibilité de remodifier ensuite.</p>
+    <button id="accepterConfirmationMaximisation">Accepter</button>
+    <button id="annulerConfirmationMaximisation">Annuler</button>
+</div>
+
+<br>
+
 <div class="missions_cursers">
     <?php afficher_liste_missions(); ?>
 </div>
@@ -177,6 +252,21 @@
     <p>Voulez-vous valider le critère d'ancienneté ? Vous aurez la possibilité de remodifier ensuite.</p>
     <button id="accepterConfirmationAnciennete">Accepter</button>
     <button id="annulerConfirmationAnciennete">Annuler</button>
+</div>
+
+<br>
+
+<div class="distance_cursers">
+    <?php afficher_distance(); ?>
+</div>
+
+<div class="modifier_button">
+    <button id="modifierDistance" style="display:none;">Modifier la distance</button>
+</div>
+<div class="confirmation_message_distance" style="display:none;">
+    <p>Voulez-vous valider le critère de distance ? Vous aurez la possibilité de remodifier ensuite.</p>
+    <button id="accepterConfirmationDistance">Accepter</button>
+    <button id="annulerConfirmationDistance">Annuler</button>
 </div>
 
 <br>

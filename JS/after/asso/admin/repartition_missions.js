@@ -197,3 +197,95 @@ $("#modifierAnciennete").click(function () {
     // Montrer le bouton "Valider"
     $("#validerAnciennete").show();
 });
+
+var distance = 1; // Variable pour stocker l'importance de la distance pour l'association
+
+// Gestionnaire d'événement pour le curseur de distance
+$("#curseurDistance").change(function () {
+    var valeurDistance = $(this).val();
+    $(".valeur_curseur_distance").text(valeurDistance);
+    distance = parseInt(valeurDistance);
+});
+
+// Gestionnaire d'événement pour le bouton "Valider" de la distance
+$("#validerDistance").click(function () {
+    $(".confirmation_message_distance").fadeIn();
+});
+
+// Gestionnaire d'événement pour le bouton "Accepter" dans la fenêtre de confirmation de la distance
+$("#accepterConfirmationDistance").click(function () {
+    $(".confirmation_message_distance").fadeOut();
+
+    // Bloquer le curseur de distance
+    $(".curseur_distance").removeClass("non_valide").addClass("valide non_modifiable").prop("disabled", true);
+
+    // Cacher le bouton "Valider"
+    $("#validerDistance").hide();
+
+    // Afficher le bouton "Modifier" pour la distance
+    $("#modifierDistance").show();
+});
+
+
+// Gestionnaire d'événement pour le bouton "Annuler" dans la fenêtre de confirmation de la distance
+$("#annulerConfirmationDistance").click(function () {
+    $(".confirmation_message_distance").fadeOut();
+});
+
+// Gestionnaire d'événement pour le bouton "Modifier" de la distance
+$("#modifierDistance").click(function () {
+    // Afficher le curseur de distance
+    $(".curseur_distance.valide").removeClass("non_modifiable").prop("disabled", false);
+
+    // Masquer le bouton "Modifier"
+    $("#modifierDistance").hide();
+
+    // Montrer le bouton "Valider"
+    $("#validerDistance").show();
+});
+
+var maximisation = 1; // Variable pour stocker l'importance de la maximisation des missions remplies pour l'association
+
+// Gestionnaire d'événement pour le curseur de maximisation
+$("#curseurMaximisation").change(function () {
+    var valeurMaximisation = $(this).val();
+    $(".valeur_curseur_maximisation").text(valeurMaximisation);
+    maximisation = parseInt(valeurMaximisation);
+});
+
+// Gestionnaire d'événement pour le bouton "Valider" de la maximisation
+$("#validerMaximisation").click(function () {
+    $(".confirmation_message_maximisation").fadeIn();
+});
+
+// Gestionnaire d'événement pour le bouton "Accepter" dans la fenêtre de confirmation de la maximisation
+$("#accepterConfirmationMaximisation").click(function () {
+    $(".confirmation_message_maximisation").fadeOut();
+
+    // Bloquer le curseur de maximisation
+    $(".curseur_maximisation").removeClass("non_valide").addClass("valide non_modifiable").prop("disabled", true);
+
+    // Cacher le bouton "Valider"
+    $("#validerMaximisation").hide();
+
+    // Afficher le bouton "Modifier" pour la maximisation
+    $("#modifierMaximisation").show();
+});
+
+
+// Gestionnaire d'événement pour le bouton "Annuler" dans la fenêtre de confirmation de la maximisation
+$("#annulerConfirmationMaximisation").click(function () {
+    $(".confirmation_message_maximisation").fadeOut();
+});
+
+// Gestionnaire d'événement pour le bouton "Modifier" de la maximisation
+$("#modifierMaximisation").click(function () {
+    // Afficher le curseur de maximisation
+    $(".curseur_maximisation.valide").removeClass("non_modifiable").prop("disabled", false);
+
+    // Masquer le bouton "Modifier"
+    $("#modifierMaximisation").hide();
+
+    // Montrer le bouton "Valider"
+    $("#validerMaximisation").show();
+});
