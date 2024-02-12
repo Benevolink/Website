@@ -61,6 +61,68 @@
         cursor: pointer;
         animation: clignoter 1s  infinite ease-in-out;
     }
+
+    <style>
+    /* Ajoutez ces styles CSS */
+    .modifier_button {
+        margin-top: 20px;
+    }
+
+    .modifier_button button {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .modifier_button button:hover {
+        background-color: #45a049;
+    }
+
+    /* Ajoutez ces styles CSS */
+    .curseur_mission.non_modifiable {
+        opacity: 0.5;
+        /* Réduire l'opacité pour indiquer qu'il a été validé */
+        cursor: not-allowed;
+        /* Changer le curseur pour indiquer qu'il est non modifiable */
+    }
+
+    /* Ajoutez ces styles CSS */
+    .modifier_anciennete_button {
+        margin-top: 20px;
+    }
+
+    .modifier_anciennete_button button {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .modifier_anciennete_button button:hover {
+        background-color: #45a049;
+    }
+
+    /* Ajoutez ces styles CSS */
+    .curseur_anciennete.non_modifiable {
+        opacity: 0.5;
+        /* Réduire l'opacité pour indiquer qu'il a été validé */
+        cursor: not-allowed;
+        /* Changer le curseur pour indiquer qu'il est non modifiable */
+    }
+
 </style>
 
 <div class="tableau_repartition">
@@ -88,6 +150,35 @@
 <br>
 
 <button id="valider">Valider</button> 
+<br>
+
+<div class="missions_cursers">
+    <?php afficher_liste_missions(); ?>
+</div>
+
+<div class="modifier_button">
+    <button id="modifierPriorites" style="display:none;">Modifier</button>
+</div>
+
+<div class="confirmation_message" style="display:none;">
+    <p>Voulez-vous valider les priorités des missions ? Vous aurez la possibilité de remodifier ensuite.</p>
+    <button id="accepterConfirmation">Accepter</button>
+    <button id="annulerConfirmation">Annuler</button>
+</div>
+
+<div class="anciennete_cursers">
+    <?php afficher_anciennete(); ?>
+</div>
+
+<div class="modifier_button">
+    <button id="modifierAnciennete" style="display:none;">Modifier l'ancienneté</button>
+</div>
+<div class="confirmation_message_anciennete" style="display:none;">
+    <p>Voulez-vous valider le critère d'ancienneté ? Vous aurez la possibilité de remodifier ensuite.</p>
+    <button id="accepterConfirmationAnciennete">Accepter</button>
+    <button id="annulerConfirmationAnciennete">Annuler</button>
+</div>
+
 <br>
 
 <div class="liste_membres">

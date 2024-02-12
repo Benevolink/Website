@@ -117,3 +117,83 @@ $("#valider").click(function () {
 
     console.log("Modifications validées :", membresAffectations);
 });
+
+// Gestionnaire d'événement pour le bouton "Valider"
+$("#validerPriorites").click(function () {
+    $(".confirmation_message").fadeIn();
+});
+
+// Gestionnaire d'événement pour le bouton "Accepter" dans la fenêtre de confirmation
+$("#accepterConfirmation").click(function () {
+    $(".confirmation_message").fadeOut();
+
+    // Marquer les curseurs comme valides et non modifiables
+    $(".curseur_mission").removeClass("non_valide").addClass("valide non_modifiable").prop("disabled", true);
+
+    // Cacher le bouton "Valider"
+    $("#validerPriorites").hide();
+
+    // Afficher le bouton "Modifier"
+    $("#modifierPriorites").show();
+
+    // Faites ce que vous devez faire après avoir accepté
+    console.log("Priorités validées !");
+});
+
+// Gestionnaire d'événement pour le bouton "Modifier"
+$("#modifierPriorites").click(function () {
+    // Enlever la classe non_modifiable et rendre les curseurs modifiables
+    $(".curseur_mission.valide").removeClass("non_modifiable").prop("disabled", false);
+
+    // Cacher le bouton "Modifier"
+    $("#modifierPriorites").hide();
+
+    // Afficher le bouton "Valider"
+    $("#validerPriorites").show();
+});
+
+var anciennete = 1; // Variable pour stocker l'ancienneté
+
+// Gestionnaire d'événement pour le curseur d'ancienneté
+$("#curseurAnciennete").change(function () {
+    var valeurAnciennete = $(this).val();
+    $(".valeur_curseur_anciennete").text(valeurAnciennete);
+    anciennete = parseInt(valeurAnciennete);
+});
+
+// Gestionnaire d'événement pour le bouton "Valider" de l'ancienneté
+$("#validerAnciennete").click(function () {
+    $(".confirmation_message_anciennete").fadeIn();
+});
+
+// Gestionnaire d'événement pour le bouton "Accepter" dans la fenêtre de confirmation de l'ancienneté
+$("#accepterConfirmationAnciennete").click(function () {
+    $(".confirmation_message_anciennete").fadeOut();
+
+    // Bloquer le curseur d'ancienneté
+    $(".curseur_anciennete").removeClass("non_valide").addClass("valide non_modifiable").prop("disabled", true);
+
+    // Cacher le bouton "Valider"
+    $("#validerAnciennete").hide();
+
+    // Afficher le bouton "Modifier" pour l'ancienneté
+    $("#modifierAnciennete").show();
+});
+
+
+// Gestionnaire d'événement pour le bouton "Annuler" dans la fenêtre de confirmation de l'ancienneté
+$("#annulerConfirmationAnciennete").click(function () {
+    $(".confirmation_message_anciennete").fadeOut();
+});
+
+// Gestionnaire d'événement pour le bouton "Modifier" de l'ancienneté
+$("#modifierAnciennete").click(function () {
+    // Afficher le curseur d'ancienneté
+    $(".curseur_anciennete.valide").removeClass("non_modifiable").prop("disabled", false);
+
+    // Masquer le bouton "Modifier"
+    $("#modifierAnciennete").hide();
+
+    // Montrer le bouton "Valider"
+    $("#validerAnciennete").show();
+});
