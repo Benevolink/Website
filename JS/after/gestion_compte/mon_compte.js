@@ -165,7 +165,21 @@ import(abs_path("JS/classes/Domaine.js")).then((module)=>{
     $("#centresInteretSuppr").prop("selectedIndex",0);
   });
 
-
+$("#interets_sub").on("click",()=>{
+  let liste_indexs = [];
+  $("#centresInteretSuppr").children("option").each(function(){
+    if($(this).val()){
+      liste_indexs.push($(this).val());
+      console.log($(this).val());
+    }
+  });
+  import(abs_path("JS/classes/User.js")).then((module)=>{
+    let user = new module.User;
+    user.send_interets(liste_indexs).done((data)=>{
+      console.log(data);
+    });
+  });
+});
 function get_disponibilites()
 {
   var disponibilites = {}

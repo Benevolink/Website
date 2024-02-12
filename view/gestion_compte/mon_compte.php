@@ -178,7 +178,7 @@
                           </select>
                       </div>
                   </div>
-                  <input type="submit" id="interets" value="Valider mes intérêts"/>
+                  <input type="submit" id="interets_sub" value="Valider mes intérêts"/>
               </div>
               <input type="submit" id="competences" value="Gérer les competences"/>
           </div>
