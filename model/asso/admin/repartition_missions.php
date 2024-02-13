@@ -251,7 +251,54 @@
         <?php
     }
 
+    function csv_to_tableau()
+    {
+        global $id_asso;
+        require_once BF::abs_path("libs/Asso.php",true);
+        $asso = new Asso($id_asso);
+        $liste_missions = $asso->liste_missions();
+        require_once BF::abs_path("libs/Event.php",true);
 
+        $chemin_fichier_csv = "./Cplex/cplex_" . $id_asso . ".csv";
+
+        // Vérifier si le fichier existe
+        if (!file_exists($chemin_fichier_csv)) {
+            echo "Impossible d'ouvrir le fichier CSV.\n";
+            return "Le fichier CSV n'existe pas.";
+        }
+
+        // Ouvrir le fichier CSV en mode lecture
+        $fichier_csv = fopen($chemin_fichier_csv, 'r');
+
+        // Vérifier si l'ouverture du fichier a réussi
+        if (!$fichier_csv) {
+            echo "Impossible d'ouvrir le fichier CSV.\n";
+            return "Impossible d'ouvrir le fichier CSV.";
+        }
+
+        // Début du tableau HTML
+        $table_html = '<table border="1">';
+        // Lire le fichier CSV ligne par ligne
+        while (($ligne = fgetcsv($fichier_csv)) !== false) {
+            // Début d'une ligne de tableau
+            $table_html .= '<tr>';
+            // Parcourir les éléments de la ligne
+            foreach ($ligne as $cellule) {
+                // Créer une cellule dans le tableau HTML
+                $table_html .= '<td>' . htmlspecialchars($cellule) . '</td>';
+            }
+            // Fin de la ligne de tableau
+            $table_html .= '</tr>';
+        }
+        // Fin du tableau HTML
+        $table_html .= '</table>';
+
+        // Fermer le fichier CSV
+        fclose($fichier_csv);
+
+        // Retourner le contenu HTML du tableau
+        return $table_html;
+    }
 
 
 ?>

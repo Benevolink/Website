@@ -206,8 +206,10 @@
     <div class="aide_decision">
         Aide à la décision
     </div>
+    <?php csv_to_tableau(); ?>
 </div>
 <br>
+
 
 <button id="valider">Valider</button> 
 <br>
