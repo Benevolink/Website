@@ -51,7 +51,7 @@ def getFromDB(table, param = ["1", "1"], columns = '*', order_by = None, join = 
 
 event_data = getFromDB(["evenements"], ["id_asso", param1], "id_event, id_lieu, nb_personnes, id_horaire, duree_mission, indice_prio_mission", "id_event")
 
-users = getFromDB(["membres_assos"], ["id_asso", param1], "id_user", "id_user")
+users = getFromDB(["membres_assos"], [f"statut = 1 AND id_asso", param1], "id_user", "id_user")
 
 for i in range(len(users)):
     user = users[i]
