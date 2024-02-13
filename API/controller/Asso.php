@@ -256,6 +256,38 @@ switch($fonction){
             return_statut(false,$e->getMessage());
         }
         exit();
-    
+    case "invitations_events":
+        BF::sess_start();
+        if(!BF::sess_start()){
+            return_statut(false,"Vous n'êtes pas connecté !");
+            exit();
+        }
+        require_once BF::abs_path("libs/User.php",true);
+        require_once BF::abs_path("libs/Event.php",true);
+        $user = new User();
+        try{
+            $id_asso = $_POST["id_asso"];
+            $invitations = $_POST["invitations"];
+            if(!$user->est_admin_asso($id_asso))
+            {
+                return_statut(false,"Vous devez être admin de l'association");
+                exit();
+            }
+            foreach($invitations as $key => $value)
+            {
+                $event = new Event($value);
+                $membre = new User($key);
+                if($membre->statut_event($value)<-1)
+                {
+                    $event->ajouter_membre($key,-2);
+                }
+            }
+            return_statut(true);
+
+        }
+        catch(Exception $e){
+            return_statut(false,$e->getMessage());
+        }
+        exit();
 }
 

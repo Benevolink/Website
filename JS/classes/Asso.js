@@ -51,6 +51,11 @@ export class Asso extends APIObjet{
     user_get_statut(id_user){
         return this.APICall("asso","user_get_statut",{id_asso : this.id, id_user : id_user});
     }
+
+    sendAideDecision(invitations)
+    {
+        return this.APICall("asso","invitations_events",{id_asso : this.id, invitations : invitations});
+    }
     
     static insert(nom,desc,desc_missions,file_content,adresse,email,tel){
         let params = {nom : nom, desc : desc, missionsProposees : desc_missions, adresse : adresse, email : email, tel : tel};
