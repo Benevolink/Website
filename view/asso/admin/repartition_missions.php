@@ -369,13 +369,14 @@
 <h2 id="titre" > <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span> 
  Interface d'aide à la décision pour les bénévoles et associations </h2>
 
+
  <div id="container">
     <img id="photo_decision" src="<?= BF::abs_path("media/img/aide_decision.jpg") ?>" alt="Image d'aide à la décision">
     <p id="info_aide"> Afin de répartir convenablement vos bénévoles à vos missions, Benevolink vous propose d'utiliser notre algorithme d'aide à la décision ! <br> Celui-ci prend en compte les critères individuels des bénévoles (disponibilité, distance, compétences, etc) et les besoins spécifiques des associations (priorité des missions, ancienneté des bénévoles, etc). </p>
 </div>
 
 </div> 
-<div class="tableau_repartition">
+<div class="tableau_repartition" id="tableau_repartition">
     <table>
         <thead>
             <tr>
@@ -389,6 +390,19 @@
     </table>
 </div>
 <br>
+
+<script type="text/javascript">
+    id_asso = <?= $_GET["id_asso"] ?>;
+</script>
+<div id="solutions"></div>
+
+<div class="aide_decision_case" id="liste_membres_affectes">
+    <div class="aide_decision" id="bouton_aide_decision">
+        Aide à la décision
+          </div>
+  </div>
+</div>
+
 
 
 
@@ -412,10 +426,10 @@
         <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
         <button type="button" class="btn btn-primary" data-dismiss="modal">Voir les solutions possibles</button>
       </div>
-
     </div>
   </div>
 </div>
+
 
 <!-- Overlay pour assombrir le reste de la page -->
 <div id="overlay"></div>
@@ -554,4 +568,31 @@ $('#loadingModal').on('hidden.bs.modal', function () {
 </script>
 
 <script src="<?= BF::abs_path("JS/after/asso/admin/repartition_missions.js") ?>">
+</script>
+<input type="submit" id="bouton_ok_aide_decision" value="Aide à la décision"/>
+<script>
+    $("#bouton_ok_aide_decision").on("click",function(){
+    import(abs_path("JS/classes/Asso.js")).then((module)=>{
+        let asso = new module.Asso(id_asso);
+        asso.aide_decision().done((data)=>{
+            $("#tableau_repartition").find("input").attr({
+                checked: false
+            });
+            let liste = $('.case_membre_mission');
+            
+            data.forEach(element => {
+                if(!isNaN(element[0]))
+                {
+                    liste.each(function(){
+                        if($(this).attr("id_membre") == element[1] && $(this).attr("id_mission") == element[0]){
+                            $(this).prop("checked","true");
+                        }
+                    });
+                    
+                }
+            });
+        });
+    });
+    });
+    $(document).ready(()=>{$(".liste_membres").hide();});
 </script>

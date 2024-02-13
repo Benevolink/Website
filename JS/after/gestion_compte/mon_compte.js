@@ -118,21 +118,68 @@ function modif_image(logo_chemin){
 
 //Affichage des centres d'intérêts
 $(document).ready(()=>{
-  import(abs_path("JS/classes/Domaine.js")).then((module)=>{
-    module.Domaine.get_all().done((data)=>{
-      data.forEach(element => {
-        $("#centresInteret").append(
-          $('<option>').text(element['nom_domaine'])
-          .val(element["id_domaine"])
-        );
-        
+import(abs_path("JS/classes/Domaine.js")).then((module)=>{
+  import(abs_path("JS/classes/User.js")).then((UserClass)=>{
+      let user = new UserClass.User;
+      user.get_all_interets().done((data_user)=>{
+        console.log(data_user);
+        module.Domaine.get_all().done((data)=>{
+        data.forEach(element => {
+          let est_select = false;
+          data_user.forEach((value)=>{
+            if(element['id_domaine']==value["id_domaine"])
+            {
+              est_select = true;
+            }
+          });
+          if(!est_select)
+          {
+            $("#centresInteret").append(
+              $('<option>').text(element['nom_domaine'])
+              .val(element["id_domaine"])
+            );
+          }else{
+            $("#centresInteretSuppr").append(
+              $('<option>').text(element['nom_domaine'])
+              .val(element["id_domaine"])
+            );
+          }
+          
+        });  
       });
-      
+    });
+
+  }); 
+  
+});
+});
+
+  $(document).on('change','#centresInteret',"change",function(){
+    $("#centresInteret").find(":selected").appendTo("#centresInteretSuppr");
+    $("#centresInteret").prop("selectedIndex",0);
+    $("#centresInteretSuppr").prop("selectedIndex",0);
+  });
+  $(document).on('change','#centresInteretSuppr',"change",function(){
+    $("#centresInteretSuppr").find(":selected").appendTo("#centresInteret");
+    $("#centresInteret").prop("selectedIndex",0);
+    $("#centresInteretSuppr").prop("selectedIndex",0);
+  });
+
+$("#interets_sub").on("click",()=>{
+  let liste_indexs = [];
+  $("#centresInteretSuppr").children("option").each(function(){
+    if($(this).val()){
+      liste_indexs.push($(this).val());
+      console.log($(this).val());
+    }
+  });
+  import(abs_path("JS/classes/User.js")).then((module)=>{
+    let user = new module.User;
+    user.send_interets(liste_indexs).done((data)=>{
+      console.log(data);
     });
   });
 });
-
-
 function get_disponibilites()
 {
   var disponibilites = {}
@@ -155,7 +202,6 @@ function get_disponibilites()
 
 function send_disponibilites()
 {
-  console.log("hi");
   let disponibilites = get_disponibilites();
   import(abs_path("JS/classes/User.js")).then((UserModule)=>{
     let user = new UserModule.User;
@@ -188,4 +234,25 @@ import(abs_path("JS/classes/User.js")).then((module)=>{
   }).fail((error)=>{
     console.error("Erreur dans la requête AJAX :",error);
   });
+});
+
+
+//Partie pour les horaires à l'actualisation
+
+$(document).ready(function(){
+import(abs_path("JS/classes/User.js")).then((moduleUser)=>{
+  let user = new moduleUser.User;
+  user.get_disponibilites().done((data)=>{
+    console.log(data);
+    data.forEach((element)=>{
+      let elt = $("#table_dispos").find("tr").filter(function(){
+        return $(this).attr("jour")==parseInt(element["jour"])-1;
+      }).first();
+      console.log(elt);
+      elt.children().eq(1).children().eq(0).attr("checked","checked");
+      elt.children().eq(2).children().eq(0).attr("value",element["h_deb"]).show();
+      elt.children().eq(3).children().eq(0).attr("value",element["h_fin"]).show();
+    });
+  });
+});
 });

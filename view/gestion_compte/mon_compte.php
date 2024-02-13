@@ -107,7 +107,7 @@
 
       <div class="row">
           <div class="col-md-5 col-md-offset-1">
-            <table class="bordered-table">
+            <table class="bordered-table" id="table_dispos">
               <h3> Mes Disponibilités </h3>
                 <tr id="dispo_text">
                     <th>Jour de la semaine</th>
@@ -168,9 +168,17 @@
                       <div class="form-group">
                           <label for="centresInteret">Sélectionnez vos centres d'intérêt :</label>
                           <select id="centresInteret" class="form-control">
+                          <option value="" selected disabled>Choisir une option</option>
+                          </select>
+                      </div>
+                        <div class="form-group">
+                          <label for="centresInteret">Enlevez vos centres d'intérêt :</label>
+                          <select id="centresInteretSuppr" class="form-control">
+                          <option value="" selected disabled>Choisir une option</option>
                           </select>
                       </div>
                   </div>
+                  <input type="submit" id="interets_sub" value="Valider mes intérêts"/>
               </div>
               <input type="submit" id="competences" value="Gérer les competences"/>
           </div>
@@ -180,8 +188,22 @@
 
 </div>
 
+<!-- Script pour les intérêts -->
+<script type="text/javascript">
+$(document).ready(()=>{
+import(abs_path("JS/classes/User.js")).then((UserClass)=>{
+    let user = new UserClass.User;
+    user.get_all_interets().done((data)=>{
+        data.forEach((value)=>{
+            
+        });
+    });
+}); 
+});
 
-<script>
+</script>
+<!-- Script pour les compétences -->
+<script type="text/javascript">
 $("#competences").on("click",function(){
     import(abs_path("JS/classes/User.js")).then((UserClass)=>{
         let user = new UserClass.User;

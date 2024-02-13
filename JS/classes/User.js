@@ -34,6 +34,13 @@ export class User extends APIObjet{
         APICall("user","reponse_invit_mission",{id_event: id_event, reponse: reponse});
     }
 
+    get_disponibilites()
+    {
+        return this.
+        APICall("user","get_all_horaires",{});
+        
+    }
+
     sendDisponibilites(disponibilites)
     {
         return this.
@@ -44,6 +51,18 @@ export class User extends APIObjet{
     {
         return this.
         APICall("user","get_all_comp",{});
+    }
+
+    get_all_interets()
+    {
+        return this.
+        APICall("user","get_all_interets",{});
+    }
+
+    send_interets(liste_ids)
+    {
+        return this.
+        APICall("user","ajouter_interets",{liste_interets: liste_ids});
     }
 
     get_all_liste_competences()

@@ -168,6 +168,71 @@ switch($fonction){
             return_statut(false,$e->getMessage());
         }
         break;
+    case "ajouter_interets":
+        BF::sess_start();
+        if(!BF::sess_start()){
+            return_statut(false,"Vous n'êtes pas connecté !");
+            exit();
+        }
+        try{
+            $user = new User();
+            $liste_interets = $_POST["liste_interets"];
+            $user->clear_interets();
+            foreach($liste_interets as $key => $value)
+            {
+                $user->ajouter_interet($value);
+            }
+            return_statut(true);
+        }
+        catch (Exception $e){
+            return_statut(false,$e->getMessage());
+        }
+        break;
+    case "get_all_interets":
+        BF::sess_start();
+        if(!BF::sess_start()){
+            return_statut(false,"Vous n'êtes pas connecté !");
+            exit();
+        }
+        $user = new User();
+        try{
+            return_json($user->get_all_interets());
+        }catch(Exception $e){
+            return_statut(false,$e->getMessage());
+        }
+        break;
+    case "get_all_horaires":
+        BF::sess_start();
+        if(!BF::sess_start()){
+            return_statut(false,"Vous n'êtes pas connecté !");
+            exit();
+        }
+        $user = new User();
+        try{
+            return_json($user->get_all_horaires());
+        }catch(Exception $e){
+            return_statut(false,$e->getMessage());
+        }
+        break;
+    case "set_disponibilites":
+        BF::sess_start();
+        if(!BF::sess_start()){
+            return_statut(false,"Vous n'êtes pas connecté !");
+            exit();
+        }
+        $user = new User();
+        $dispo = $_POST["disponibilites"];
+        try{
+            $user->clear_horaires();
+            foreach($dispo as $key => $value)
+            {
+                $user->ajout_horaire($key+1,$value["heure_debut"],$value["heure_fin"]);
+            }
+            return_statut(true);
+        }catch(Exception $e){
+            return_statut(false,$e->getMessage());
+        }
+        break;
     default:
         echo "Veuillez spécifier une fonction";
         exit();

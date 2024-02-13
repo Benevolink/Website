@@ -114,7 +114,12 @@ $("#valider").click(function () {
         var idMission = $(this).attr("id_mission");
         membresAffectations[idMembre] = idMission;
     });
-
+    import(abs_path("JS/classes/Asso.js")).then((module)=>{
+        let asso = new module.Asso(id_asso);
+        asso.sendAideDecision(membresAffectations).done((data)=>{
+            console.log(data);
+        });
+    });
     console.log("Modifications validées :", membresAffectations);
 });
 
