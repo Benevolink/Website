@@ -217,6 +217,45 @@ switch($fonction){
         $user->quitter_asso($id_asso);
         return_statut(true);
         exit();
+    case "aide_decision":
+        BF::sess_start();
+        if(!BF::sess_start()){
+            return_statut(false,"Vous n'êtes pas connecté !");
+            exit();
+        }
+        require_once BF::abs_path("libs/User.php",true);
+        $user = new User();
+        try{
+            $id_asso = $_POST["id_asso"];
+            if(!$user->est_admin_asso($id_asso))
+            {
+                return_statut(false,"Vous devez être admin de l'association");
+                exit();
+            }
+            shell_exec("python3.9 ../../Cplex/cplex_data.py");
+            $fichier = fopen(BF::abs_path("Cplex/cplex_".$id_asso.".csv",true),"r");
+            $table = [];
+            if ($fichier !== false) {
+                // Lire le fichier ligne par ligne
+                while (($ligne = fgetcsv($fichier)) !== false) {
+                    // $ligne est un tableau contenant les colonnes de la ligne courante
+                    // Vous pouvez accéder à chaque valeur avec son index
+                    // Par exemple, $ligne[0] pour la première colonne, $ligne[1] pour la deuxième, etc.
+                    
+                    // Faire quelque chose avec la ligne, par exemple l'afficher
+                    $table[] = $ligne;
+                }
+                
+                // Fermer le fichier
+                fclose($fichier);
+                return_json($table);
+            } else {
+                return_statut(false,"Erreur lors de l'ouverture du fichier CSV.");
+            }
+        }catch(Exception $e){
+            return_statut(false,$e->getMessage());
+        }
+        exit();
     
 }
 

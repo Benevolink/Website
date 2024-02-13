@@ -196,4 +196,19 @@
             </div>
         </div>
     </div>
+
+    <input type="submit" value="Aidedecision" id="aide_decision"/>
+
+    <script>
+      $("#aide_decision").on("click",function(){
+        import(abs_path("JS/classes/Asso.js")).then((module)=>{
+          let asso = new module.Asso(id_asso);
+          asso.aide_decision().done((data)=>{
+            console.log(data);
+          });
+        });
+      });
+    </script>
     <!-- Aj
+
+    

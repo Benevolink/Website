@@ -20,6 +20,12 @@ export class Asso extends APIObjet{
         .APICall("asso","get_all_events",{id_asso : this.id});
     }
 
+    aide_decision()
+    {
+        return this
+        .APICall("asso","aide_decision",{id_asso : this.id});
+    }
+
     /**
      * Utilisé pour les recherches d'assos
      */
