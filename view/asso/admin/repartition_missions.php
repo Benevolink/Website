@@ -397,8 +397,8 @@
 <div id="solutions"></div>
 
 <div class="aide_decision_case" id="liste_membres_affectes">
-    <div class="aide_decision" id="bouton_aide_decision">
-        Aide à la décision
+    <div class="aide_decision" id="valider">
+        Notifier les bénévoles
           </div>
   </div>
 </div>
@@ -424,7 +424,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Voir les solutions possibles</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="bouton_ok_aide_decision">Voir les solutions possibles</button>
       </div>
     </div>
   </div>
@@ -506,7 +506,7 @@
 
 <div class="aide_decision_case" id="liste_membres_affectes">
     <div class="aide_decision">
-       <button id="openLoadingModal" data-toggle="modal" data-target="#loadingModal">
+       <button id="openLoadingModal" data-toggle="modal" data-target="#loadingModal" id="bouton_ok_aide_decision">
            <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Appliquer l'algorithme d'aide à la décision
        </button>
     </div>
@@ -569,7 +569,6 @@ $('#loadingModal').on('hidden.bs.modal', function () {
 
 <script src="<?= BF::abs_path("JS/after/asso/admin/repartition_missions.js") ?>">
 </script>
-<input type="submit" id="bouton_ok_aide_decision" value="Aide à la décision"/>
 <script>
     $("#bouton_ok_aide_decision").on("click",function(){
     import(abs_path("JS/classes/Asso.js")).then((module)=>{

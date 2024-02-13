@@ -28,7 +28,7 @@ function cocherAleatoirement() {
     });
 }
 
-
+/*
 // Gestionnaire d'événement pour le bouton d'aide à la décision
 $(".aide_decision_case").click((event) => {
     console.log("Le bouton d'aide à la décision a été cliqué !");
@@ -55,7 +55,7 @@ $(".aide_decision_case").click((event) => {
 
     console.log("Affectations aléatoires :", membresAffectations);
 });
-
+*/
 // Fonction pour simuler le tableau
 function simulerTableau() {
     var tableau = {};
@@ -121,6 +121,7 @@ $("#valider").click(function () {
         });
     });
     console.log("Modifications validées :", membresAffectations);
+    window.location.href = abs_path("controller/asso/admin/association_admin.php?id_asso="+id_asso);
 });
 
 // Gestionnaire d'événement pour le bouton "Valider"
