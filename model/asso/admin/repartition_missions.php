@@ -146,14 +146,16 @@
         ?>
         <div class="maximisation_cursers">
             <br>
-            <p>Maximisation du nombre de missions remplies :</p>
+            <p>A quel point souhaitez-vous que vos missions soient remplis par vos bénévoles? Autrement dit, voulez-vous que tous vos bénévoles soient assignés à une mission?</p>
             <br>
             <input type="range" min="1" max="5" value="1" class="curseur_maximisation" id="curseurMaximisation">
             <span class="valeur_curseur_maximisation">1</span>
         </div>
 
+        <br>
+
         <div class="valider_button_maximisation">
-            <button id="validerMaximisation">Valider le critère de la maximisation</button>
+            <button id="validerMaximisation"  style="font-weight:bold; font-size:15px; margin-left:300px;">Valider le critère de la maximisation</button>
         </div>
 
         <div class="modifier_button">
@@ -198,7 +200,7 @@
         }
     ?>
         <div class="valider_button">
-            <button id="validerPriorites">Valider</button>
+            <button id="validerPriorites" style="font-weight:bold; font-size:15px; margin-left:375px;">Valider</button>
         </div>
     <?php
         // Bouton Modifier (initialement caché)
@@ -214,14 +216,14 @@
         ?>
         <div class="anciennete_cursers">
             <br>
-            <p>Ancienneté :</p>
+            <p style="margin-left:350px;">Ancienneté :</p>
             <br>
             <input type="range" min="1" max="5" value="1" class="curseur_anciennete" id="curseurAnciennete">
             <span class="valeur_curseur_anciennete">1</span>
         </div>
 
         <div class="valider_button_anciennete">
-            <button id="validerAnciennete">Valider le critère d'ancienneté</button>
+            <button id="validerAnciennete" style="font-weight:bold; font-size:15px; margin-left:300px;">Valider le critère d'ancienneté</button>
         </div>
 
         <div class="modifier_button">
@@ -235,14 +237,14 @@
         ?>
         <div class="distance_cursers">
             <br>
-            <p>Distance :</p>
+            <p style="margin-left:350px;">Distance :</p>
             <br>
             <input type="range" min="1" max="5" value="1" class="curseur_distance" id="curseurDistance">
             <span class="valeur_curseur_distance">1</span>
         </div>
 
         <div class="valider_button_distance">
-            <button id="validerDistance">Valider le critère de la distance</button>
+            <button id="validerDistance" style="font-weight:bold; font-size:15px; margin-left:300px;">Valider le critère de la distance</button>
         </div>
 
         <div class="modifier_button">

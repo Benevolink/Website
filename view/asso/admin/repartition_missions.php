@@ -266,6 +266,104 @@
         /* Changer le curseur pour indiquer qu'il est non modifiable */
     }
 
+    .confirmation_message_maximisation{
+        font-family: Corps;
+    src: url(fonts/Nexa-Heavy.woff2) format("woff2");
+    font-size:18px;
+    }
+
+    #critere {
+    background-color: #fff8e1; /* Fond beige clair */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Ombre légère */
+    border-radius: 10px; /* Coins arrondis */
+    padding: 20px; /* Espacement intérieur */
+    margin-left: 150px;
+    margin-right: 150px;
+    margin-top: 50px;
+    font-family: Corps;
+    src: url(fonts/Nexa-Heavy.woff2) format("woff2");
+    font-size:18px;
+}
+
+#curseurMaximisation{
+    -webkit-appearance: none; /* Supprimer l'apparence par défaut */
+    width: 300px; /* Largeur du curseur */
+    height: 10px; /* Hauteur du curseur */
+    background: #ddd; /* Couleur de la piste du curseur */
+    border-radius: 5px; /* Coins arrondis */
+    outline: none; /* Supprimer la bordure par défaut */
+    opacity: 0.7; /* Opacité de la piste du curseur */
+    transition: opacity 0.2s; /* Transition fluide lors du survol */
+    margin-left:250px;
+}
+
+#curseurAnciennete{
+    -webkit-appearance: none; /* Supprimer l'apparence par défaut */
+    width: 300px; /* Largeur du curseur */
+    height: 10px; /* Hauteur du curseur */
+    background: #ddd; /* Couleur de la piste du curseur */
+    border-radius: 5px; /* Coins arrondis */
+    outline: none; /* Supprimer la bordure par défaut */
+    opacity: 0.7; /* Opacité de la piste du curseur */
+    transition: opacity 0.2s; /* Transition fluide lors du survol */
+    margin-left:250px;
+}
+
+#curseurDistance{
+    -webkit-appearance: none; /* Supprimer l'apparence par défaut */
+    width: 300px; /* Largeur du curseur */
+    height: 10px; /* Hauteur du curseur */
+    background: #ddd; /* Couleur de la piste du curseur */
+    border-radius: 5px; /* Coins arrondis */
+    outline: none; /* Supprimer la bordure par défaut */
+    opacity: 0.7; /* Opacité de la piste du curseur */
+    transition: opacity 0.2s; /* Transition fluide lors du survol */
+    margin-left:250px;
+}
+
+.curseur_mission{
+    -webkit-appearance: none; /* Supprimer l'apparence par défaut */
+    width: 300px; /* Largeur du curseur */
+    height: 10px; /* Hauteur du curseur */
+    background: #ddd; /* Couleur de la piste du curseur */
+    border-radius: 5px; /* Coins arrondis */
+    outline: none; /* Supprimer la bordure par défaut */
+    opacity: 0.7; /* Opacité de la piste du curseur */
+    transition: opacity 0.2s; /* Transition fluide lors du survol */
+}
+
+.valeur_curseur_maximisation{
+    margin-left:400px;
+}
+
+.valeur_curseur_anciennete{
+    margin-left:400px;
+}
+.valeur_curseur{
+    margin-left:400px;
+}
+
+.valeur_curseur_distance{
+    margin-left:400px;
+}
+
+#curseurMaximisation:hover {
+    opacity: 1; /* Augmenter l'opacité lors du survol */
+}
+
+
+.priorite_message{
+    font-size:16px;
+    text-align:center;
+}
+
+#titre_aide{
+    font-weight:bold;
+    src: url(fonts/Nexa-Heavy.woff2) format("woff2");
+    font-size:30px;
+    text-align: center;
+}
+
 </style>
 <div id="intro_aide">
 <h2 id="titre" > <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span> 
@@ -292,20 +390,8 @@
 </div>
 <br>
 
-<!-- Bouton d'application de l'algorithme d'aide à la décision -->
-<div id="solutions"></div>
-
-<div class="aide_decision_case" id="liste_membres_affectes">
-    <div class="aide_decision">
-       <button id="openLoadingModal" data-toggle="modal" data-target="#loadingModal">
-           <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Appliquer l'algorithme d'aide à la décision
-       </button>
-    </div>
-</div>
 
 
-<br>
-<br>
 
 <!-- Modal de chargement -->
 
@@ -334,66 +420,87 @@
 <!-- Overlay pour assombrir le reste de la page -->
 <div id="overlay"></div>
 
-<button id="valider">Valider</button> 
+<h2 id="titre_aide"> Configurez l'aide à la décision pour répartir vos bénévoles au mieux ! </h2>
+
+
+<div id="critere">
+
+    <div class="maximisation_cursers">
+        <?php afficher_maximisation(); ?>
+    </div>
+
+    <div class="modifier_button">
+        <button id="modifierMaximisation" style="display:none;">Modifier le critère de maximisation</button>
+    </div>
+    <div class="confirmation_message_maximisation" style="display:none;">
+        <p>Voulez-vous valider le critère de maximisation ? Vous aurez la possibilité de remodifier ensuite.</p>
+        <button id="accepterConfirmationMaximisation">Accepter</button>
+        <button id="annulerConfirmationMaximisation">Annuler</button>
+    </div>
+
+    <br>
+
+    <div class="missions_cursers">
+        <?php afficher_liste_missions(); ?>
+    </div>
+
+    <div class="modifier_button">
+        <button id="modifierPriorites" style="display:none;">Modifier</button>
+    </div>
+
+    <div class="confirmation_message" style="display:none;">
+        <p>Voulez-vous valider les priorités des missions ? Vous aurez la possibilité de remodifier ensuite.</p>
+        <button id="accepterConfirmation">Accepter</button>
+        <button id="annulerConfirmation">Annuler</button>
+    </div>
+
+    <div class="anciennete_cursers">
+        <?php afficher_anciennete(); ?>
+    </div>
+
+    <div class="modifier_button">
+        <button id="modifierAnciennete" style="display:none;">Modifier l'ancienneté</button>
+    </div>
+    <div class="confirmation_message_anciennete" style="display:none;">
+        <p>Voulez-vous valider le critère d'ancienneté ? Vous aurez la possibilité de remodifier ensuite.</p>
+        <button id="accepterConfirmationAnciennete">Accepter</button>
+        <button id="annulerConfirmationAnciennete">Annuler</button>
+    </div>
+
+    <br>
+
+    <div class="distance_cursers">
+        <?php afficher_distance(); ?>
+    </div>
+
+    <div class="modifier_button">
+        <button id="modifierDistance" style="display:none;">Modifier la distance</button>
+    </div>
+    <div class="confirmation_message_distance" style="display:none;">
+        <p>Voulez-vous valider le critère de distance ? Vous aurez la possibilité de remodifier ensuite.</p>
+        <button id="accepterConfirmationDistance">Accepter</button>
+        <button id="annulerConfirmationDistance">Annuler</button>
+    </div>
+
+
+
+</div>
+
+
+<!-- Bouton d'application de l'algorithme d'aide à la décision -->
+<div id="solutions"></div>
+
+<div class="aide_decision_case" id="liste_membres_affectes">
+    <div class="aide_decision">
+       <button id="openLoadingModal" data-toggle="modal" data-target="#loadingModal">
+           <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Appliquer l'algorithme d'aide à la décision
+       </button>
+    </div>
+</div>
+
 <br>
-
-<div class="maximisation_cursers">
-    <?php afficher_maximisation(); ?>
-</div>
-
-<div class="modifier_button">
-    <button id="modifierMaximisation" style="display:none;">Modifier le critère de maximisation</button>
-</div>
-<div class="confirmation_message_maximisation" style="display:none;">
-    <p>Voulez-vous valider le critère de maximisation ? Vous aurez la possibilité de remodifier ensuite.</p>
-    <button id="accepterConfirmationMaximisation">Accepter</button>
-    <button id="annulerConfirmationMaximisation">Annuler</button>
-</div>
-
 <br>
-
-<div class="missions_cursers">
-    <?php afficher_liste_missions(); ?>
-</div>
-
-<div class="modifier_button">
-    <button id="modifierPriorites" style="display:none;">Modifier</button>
-</div>
-
-<div class="confirmation_message" style="display:none;">
-    <p>Voulez-vous valider les priorités des missions ? Vous aurez la possibilité de remodifier ensuite.</p>
-    <button id="accepterConfirmation">Accepter</button>
-    <button id="annulerConfirmation">Annuler</button>
-</div>
-
-<div class="anciennete_cursers">
-    <?php afficher_anciennete(); ?>
-</div>
-
-<div class="modifier_button">
-    <button id="modifierAnciennete" style="display:none;">Modifier l'ancienneté</button>
-</div>
-<div class="confirmation_message_anciennete" style="display:none;">
-    <p>Voulez-vous valider le critère d'ancienneté ? Vous aurez la possibilité de remodifier ensuite.</p>
-    <button id="accepterConfirmationAnciennete">Accepter</button>
-    <button id="annulerConfirmationAnciennete">Annuler</button>
-</div>
-
 <br>
-
-<div class="distance_cursers">
-    <?php afficher_distance(); ?>
-</div>
-
-<div class="modifier_button">
-    <button id="modifierDistance" style="display:none;">Modifier la distance</button>
-</div>
-<div class="confirmation_message_distance" style="display:none;">
-    <p>Voulez-vous valider le critère de distance ? Vous aurez la possibilité de remodifier ensuite.</p>
-    <button id="accepterConfirmationDistance">Accepter</button>
-    <button id="annulerConfirmationDistance">Annuler</button>
-</div>
-
 <br>
 
 <div class="liste_membres">
@@ -404,6 +511,8 @@
     }
     ?>
 </div>
+
+
 
 <script>
     var membresAffectations = {}; // Tableau pour stocker les affectations des membres
