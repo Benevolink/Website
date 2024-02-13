@@ -14,7 +14,7 @@
     margin-bottom: 0px;
     border-radius: 5px;
     padding: 5px;
-    background-color: rgb(212, 212, 212);
+    background-color:darkseagreen;
     overflow: auto;
 }
 .event_a_droite{
@@ -51,6 +51,8 @@
     border-radius: 5px;
     padding: 5px;
     background-color: rgb(212, 212, 212);
+font-size: 130%;
+
 }
 .titre_rubrique_event{
     font-weight: bold;

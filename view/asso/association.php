@@ -5,31 +5,36 @@
   <label class="titre_asso" for="logo"><?= $prop_all["asso_info"][AttributsTables::ASSO_NOM] ?></label>
   <br>
   
-  
-  
-  <?php if($est_dans_asso){ ?>
-    <label for="followed">Rejoindre</label>
-    <input id="followed" type="checkbox" disabled="disabled" checked>
-  <?php } else { ?>
-    <label for="followed">Rejoindre</label>
-    <input id="followed" type="checkbox">
-  <?php }?>
 
-  <?php //si le user est admin de l'asso, il peut administrer son asso
-  if($is_admin){ ?>
-    <a href="<?= 'admin/association_admin.php?id_asso='.$id_asso ?>">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+<br>
+  
+ 
+<?php
+if ($is_admin) { ?>
+  <a href="<?= 'admin/association_admin.php?id_asso='.$id_asso ?>" class="btn btn-success">
       Accéder à la page d'administration
-    </a>
-  <?php } ?>
+  </a>
+<?php } ?>
 
-  <div class="cote_a_cote">
+<br> <br> 
 
-    <div class="rej_bouton" id="Rejoindre" style="background-color: rgb(124, 243, 152);" onclick="join();">
-      Rejoindre
-    </div>
-  </div>
+<div class="btn btn-success" id="Rejoindre"  onclick="join();">
+  Rejoindre
+</div>  
 
-  </div>
+  
+  
+  
+<div class="row">
   
 <div class="row infos_asso">
   <div class="col-md-7 description_asso contact_adresse desc_asso_remplir_flex">
@@ -51,20 +56,25 @@
     <p>  <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>  <?= $prop_all["asso_info"][AttributsTables::ASSO_EMAIL] ?></p>
 
   </div>
+  <br> 
+  <div class="col-md-4 col-md-offset-4" id="description_asso">
+  <h3 id="titre_asso">Description des Missions</h3>
 
-  <div class="col-md-4 col-md-offset-4 contact_adresse desc_asso_remplir_flex" id= "desc_missions">
-  <h4>Description des Missions</h4>
-  <p><?= $prop_all["asso_info"][AttributsTables::ASSO_DESCRIPTION_MISSIONS] ?></p>
+  
+  <p><?= $prop_all["asso_info"][AttributsTables::ASSO_DESCRIPTION] ?></p>
+
   </div>
-  </div>
-  <br>
+
+</div>
+<br>
   <h4 id="follower"> Il y a <?= $nombre ?> membre(s) dans l'association. </h4>
-  <br>
-  <br> <br> <br>
+
 <div id="wrapper_all"></div>
 
 
-  
+<script type="text/javascript">
+  $(document).ready(function(){$(".Iframe_container").remove();});
+</script>
 <style>
 
   .row{
@@ -88,12 +98,26 @@
   #description_asso{
     font-family: Corps;
     src: url(fonts/Nexa-Heavy.woff2) format("woff2");
-    margin-left: 40px;
+    margin-left: 85px;
     border: 1px solid #000;
     border-radius: 10px;
     box-sizing: border-box; 
     padding: 8px; /* Espace à l'intérieur des cellules */
-    padding-left: 55px;
+    padding-left: 35px;
+    font-size: 17px;
+    margin-top: 20px;
+    flex-grow: 1;
+  }
+
+  #image_asso{
+    font-family: Corps;
+    src: url(fonts/Nexa-Heavy.woff2) format("woff2");
+    margin-left: 70px;
+    border: 1px solid #000;
+    border-radius: 10px;
+    box-sizing: border-box; 
+    padding: 8px; /* Espace à l'intérieur des cellules */
+    padding-left: 30px;
     font-size: 17px;
     margin-top: 20px;
     width : 100%;
@@ -108,7 +132,7 @@
     border-radius: 10px;
     box-sizing: border-box; 
     padding: 8px; /* Espace à l'intérieur des cellules */
-    padding-left: 55px;
+    padding-left: 30px;
     font-size: 17px;
   }
   #logoImg{
